@@ -1,0 +1,9 @@
+package table_1test1;
+
+import javax.swing.JComponent;
+
+public class Armies extends JComponent {
+
+
+	private static final long serialVersionUID = 1L;
+}
