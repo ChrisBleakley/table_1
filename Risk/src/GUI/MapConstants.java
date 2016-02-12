@@ -6,7 +6,7 @@
 ||	Contact:			Rory.Buckley.89@gmail.com										||
 ||	Contact 2:			14745991@ucdconnect.ie											||
 ||	Description:		MapConstants class for MapPanel and component					||
-||	Version:			0.1																||
+||	Version:			0.2																||
 ||																						||
 ===========================================================================================
  */
@@ -77,8 +77,8 @@ public class MapConstants {
 	public static final String[] CONTINENT_NAMES = {"N America","Europe","Asia","Australia","S America","Africa"};  // for reference 
 	public static final int[] CONTINENT_IDS = {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5};
 	public static final int[] CONTINENT_VALUES = {5,5,7,2,2,3};
-	//public static final int FRAME_WIDTH = 1000;    // must be even
-	//public static final int FRAME_HEIGHT = 600;
+	public static final int FRAME_WIDTH = 1000;    // must be even
+	public static final int FRAME_HEIGHT = 600;
 	public static final int[][] COUNTRY_COORD = {
 		{191,150},     // 0
 		{255,161},
@@ -130,6 +130,7 @@ public class MapConstants {
 		{135,206,250},
 		{216,191,216},
 		{70,130,180}
-	};		
+	};	
+	public static final int CIRCLE_RADIUS = 18;
 }
 

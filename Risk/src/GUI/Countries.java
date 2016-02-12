@@ -6,7 +6,7 @@
 ||	Contact:			Rory.Buckley.89@gmail.com										||
 ||	Contact 2:			14745991@ucdconnect.ie											||
 ||	Description:		Countries class using JComponent								||
-||	Version:			0.1																||
+||	Version:			0.2																||
 ||																						||
 ===========================================================================================
  */
@@ -15,6 +15,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -24,17 +25,15 @@ import javax.swing.JComponent;
 
 public class Countries extends JComponent{
 
-	public Countries(int radius, Dimension panel_size){
-		//Set size
-		this.setPreferredSize(panel_size);
+	public Countries(int radius, Dimension panel_size, int[][] coords){
 		
-		//Initialise constant private references
-		this.coords = MapConstants.COUNTRY_COORD;
+		this.panel_size = panel_size;
+		this.setPreferredSize(this.panel_size);
+		this.coords = coords;
 		this.names = MapConstants.COUNTRY_NAMES;
 		this.radius = radius;
 		this.continents = MapConstants.CONTINENT_IDS;
 		this.colors = MapConstants.colors;
-		
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -46,48 +45,43 @@ public class Countries extends JComponent{
 	private Graphics2D initialiseGFX2D(Graphics g){
 		
 		super.paintComponent(g);
+		this.fontsize = (int)(g.getFont().getSize() * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
 		
 		//Turn on 2d Graphics
 		Graphics2D gfx2d = (Graphics2D)g;
 		
 		//Initialise Anti Aliasing
-		gfx2d.setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
+		gfx2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		return gfx2d;
 	}
 	
 	private void drawCountries(Graphics2D gfx2d){
-		
+
 		for (int i = 0; i < coords.length; i++){
-			//Initialise Circle coordinates
-			int 	x = coords[i][0] - radius,
-					y = coords[i][1] - radius;
+			//Initialise Country coordinates dependent on current screensize compared to the frame constants
+			int x = coords[i][0] - radius;
+			int	y = coords[i][1] - radius;
 			
 			//Initialise Country Name
 			String name = names[i];
 			
 			//Initialise Color
-			int 	continent = continents[i],
-					R = colors[continent][0],
-					G = colors[continent][1],
-					B = colors[continent][2];
+			int continent = continents[i];
+			int R = colors[continent][0];
+			int G = colors[continent][1];
+			int B = colors[continent][2];
 			Color c = new Color(R, G, B);
 			
 			//Draw circles
 			Ellipse2D.Double circle = new Ellipse2D.Double(
-					x,
-					y,
-					radius * 2,
-					radius * 2);
+					x, y, radius * 2, radius * 2);
 			
 			//Draw Country Names
 			gfx2d.setPaint(Color.black);
-			gfx2d.drawString(
-					name,
-					x - 4,
-					y - 4);
+			gfx2d.setFont(new Font("blah", Font.BOLD, this.fontsize));
+			gfx2d.drawString(name, x - 4, y - 4);
 			
 			gfx2d.setPaint(c);
 			gfx2d.fill(circle);
@@ -96,8 +90,10 @@ public class Countries extends JComponent{
 	
 	private int[][] coords;
 	private String[] names;
+	private int fontsize;
 	private int radius;
 	private int[] continents;
 	private int[][] colors;
+	private Dimension panel_size;
 	private static final long serialVersionUID = 1L;
 }

@@ -6,7 +6,7 @@
 ||	Contact:			Rory.Buckley.89@gmail.com										||
 ||	Contact 2:			14745991@ucdconnect.ie											||
 ||	Description:		MapPanel class using JPanel										||
-||	Version:			0.1																||
+||	Version:			0.2																||
 ||																						||
 ===========================================================================================
  */
@@ -25,18 +25,24 @@ import javax.swing.JPanel;
 public class MapPanel extends JPanel {
 	public MapPanel(Dimension panel_size){
 		
-		this.panel_size = panel_size;
-		this.radius = 18;
-		
-		//Set size
+		this.panel_size = panel_size;		
 		this.setPreferredSize(panel_size);
 		
-		//Initialise constant private references
-		this.coords = MapConstants.COUNTRY_COORD;
+		//Initialise coordinates and links
+		this.coords = new int[MapConstants.COUNTRY_COORD.length][2];
+		{
+			int i = 0;
+			for (int[] stdcoords : MapConstants.COUNTRY_COORD){
+				coords[i][0] = (int)((stdcoords[0] - radius) * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
+				coords[i++][1] = (int)((stdcoords[1] - radius) * (panel_size.getHeight()) / MapConstants.FRAME_HEIGHT);
+			}
+		}
+		this.radius = (int)(MapConstants.CIRCLE_RADIUS
+				 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
 		this.link_matrix = MapConstants.ADJACENT;
 		
 		//Add the Countries
-		this.countries_component = new Countries(this.radius, this.panel_size);
+		this.countries_component = new Countries(this.radius, this.panel_size, this.coords);
 		this.add(countries_component);
 	}
 	
@@ -66,9 +72,9 @@ public class MapPanel extends JPanel {
 		//Go through each country in the arrays
 		for (int i = 0; i < coords.length; i++){
 			
-			//Initialise coordinates
-			int 	x = this.coords[i][0] - this.radius,
-					y = this.coords[i][1] - this.radius;
+			//Initialise Country's coordinates
+			int x = coords[i][0] - radius;
+			int	y = coords[i][1] - radius;
 			
 			//Initialise links
 			int[] links = this.link_matrix[i];
@@ -79,17 +85,14 @@ public class MapPanel extends JPanel {
 			//Go through the link array and find the corresponding country to link to
 			for (int j = 0; j < links.length; j++){
 				
-				int 	target_index = links[j],
-						target_x = this.coords[target_index][0],
-						target_y = this.coords[target_index][1];
+				int target_index = links[j];
+				int target_x = this.coords[target_index][0];
+				int target_y = this.coords[target_index][1];
 				
 				if (target_index > j){
 					
 					Line2D.Double link = new Line2D.Double(
-							x + this.radius,
-							y + this.radius,
-							target_x,
-							target_y);
+							x + this.radius, y + this.radius, target_x, target_y);
 					
 					gfx2d.draw(link);
 				}

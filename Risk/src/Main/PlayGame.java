@@ -1,6 +1,7 @@
 package Main;
 
 import GUI.*;
+import Listeners.TextActionListener;
 import Player.Player;
 
 public class PlayGame {
@@ -8,6 +9,7 @@ public class PlayGame {
 		
 		Output gui = new Output();
 		Player player1 = new Player();
-		Player player2 = new Player(); 
+		Player player2 = new Player();
+		
 	}
 }
