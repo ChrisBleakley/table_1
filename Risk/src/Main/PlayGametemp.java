@@ -1,14 +1,13 @@
 package Main;
 
 import javax.swing.JFrame;
-
 import java.util.Scanner;
 
 import GUI.Output;
 import Listeners.TextActionListener;
 import Player.Player;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane; // Warning :Never used (Remove?)
 
 public class PlayGametemp {
 	public static void main(String args[]){ 

@@ -12,23 +12,19 @@ public class Player {
 	private String playerName = null;
 	private Color playerColour = null;
 	
-	public void setPlayerName(String _playerName)
-	{
+	public void setPlayerName(String _playerName) {
 		playerName = _playerName;
 	}
 	
-	public String getPlayerName()
-	{
+	public String getPlayerName() {
 		return playerName;
 	}
 	
-	public void setPlayerColour(Color _playerColour)
-	{
+	public void setPlayerColour(Color _playerColour) {
 		playerColour = _playerColour;
 	}
 	
-	public Color getPlayerColour()
-	{
+	public Color getPlayerColour() {
 		return playerColour;
 	}
 	

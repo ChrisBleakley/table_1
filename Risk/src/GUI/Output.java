@@ -23,23 +23,34 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Listeners.TextActionListener;
+
 public class Output extends JFrame {
+	
+	private JTextField tf;
+	private JPanel input_panel;
+	private JPanel game_info_panel;
+	private MapPanel map_panel;
+	private JLabel game_info = new JLabel("Game Information", SwingConstants.CENTER);
+	//private GameMechanics game;
+	private Dimension map_size;
+	private static final long serialVersionUID = 1L;
+	
 	public Output() {
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int) (screensize.getWidth() * 0.75);
-		int map_height = (int) (screensize.getHeight() * 0.75);
+		int map_width = (int) (screensize.getWidth() * 0.70);
+		int map_height = (int) (screensize.getHeight() * 0.60);
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
 	
 		//create panels
-		this.game_info_panel= new JPanel();
+		this.game_info_panel = new JPanel();
 		this.input_panel = new JPanel();
 		this.map_panel = new MapPanel(map_size);
 		
 		//create labels to identify each panel
-		JLabel game_info = new JLabel("Game Information", SwingConstants.CENTER);
 		JLabel input = new JLabel("User input");
 		
 		//create text field to be added to user input panel.
@@ -81,6 +92,14 @@ public class Output extends JFrame {
 		//make gui visible
 		this.setVisible(true);
  
+		// Text field stuff
+		tf.addActionListener(new TextActionListener(this));
+		
+	}
+		
+	// relies on 'game_info' JLabel being declared outside constructor.
+	public void updateGameInfoPanel(String updatedText) {
+		game_info.setText(updatedText);
 	}
 	
 	public JTextField getTextField(){
@@ -96,19 +115,8 @@ public class Output extends JFrame {
 		
 	}
 	
-	public void setPlayers(String name, int color){
-		
-	}
-	
 	/*public void setGameMechanics(GameMechanics game){
 	this.game = game;
 	}*/
 	
-	private JTextField tf;
-	private JPanel input_panel;
-	private JPanel game_info_panel;
-	private MapPanel map_panel;
-	//private GameMechanics game;
-	private Dimension map_size;
-	private static final long serialVersionUID = 1L;
 }
