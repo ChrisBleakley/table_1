@@ -14,6 +14,7 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,19 +27,22 @@ public class Output extends JFrame {
 	
 	public Output() {
 		this.setTitle("Risk");
-		//setSize(constants.FRAME_WIDTH, constants.FRAME_HEIGHT);
+		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+		final int FRAME_WIDTH = (int) (screensize.getWidth() * 0.75);
+		final int FRAME_HEIGHT = (int) (screensize.getHeight() * 0.75);
+		
 	
 		//create panels
 		this.game_info_panel= new JPanel();
 		this.input_panel = new JPanel();
-		this.map_panel = new MapPanel();
+		this.map_panel = new MapPanel(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		
 		//create labels to identify each panel
 		JLabel game_info = new JLabel("Game Information", SwingConstants.CENTER);
 		JLabel input = new JLabel("User input");
 		
 		//create text field to be added to user input panel.
-		JTextField tf = new JTextField();
+		this.tf = new JTextField();
 		tf.setPreferredSize(new Dimension(400,24));
 		
 		//add the labels to the panels
@@ -58,9 +62,9 @@ public class Output extends JFrame {
 		
 		//set dimensions for panels
 		map_panel.setPreferredSize(new Dimension(
-				MapConstants.FRAME_WIDTH, MapConstants.FRAME_HEIGHT));
+				FRAME_WIDTH, FRAME_HEIGHT));
 		game_info.setPreferredSize(new Dimension(
-				MapConstants.FRAME_WIDTH, 100));
+				FRAME_WIDTH, 100));
 		
 		//prevent panels from being resizeable
 		bottom_panels.setEnabled(false);
@@ -80,7 +84,12 @@ public class Output extends JFrame {
  
 	}
 	
-	/*public String getTextFieldText(){
+	public JTextField getTextField(){
+		return this.tf;
+	}
+	
+	public void addTextOutput(String text){
+		
 		
 	}
 	
@@ -96,6 +105,7 @@ public class Output extends JFrame {
 	this.game = game;
 	}*/
 	
+	private JTextField tf;
 	private JPanel input_panel;
 	private JPanel game_info_panel;
 	private MapPanel map_panel;

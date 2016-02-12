@@ -23,9 +23,9 @@ import java.awt.geom.Line2D;
 import javax.swing.JPanel;
 
 public class MapPanel extends JPanel {
-	public MapPanel(){
+	public MapPanel(Dimension panel_size){
 		
-		this.panel_size = new Dimension(MapConstants.FRAME_WIDTH, MapConstants.FRAME_HEIGHT);
+		this.panel_size = panel_size;
 		this.radius = 18;
 		
 		//Set size
