@@ -102,6 +102,7 @@ public class Output extends JFrame {
 		game_info.setText(updatedText);
 	}
 	
+	//used to make TextField accessible from Listener class
 	public JTextField getTextField(){
 		return this.tf;
 	}
