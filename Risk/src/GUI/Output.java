@@ -23,6 +23,9 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Listeners.TextActionListener;
+import Listeners.TextFieldListener;
+
 public class Output extends JFrame {
 	
 	public Output() {
@@ -44,6 +47,9 @@ public class Output extends JFrame {
 		//create text field to be added to user input panel.
 		this.tf = new JTextField();
 		tf.setPreferredSize(new Dimension(400,24));
+		tf.addActionListener(new TextActionListener(this));
+	    tf.getDocument().addDocumentListener(new TextFieldListener());
+	    tf.getDocument().putProperty("name", "Text Field");
 		
 		//add the labels to the panels
 		game_info_panel.add(game_info);
