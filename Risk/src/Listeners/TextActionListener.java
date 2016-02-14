@@ -17,11 +17,16 @@ public class TextActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//store contents of JTextField to string, print string to console and empty JTextField.
-		String text = gui.getTextField().getText();
-		gui.updateGameInfoPanel(text);
-		gui.addInputToHistory(text);
-		gui.printStack();
-		gui.getTextField().setText("");
+		if (!gui.getTextField().getText().isEmpty()) {
+		
+			//store contents of JTextField to string, print string to console and empty JTextField.
+			String text = gui.getTextField().getText();
+			gui.updateGameInfoPanel(text);
+			gui.addInputToHistory(text);
+			gui.printStack();
+			gui.getTextField().setText(""); 
+		}
 	}
 }
+
+

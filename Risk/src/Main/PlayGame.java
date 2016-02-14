@@ -3,7 +3,6 @@ package Main;
 import java.awt.Color;
 
 import GUI.*;
-import Listeners.TextActionListener;
 import Player.Player;
 
 public class PlayGame {
@@ -13,7 +12,8 @@ public class PlayGame {
 		Player player1 = new Player();
 		Player player2 = new Player();
 		
-		player1.setPlayerName("DerekLad");
+		//player1.setPlayerName("DerekLad");
+		player1.setPlayerName(gui);
 		player1.setPlayerColour(Color.BLUE);
 		
 		player2.setPlayerName("roflcopter");
@@ -25,6 +25,8 @@ public class PlayGame {
 			gui.setArmies(player2, i++, j++);
 		}
 		
-		gui.updateGameInfoPanel(player1.getPlayerName());
+		//gui.updateGameInfoPanel(player1.getPlayerName());
+		
+		System.out.println("Player name: " + player1.getPlayerName());
 	}
 }

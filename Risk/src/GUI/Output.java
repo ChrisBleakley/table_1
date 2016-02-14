@@ -1,5 +1,9 @@
 package GUI;
 
+/*
+	Class comment.
+*/
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -14,18 +18,20 @@ import java.util.Stack;
 
 public class Output extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JTextField tf;
 	private JPanel input_panel;
 	private JPanel game_info_panel;
 	private MapPanel map_panel;
 	private int gameinfoheight = 100;
 	private JLabel game_info = new JLabel("Game Information", SwingConstants.CENTER);
-	//private GameMechanics game;
+	private JLabel input = new JLabel("User input");
 	private Dimension map_size;
-	private static final long serialVersionUID = 1L;
 	private Stack<String> inputHistory = new Stack<String>();
 	
 	public Output() {
+		
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		int map_width = (int) (screensize.getWidth() - 150);
@@ -38,9 +44,6 @@ public class Output extends JFrame {
 		this.game_info_panel = new JPanel();
 		this.input_panel = new JPanel();
 		this.map_panel = new MapPanel(map_size);
-		
-		//create labels to identify each panel
-		JLabel input = new JLabel("User input");
 		
 		//create text field to be added to user input panel.
 		this.tf = new JTextField();
@@ -99,6 +102,11 @@ public class Output extends JFrame {
 	//takes user input as argument and adds it to the stack "inputHistory"
 	public void addInputToHistory(String input) {
 		inputHistory.add(input);
+	}
+	
+	// return top element of the stack
+	public String getStackElement() {
+		return inputHistory.peek();
 	}
 	
 	// relies on 'game_info' JLabel being declared outside constructor.
