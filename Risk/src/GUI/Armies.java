@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -30,18 +31,31 @@ public class Armies extends JComponent {
 	}	
 	private void drawArmies(Graphics2D gfx2d){
 		for (Army army : armies){
-			Integer x = army.getCountry().getXCoords();
-			Integer y = army.getCountry().getYCoords();
-			String size = String.valueOf(army.getSize());
-			Integer diameter = (army.getCountry().getRadius() / 8) * army.getSize();
-			
-			Ellipse2D.Double countryicon = new Ellipse2D.Double(
-					x, y, diameter, diameter);
+			Integer diameter = army.getCountry().getRadius() +
+					((army.getCountry().getRadius() / 16) * army.getSize());
+			Integer x = army.getCountry().getXCoords() - (diameter/2);
+			Integer y = army.getCountry().getYCoords() - (diameter/2);
 			gfx2d.setPaint(army.getPlayer().getPlayerColour());
-			gfx2d.fill(countryicon);
+			Integer stroke = army.getSize();
+			gfx2d.setStroke(new BasicStroke(stroke + 1));
+			gfx2d.draw(new Ellipse2D.Double(x, y, diameter, diameter));
 			
+			diameter = army.getCountry().getRadius();
+			x = army.getCountry().getXCoords() - (diameter/2);
+			y = army.getCountry().getYCoords() - (diameter/2);
+			gfx2d.setPaint(army.getPlayer().getPlayerColour().darker());
+			gfx2d.fill(new Ellipse2D.Double(x, y, diameter, diameter));
+			
+			x = army.getCountry().getXCoords() - (int)(4*MapConstants.SCALING_CONSTANT);
+			y = army.getCountry().getYCoords() + (int)(2*MapConstants.SCALING_CONSTANT);
 			gfx2d.setPaint(Color.black);
-			gfx2d.setFont(army.getCountry().getFont());
+			gfx2d.setFont(army.getCountry().getFont());	
+			String size = String.valueOf(army.getSize());
+			gfx2d.drawString(size, x - 1, y - 1);
+			gfx2d.drawString(size, x - 1, y + 1);
+			gfx2d.drawString(size, x + 1, y - 1);
+			gfx2d.drawString(size, x + 1, y + 1);
+			gfx2d.setPaint(Color.white);
 			gfx2d.drawString(size, x, y);
 		}
 	}

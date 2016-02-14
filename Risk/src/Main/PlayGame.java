@@ -16,6 +16,15 @@ public class PlayGame {
 		player1.setPlayerName("DerekLad");
 		player1.setPlayerColour(Color.BLUE);
 		
+		player2.setPlayerName("roflcopter");
+		player2.setPlayerColour(Color.RED);
+		
+		int i = 0, j = 0;
+		while (i < GUI.MapConstants.COUNTRY_COORD.length){
+			gui.setArmies(player1, i++, j);
+			gui.setArmies(player2, i++, j++);
+		}
+		
 		gui.updateGameInfoPanel(player1.getPlayerName());
 	}
 }

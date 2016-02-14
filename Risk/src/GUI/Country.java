@@ -57,8 +57,8 @@ public class Country {
 		return color;
 	}
 	private void setFont(){
-		Integer fontsize = (int)(11 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
-		this.font = new Font(MapConstants.CONT_FONTS[continentid], Font.PLAIN, fontsize);
+		Integer fontsize = (int)(12 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
+		this.font = new Font(MapConstants.CONT_FONTS[continentid], Font.BOLD, fontsize);
 	}
 	public Font getFont(){
 		return font;

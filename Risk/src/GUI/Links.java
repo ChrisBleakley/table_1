@@ -1,9 +1,9 @@
 package GUI;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -17,7 +17,7 @@ public class Links extends JComponent{
 		this.panel_size = panel_size;
 		this.setPreferredSize(panel_size);
 		this.countries = countries;
-		this.setLayout(new FlowLayout());
+		this.setLayout(new BorderLayout());
 		this.countriescomponent = new Countries(panel_size, countries, armies);
 		this.add(countriescomponent);
 	}
