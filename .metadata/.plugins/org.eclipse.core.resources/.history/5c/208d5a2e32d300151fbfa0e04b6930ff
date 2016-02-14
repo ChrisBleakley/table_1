@@ -15,17 +15,14 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
 import Listeners.TextActionListener;
-
-import java.util.Stack;
+import Player.Player;
 
 public class Output extends JFrame {
 	
@@ -37,13 +34,12 @@ public class Output extends JFrame {
 	//private GameMechanics game;
 	private Dimension map_size;
 	private static final long serialVersionUID = 1L;
-	private Stack<String> inputHistory = new Stack<String>();
 	
 	public Output() {
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int) (screensize.getWidth() * 0.70);
-		int map_height = (int) (screensize.getHeight() * 0.60);
+		int map_width = (int)(screensize.getWidth() - 150);
+		int map_height = (int)(screensize.getHeight() - gameinfoheight - 150);
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
@@ -77,7 +73,7 @@ public class Output extends JFrame {
 		
 		//set dimensions for panels
 		map_panel.setPreferredSize(map_size);
-		game_info.setPreferredSize(new Dimension(map_width, 100));
+		game_info.setPreferredSize(new Dimension(map_width, gameinfoheight));
 		
 		//prevent panels from being resizeable
 		bottom_panels.setEnabled(false);
@@ -99,22 +95,7 @@ public class Output extends JFrame {
 		tf.addActionListener(new TextActionListener(this));
 		
 	}
-	
-	//FOR TESTING ONLY. REMOVE ONCE MECHANISM HAS BEEN DEVISED FOR PRINTING HISTORY TO PANEL
-	public void printStack() {
-		for(String x: inputHistory){
-			System.out.println(x);
-		}
-		System.out.println();
-		System.out.println();
-		System.out.println();
-	}
-	
-	//takes user input as argument and adds it to the stack "inputHistory"
-	public void addInputToHistory(String input) {
-		inputHistory.add(input);
-	}
-	
+		
 	// relies on 'game_info' JLabel being declared outside constructor.
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.setText(updatedText);
@@ -124,18 +105,13 @@ public class Output extends JFrame {
 	public JTextField getTextField(){
 		return this.tf;
 	}
-	
-	public void addTextOutput(String text){
-		
-		
+	//change Armies displayed on a particular country
+	public void setArmies(Player player, int country_index, Integer armysize){
+		for (Country country : map_panel.getCountries()){
+			if (country.getID() == country_index){
+				this.map_panel.setArmies(country, player, armysize);
+			}
+		}	
 	}
-	
-	public void setArmies(PlayerComponent pl, String country, int inf, int cav, int art){
-		
-	}
-	
-	/*public void setGameMechanics(GameMechanics game){
-	this.game = game;
-	}*/
-	
+	private int gameinfoheight = 100;
 }

@@ -25,8 +25,6 @@ import javax.swing.SwingConstants;
 
 import Listeners.TextActionListener;
 
-import java.util.Stack;
-
 public class Output extends JFrame {
 	
 	private JTextField tf;
@@ -37,13 +35,12 @@ public class Output extends JFrame {
 	//private GameMechanics game;
 	private Dimension map_size;
 	private static final long serialVersionUID = 1L;
-	private Stack<String> inputHistory = new Stack<String>();
 	
 	public Output() {
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int) (screensize.getWidth() * 0.70);
-		int map_height = (int) (screensize.getHeight() * 0.60);
+		int map_width = (int) (screensize.getWidth() * 0.9);
+		int map_height = (int) (screensize.getHeight() * 0.8);
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
@@ -99,22 +96,7 @@ public class Output extends JFrame {
 		tf.addActionListener(new TextActionListener(this));
 		
 	}
-	
-	//FOR TESTING ONLY. REMOVE ONCE MECHANISM HAS BEEN DEVISED FOR PRINTING HISTORY TO PANEL
-	public void printStack() {
-		for(String x: inputHistory){
-			System.out.println(x);
-		}
-		System.out.println();
-		System.out.println();
-		System.out.println();
-	}
-	
-	//takes user input as argument and adds it to the stack "inputHistory"
-	public void addInputToHistory(String input) {
-		inputHistory.add(input);
-	}
-	
+		
 	// relies on 'game_info' JLabel being declared outside constructor.
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.setText(updatedText);
@@ -130,7 +112,7 @@ public class Output extends JFrame {
 		
 	}
 	
-	public void setArmies(PlayerComponent pl, String country, int inf, int cav, int art){
+	public void setArmies(PlayerComponent pl, int country_index, int armies){
 		
 	}
 	

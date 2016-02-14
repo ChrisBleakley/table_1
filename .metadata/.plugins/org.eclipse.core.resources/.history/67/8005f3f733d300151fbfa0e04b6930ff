@@ -130,8 +130,13 @@ public class Output extends JFrame {
 		
 	}
 	
-	public void setArmies(PlayerComponent pl, String country, int inf, int cav, int art){
-		
+	//change Armies displayed on a particular country
+	public void setArmies(Player player, int country_index, Integer armysize){
+		for (Country country : map_panel.getCountries()){
+			if (country.getID() == country_index){
+				this.map_panel.setArmies(country, player, armysize);
+			}
+		}	
 	}
 	
 	/*public void setGameMechanics(GameMechanics game){

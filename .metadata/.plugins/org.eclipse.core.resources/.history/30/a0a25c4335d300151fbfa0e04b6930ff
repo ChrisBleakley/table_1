@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Listeners.TextActionListener;
+import Player.Player;
 
 import java.util.Stack;
 
@@ -42,8 +43,8 @@ public class Output extends JFrame {
 	public Output() {
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int) (screensize.getWidth() * 0.70);
-		int map_height = (int) (screensize.getHeight() * 0.60);
+		int map_width = (int) (screensize.getWidth() - 250);
+		int map_height = (int) (screensize.getHeight() - 250);
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
@@ -130,8 +131,13 @@ public class Output extends JFrame {
 		
 	}
 	
-	public void setArmies(PlayerComponent pl, String country, int inf, int cav, int art){
-		
+	//change Armies displayed on a particular country
+	public void setArmies(Player player, int country_index, Integer armysize){
+		for (Country country : map_panel.getCountries()){
+			if (country.getID() == country_index){
+				this.map_panel.setArmies(country, player, armysize);
+			}
+		}	
 	}
 	
 	/*public void setGameMechanics(GameMechanics game){
