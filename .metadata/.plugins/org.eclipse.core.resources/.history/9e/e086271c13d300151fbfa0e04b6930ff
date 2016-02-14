@@ -1,0 +1,21 @@
+package GUI;
+
+import java.awt.Color;
+
+public class Army {
+	
+	public Army(Integer size, Integer player, Integer countryindex){
+		this.size = size;
+		this.player = player;
+		this.countryid = countryindex;
+	}
+	public void setSize(){
+		this.size = size;
+	}
+	public setPlayer(){
+		this.player = player;
+	}	
+	private Integer size;
+	private Integer player;
+	private Integer countryid;
+}

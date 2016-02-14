@@ -1,0 +1,61 @@
+package GUI;
+
+import java.awt.Color;
+import java.util.ArrayList;
+
+public class Country {
+	public Country(Integer x, Integer y, String name, Integer[] links,
+			ArrayList<Country> othercountries, Integer continent, Dimension panel_size){
+		radius = 18 * (panel_size.getHeight()) / MapConstants.FRAME_HEIGHT);
+		this.name = name;
+		coords = new Integer[2];
+		coords[0] = x - radius;
+		coords[1] = y - radius;
+		this.setAdjacentCountries(links);
+		this.othercountries = othercountries;
+		continentid = continent;
+		continentname = MapConstants.CONTINENT_NAMES[continentid];
+		this.setColor();
+	}	
+	public Integer getXCoords(){
+		return coords[0];
+	}	
+	public Integer getYCoords(){
+		return coords[1];
+	}	
+	public String getName(){
+		return name;
+	}	
+	public Integer getRadius(){
+		return radius;
+	}
+	private void setAdjacentCountries(Integer[] links){
+		this.adjacent = new ArrayList<Country>();
+		for (int j = 0; j < links.length; j++){
+			adjacent.add(othercountries.get(links[j]));
+		}
+	}
+	public ArrayList<Country> getAdjacentCountries(){
+		return adjacent;
+	}	
+	private	void setColor(){
+		Integer R = MapConstants.CONT_COLORS[continentid][0];
+		Integer G = MapConstants.CONT_COLORS[continentid][1];
+		Integer B = MapConstants.CONT_COLORS[continentid][2];
+		this.color = new Color(R, G, B);
+	}	
+	public Color getColor(){	
+		return color;
+	}
+	public String getContinentName(){
+		return continentname;
+	}
+	private String name;
+	private Integer[] coords;
+	private Integer radius;
+	ArrayList<Country> adjacent;
+	private ArrayList<Country> othercountries;
+	private Integer continentid;
+	private String continentname;
+	private Color color;
+}

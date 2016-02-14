@@ -1,0 +1,28 @@
+package GUI;
+
+public class Army {
+	
+	public Army(Integer size, Integer player, Integer countryindex){
+		this.size = size;
+		this.player = player;
+		this.countryid = countryindex;
+	}
+	public void setSize(Integer size){
+		this.size = size;
+	}
+	public Integer getSize(){
+		return size;
+	}
+	public void setPlayer(Integer player){
+		this.player = player;
+	}
+	public Integer getPlayer(){
+		return player;
+	}
+	public Integer getCountry(){
+		return countryid;
+	}
+	private Integer size;
+	private Integer player;
+	private Integer countryid;
+}

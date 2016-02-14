@@ -123,14 +123,25 @@ public class MapConstants {
 		{547,432},        // 40
 		{586,545}
 	};
-	public static final int[][] colors = {
-		{138,43,226},
-		{65,105,225},
-		{72,61,139},
-		{135,206,250},
-		{216,191,216},
-		{70,130,180}
-	};	
-	public static final int CIRCLE_RADIUS = 18;
+	public static final int[][] CONT_COLORS = {
+		{107,142,35},
+		{154,205,50},
+		{173,255,47},
+		{0,255,127},
+		{85,107,47},
+		{34,139,34}
+	};
+	public static final String[] CONT_FONTS = {
+		"Baskerville Old Face",
+		"Bookman Old Style",
+		"Stencil",
+		"Arial",
+		"Bauhaus 93",
+		"Papyrus"
+	};
+	public static double SCALING_CONSTANT;
+	public static void setScaling(double scaling){
+		SCALING_CONSTANT = scaling;
+	}
 }
 

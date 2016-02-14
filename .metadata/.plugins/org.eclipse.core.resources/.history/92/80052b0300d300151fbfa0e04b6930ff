@@ -1,0 +1,40 @@
+package GUI;
+
+import java.util.ArrayList;
+
+public class Country {
+	public Country(Integer x, Integer y, Integer[] links, ArrayList<Country> othercountries){
+		radius = 18;
+		coords = new Integer[2];
+		coords[0] = x - radius;
+		coords[1] = y - radius;
+		this.adjacent = links;
+		this.othercountries = othercountries;
+	}
+	
+	public Integer getXCoords(){
+		return coords[0];
+	}
+	
+	public Integer getYCoords(){
+		return coords[1];
+	}
+	
+	public Integer getRadius(){
+		return radius;
+	}
+	
+	public ArrayList<Country> getAdjacentCountries(){
+		ArrayList<Country> adjacentlist = new ArrayList<Country>();
+		for (int j = 0; j < adjacent.length; j++){
+			adjacentlist.add(othercountries.get(adjacent[j]));
+		}
+		return adjacentlist;
+	}
+	
+	private String name;
+	private Integer[] coords;
+	private Integer radius;
+	private Integer[] adjacent;
+	private ArrayList<Country> othercountries;
+}

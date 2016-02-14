@@ -1,0 +1,33 @@
+package GUI;
+
+public class Country {
+	public Country(Integer x, Integer y, Integer[] links, ArrayList<Country> other_countries){
+		country_radius = 18;
+		country_coords = new Integer[2];
+		country_coords[0] = x - country_radius;
+		country_coords[1] = y - country_radius;
+		this.links = links;
+	}
+	
+	public Integer getXCoords(){
+		return country_coords[0];
+	}
+	
+	public Integer getYCoords(){
+		return country_coords[1];
+	}
+	
+	public Integer getRadius(){
+		return country_radius;
+	}
+	
+	public Country getAdjacentCountry(Integer i){
+		
+		return ;
+	}
+	
+	private Integer[] country_coords;
+	private Integer country_radius;
+	private Integer[] adjacent_countries;
+	private ArrayList<Country> other_countries;
+}

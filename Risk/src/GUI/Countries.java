@@ -1,99 +1,92 @@
-/*
-===========================================================================================
-||	Project:			Risk Game														||
-||	Module:				COMP20050														||
-||	Author(s):			Rory Buckley													||
-||	Contact:			Rory.Buckley.89@gmail.com										||
-||	Contact 2:			14745991@ucdconnect.ie											||
-||	Description:		Countries class using JComponent								||
-||	Version:			0.2																||
-||																						||
-===========================================================================================
- */
-
 package GUI;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
 public class Countries extends JComponent{
 
-	public Countries(int radius, Dimension panel_size, int[][] coords){
-		
-		this.panel_size = panel_size;
-		this.setPreferredSize(this.panel_size);
-		this.coords = coords;
-		this.names = MapConstants.COUNTRY_NAMES;
-		this.radius = radius;
-		this.continents = MapConstants.CONTINENT_IDS;
-		this.colors = MapConstants.colors;
+	public Countries(Dimension panel_size, ArrayList<Country> countries, ArrayList<Army> armies){
+		this.setPreferredSize(panel_size);
+		this.countries = countries;
+		this.setLayout(new FlowLayout());
+		this.armiescomponent = new Armies(panel_size, armies);
+		this.add(armiescomponent);
 	}
 	@Override
-	public void paintComponent(Graphics g){
-		
+	public void paintComponent(Graphics g){		
 		this.drawCountries(this.initialiseGFX2D(g));
-		
 	}
-	
-	private Graphics2D initialiseGFX2D(Graphics g){
-		
+	private Graphics2D initialiseGFX2D(Graphics g){	
 		super.paintComponent(g);
-		this.fontsize = (int)(g.getFont().getSize() * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
-		
-		//Turn on 2d Graphics
 		Graphics2D gfx2d = (Graphics2D)g;
-		
-		//Initialise Anti Aliasing
 		gfx2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		
+				RenderingHints.VALUE_ANTIALIAS_ON);		
 		return gfx2d;
-	}
-	
+	}	
 	private void drawCountries(Graphics2D gfx2d){
-
-		for (int i = 0; i < coords.length; i++){
-			//Initialise Country coordinates dependent on current screensize compared to the frame constants
-			int x = coords[i][0] - radius;
-			int	y = coords[i][1] - radius;
-			
-			//Initialise Country Name
-			String name = names[i];
-			
-			//Initialise Color
-			int continent = continents[i];
-			int R = colors[continent][0];
-			int G = colors[continent][1];
-			int B = colors[continent][2];
-			Color c = new Color(R, G, B);
-			
-			//Draw circles
-			Ellipse2D.Double circle = new Ellipse2D.Double(
-					x, y, radius * 2, radius * 2);
-			
-			//Draw Country Names
-			gfx2d.setPaint(Color.black);
-			gfx2d.setFont(new Font("blah", Font.BOLD, this.fontsize));
-			gfx2d.drawString(name, x - 4, y - 4);
-			
-			gfx2d.setPaint(c);
-			gfx2d.fill(circle);
+		for (Country country : countries){
+			drawCountry(gfx2d, country);
+			drawName(gfx2d, country);
 		}
 	}
-	
-	private int[][] coords;
-	private String[] names;
-	private int fontsize;
-	private int radius;
-	private int[] continents;
-	private int[][] colors;
-	private Dimension panel_size;
+	private void drawCountry(Graphics2D gfx2d, Country country){
+		//Draw Country Outline
+		//Draw central Outline
+		Integer radius = country.getRadius() + (int)(4*MapConstants.SCALING_CONSTANT);
+		Integer x = country.getXCoords() - radius;
+		Integer	y = country.getYCoords() - radius;
+		gfx2d.setStroke(new BasicStroke((int)(4*MapConstants.SCALING_CONSTANT)));
+		gfx2d.setPaint(new Color(240,230,140));
+		gfx2d.draw(new Ellipse2D.Double(x, y, radius*2, radius*2));
+		//Draw Outer Outline
+		radius = country.getRadius() + (int)(7*MapConstants.SCALING_CONSTANT);
+		x = country.getXCoords() - radius;
+		y = country.getYCoords() - radius;
+		gfx2d.setStroke(new BasicStroke((int)(2*MapConstants.SCALING_CONSTANT)));
+		gfx2d.setPaint(new Color(127,255,212));
+		gfx2d.draw(new Ellipse2D.Double(x, y, radius*2, radius*2));
+		//Draw Inner Outline
+		radius = country.getRadius();
+		x = country.getXCoords() - radius;
+		y = country.getYCoords() - radius;
+		gfx2d.setStroke(new BasicStroke((int)(4*MapConstants.SCALING_CONSTANT)));
+		gfx2d.setPaint(new Color(189,183,107));
+		gfx2d.draw(new Ellipse2D.Double(x, y, radius*2, radius*2));
+		//Fill in Country centre
+		radius = country.getRadius();
+		x = country.getXCoords() - radius;
+		y = country.getYCoords() - radius;
+		gfx2d.setPaint(country.getColor());
+		gfx2d.fill(new Ellipse2D.Double(x, y, radius*2, radius*2));
+	}
+	private void drawName(Graphics2D gfx2d, Country country){
+		Integer radius = country.getRadius();
+		Integer nameoffset = radius + (radius / 4);
+		Integer name_x = country.getXCoords() - nameoffset;
+		Integer name_y = country.getYCoords() - nameoffset;
+		String name = country.getName();
+		
+		gfx2d.setFont(country.getFont());
+		//Draw outline
+		gfx2d.setPaint(Color.black);
+		gfx2d.drawString(name, name_x - 1, name_y - 1);
+		gfx2d.drawString(name, name_x - 1, name_y + 1);
+		gfx2d.drawString(name, name_x + 1, name_y - 1);
+		gfx2d.drawString(name, name_x + 1, name_y + 1);
+		//Draw name
+		gfx2d.setPaint(country.getColor().darker());
+		gfx2d.drawString(name, name_x, name_y);
+	}
+	private ArrayList<Country> countries;
+	private Armies armiescomponent;
 	private static final long serialVersionUID = 1L;
 }

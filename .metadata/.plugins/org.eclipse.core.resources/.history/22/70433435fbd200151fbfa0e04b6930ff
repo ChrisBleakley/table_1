@@ -1,0 +1,21 @@
+package GUI;
+
+public class Country {
+	public Country(Integer x, Integer y){
+		country_coords = new Integer[2];
+		country_coords[0] = x;
+		country_coords[1] = y;
+		country_radius = 18;
+	}
+	
+	public Integer getXCoords(){
+		return country_coords[0];
+	}
+	
+	public Integer getYCoords(){
+		return country_coords[1];
+	}
+	
+	private Integer[] country_coords;
+	private Integer country_radius;
+}

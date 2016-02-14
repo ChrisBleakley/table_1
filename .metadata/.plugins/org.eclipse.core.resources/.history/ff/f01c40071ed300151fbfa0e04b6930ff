@@ -1,0 +1,58 @@
+package GUI;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+
+import javax.swing.JComponent;
+
+public class Countries extends JComponent{
+
+	public Countries(Dimension panel_size, ArrayList<Country> countries, ArrayList<Army> armies){
+		
+		this.panel_size = panel_size;
+		this.setPreferredSize(this.panel_size);
+		this.countries = countries;
+		this.setLayout(new FlowLayout());
+		this.armiescomponent = new Armies(panel_size, armies);
+		this.add(armiescomponent);
+	}
+	@Override
+	public void paintComponent(Graphics g){		
+		this.drawCountries(this.initialiseGFX2D(g));
+	}
+	private Graphics2D initialiseGFX2D(Graphics g){	
+		super.paintComponent(g);
+		Graphics2D gfx2d = (Graphics2D)g;
+		gfx2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);		
+		return gfx2d;
+	}	
+	private void drawCountries(Graphics2D gfx2d){
+		for (Country country : countries){
+			Integer radius = country.getRadius();
+			Integer x = country.getXCoords() - radius;
+			Integer	y = country.getYCoords() - radius;
+			String name = country.getName();
+			Integer nameoffset = radius / 6;
+			
+			Ellipse2D.Double countryicon = new Ellipse2D.Double(
+					x, y, radius * 2, radius * 2);
+			gfx2d.setPaint(country.getColor());
+			gfx2d.fill(countryicon);
+			
+			gfx2d.setPaint(country.getColor().darker());
+			gfx2d.setFont(country.getFont());
+			gfx2d.drawString(name, x - nameoffset, y - nameoffset);
+		}
+	}
+	private ArrayList<Country> countries;
+	private Armies armiescomponent;
+	private Dimension panel_size;
+	private static final long serialVersionUID = 1L;
+}
