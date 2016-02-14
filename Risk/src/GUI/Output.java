@@ -25,6 +25,8 @@ import javax.swing.SwingConstants;
 
 import Listeners.TextActionListener;
 
+import java.util.Stack;
+
 public class Output extends JFrame {
 	
 	private JTextField tf;
@@ -35,6 +37,7 @@ public class Output extends JFrame {
 	//private GameMechanics game;
 	private Dimension map_size;
 	private static final long serialVersionUID = 1L;
+	private Stack<String> inputHistory = new Stack<String>();
 	
 	public Output() {
 		//Set map dimensions using current screensize
@@ -96,7 +99,22 @@ public class Output extends JFrame {
 		tf.addActionListener(new TextActionListener(this));
 		
 	}
-		
+	
+	//FOR TESTING ONLY. REMOVE ONCE MECHANISM HAS BEEN DEVISED FOR PRINTING HISTORY TO PANEL
+	public void printStack() {
+		for(String x: inputHistory){
+			System.out.println(x);
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println();
+	}
+	
+	//takes user input as argument and adds it to the stack "inputHistory"
+	public void addInputToHistory(String input) {
+		inputHistory.add(input);
+	}
+	
 	// relies on 'game_info' JLabel being declared outside constructor.
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.setText(updatedText);

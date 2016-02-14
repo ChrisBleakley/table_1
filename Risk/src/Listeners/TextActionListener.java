@@ -19,8 +19,9 @@ public class TextActionListener implements ActionListener {
 		
 		//store contents of JTextField to string, print string to console and empty JTextField.
 		String text = gui.getTextField().getText();
-		System.out.println(text);
 		gui.updateGameInfoPanel(text);
+		gui.addInputToHistory(text);
+		gui.printStack();
 		gui.getTextField().setText("");
 	}
 }
