@@ -1,8 +1,14 @@
 package Listeners;
 
+/*
+	Make sure that the team names and student numbers are included as comments in the header of all
+	source files and the documentation file.
+	
+	CLASS COMMENT.
+*/
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import GUI.Output;
 
@@ -10,7 +16,7 @@ public class TextActionListener implements ActionListener {
 	
 	private Output gui;
 	
-	//method used in order to make JTextField from output class accessible.
+	// This Method is used in order to make JTextField from output class accessible.
 	public TextActionListener(Output gui){
 		this.gui = gui;
 	}
@@ -18,11 +24,11 @@ public class TextActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		// If the user hits ENTER and there is content in the TextField,
+		// we retrieve this content, storing it in the input command stack.
 		if (!gui.getTextField().getText().isEmpty()) {
 		
-			// store contents of JTextField to string, print string to console and empty JTextField.
 			String text = gui.getTextField().getText();
-			//gui.updateGameInfoPanel(text);
 			gui.addInputToHistory(text);
 			gui.getTextField().setText(""); 
 		}

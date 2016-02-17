@@ -6,8 +6,12 @@ import java.util.EmptyStackException;
 import GUI.Output;
 
 /*
+	Make sure that the team names and student numbers are included as comments in the header of all
+	source files and the documentation file.
+
+  
 	Class stores information about the players.
-	I.e. Name, Colour. 
+	i.e. Name, Colour. 
 */
 
 public class Player {
@@ -21,10 +25,11 @@ public class Player {
 		while (gui.isInputStackEmpty()) {
 			
 			try {
-				playerName = gui.getPreviousInputFromStack();
+				//playerName = gui.getPreviousInputFromStack();
+				playerName = gui.getTextField().getText();
 			}
 			
-			catch (EmptyStackException e) {}
+			catch (EmptyStackException e) { }
 			
 		}
 		

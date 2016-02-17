@@ -1,13 +1,14 @@
 package GUI;
 
 /*
-	Class comment.
+	Make sure that the team names and student numbers are included as comments in the header of all
+	source files and the documentation file.
+	
+	CLASS COMMENT.
 */
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,8 +38,8 @@ public class Output extends JFrame {
 		
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int) (screensize.getWidth() - 150);
-		int map_height = (int) (screensize.getHeight() - gameinfoheight - 150);
+		int map_width = (int)(screensize.getWidth() - 150);
+		int map_height = (int)(screensize.getHeight() - gameinfoheight - 150);
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
@@ -89,26 +90,6 @@ public class Output extends JFrame {
  
 		// Text field stuff
 		tf.addActionListener(new TextActionListener(this));
-//		tf.addKeyListener(new KeyAdapter() {
-//			
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//					
-//					if (!getTextField().getText().isEmpty()) {
-//						
-//						setEnabled(true);
-//						
-//						// store contents of JTextField to string, print string to console and empty JTextField.
-//						String text = getTextField().getText();
-//						updateGameInfoPanel(text);
-//						addInputToHistory(text);
-//						printStack();
-//						getTextField().setText(""); 
-//					}
-//				}
-//			}
-//		});
 		
 	}
 	
@@ -128,7 +109,7 @@ public class Output extends JFrame {
 	}
 	
 	// returns the top element of the stack (used to store the inputs).
-	public String getPreviousInputFromStack() {
+	public String getPreviousInputFromStack() {		
 		return inputHistory.peek();
 	}
 	
