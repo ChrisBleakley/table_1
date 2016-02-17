@@ -1,6 +1,7 @@
 package Player;
 
 import java.awt.Color;
+import java.util.EmptyStackException;
 
 import GUI.Output;
 
@@ -11,19 +12,24 @@ import GUI.Output;
 
 public class Player {
 
-	private String playerName = null;
+	private String playerName = "";
 	private Color playerColour = null;
 	
 	public void setPlayerName(Output gui) {
 		gui.updateGameInfoPanel("Enter player name:");
-
-		playerName = gui.getTextField().getText();
 		
+		while (gui.isInputStackEmpty()) {
+			
+			try {
+				playerName = gui.getPreviousInputFromStack();
+			}
+			
+			catch (EmptyStackException e) {}
+			
+		}
+		
+		gui.popInputStack();
 		gui.updateGameInfoPanel("Player " + playerName + " has joined the game");
-	}
-	
-	public void setPlayerName(String _playerName) {
-		playerName = _playerName;
 	}
 	
 	public String getPlayerName() {

@@ -2,6 +2,7 @@ package Listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import GUI.Output;
 
@@ -19,14 +20,14 @@ public class TextActionListener implements ActionListener {
 		
 		if (!gui.getTextField().getText().isEmpty()) {
 		
-			//store contents of JTextField to string, print string to console and empty JTextField.
+			// store contents of JTextField to string, print string to console and empty JTextField.
 			String text = gui.getTextField().getText();
-			gui.updateGameInfoPanel(text);
+			//gui.updateGameInfoPanel(text);
 			gui.addInputToHistory(text);
-			gui.printStack();
 			gui.getTextField().setText(""); 
 		}
 	}
+	
 }
 
 

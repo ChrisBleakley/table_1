@@ -12,11 +12,10 @@ public class PlayGame {
 		Player player1 = new Player();
 		Player player2 = new Player();
 		
-		//player1.setPlayerName("DerekLad");
 		player1.setPlayerName(gui);
 		player1.setPlayerColour(Color.BLUE);
 		
-		player2.setPlayerName("roflcopter");
+		player2.setPlayerName(gui);
 		player2.setPlayerColour(Color.RED);
 		
 		int i = 0, j = 0;
@@ -25,8 +24,9 @@ public class PlayGame {
 			gui.setArmies(player2, i++, j++);
 		}
 		
-		//gui.updateGameInfoPanel(player1.getPlayerName());
+		gui.updateGameInfoPanel("Player 1: " + player1.getPlayerName() + "Player 2: " + player2.getPlayerName());
 		
-		System.out.println("Player name: " + player1.getPlayerName());
+		System.out.println("Player one name: " + player1.getPlayerName());
+		System.out.println("Player two name: " + player2.getPlayerName());
 	}
 }

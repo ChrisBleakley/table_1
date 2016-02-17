@@ -6,6 +6,9 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,7 +49,7 @@ public class Output extends JFrame {
 		this.map_panel = new MapPanel(map_size);
 		
 		//create text field to be added to user input panel.
-		this.tf = new JTextField();
+		this.tf = new JTextField("");
 		tf.setPreferredSize(new Dimension(400,24));
 		
 		//add the labels to the panels
@@ -86,6 +89,26 @@ public class Output extends JFrame {
  
 		// Text field stuff
 		tf.addActionListener(new TextActionListener(this));
+//		tf.addKeyListener(new KeyAdapter() {
+//			
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//					
+//					if (!getTextField().getText().isEmpty()) {
+//						
+//						setEnabled(true);
+//						
+//						// store contents of JTextField to string, print string to console and empty JTextField.
+//						String text = getTextField().getText();
+//						updateGameInfoPanel(text);
+//						addInputToHistory(text);
+//						printStack();
+//						getTextField().setText(""); 
+//					}
+//				}
+//			}
+//		});
 		
 	}
 	
@@ -104,9 +127,17 @@ public class Output extends JFrame {
 		inputHistory.add(input);
 	}
 	
-	// return top element of the stack
-	public String getStackElement() {
+	// returns the top element of the stack (used to store the inputs).
+	public String getPreviousInputFromStack() {
 		return inputHistory.peek();
+	}
+	
+	public boolean isInputStackEmpty() {
+		return inputHistory.isEmpty();
+	}
+	
+	public void popInputStack() {
+		inputHistory.pop();
 	}
 	
 	// relies on 'game_info' JLabel being declared outside constructor.
@@ -119,11 +150,6 @@ public class Output extends JFrame {
 		return this.tf;
 	}
 	
-	public void addTextOutput(String text){
-		
-		
-	}
-	
 	//change Armies displayed on a particular country
 	public void setArmies(Player player, int country_index, Integer armysize){
 		for (Country country : map_panel.getCountries()){
@@ -132,9 +158,5 @@ public class Output extends JFrame {
 			}
 		}	
 	}
-	
-	/*public void setGameMechanics(GameMechanics game){
-	this.game = game;
-	}*/
 	
 }
