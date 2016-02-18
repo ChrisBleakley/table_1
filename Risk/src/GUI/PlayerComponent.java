@@ -33,7 +33,7 @@ public class PlayerComponent extends JComponent{
 	}
 	private void drawPlayerKey(Graphics2D gfx2d){
 		Integer x = (int)(panel_size.getWidth()/2 - 192);
-		Integer y = (int)(panel_size.getHeight() / 2);
+		Integer y = (int)(panel_size.getHeight() * 3 / 5);
 		//Hardcoded players so player key is hardcoded for now
 		gfx2d.setFont(new Font("Arial", Font.BOLD, 18));
 		gfx2d.setPaint(Color.RED);

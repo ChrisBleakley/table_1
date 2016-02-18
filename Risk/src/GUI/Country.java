@@ -27,7 +27,7 @@ public class Country {
 	}	
 	private void setCoords(Integer arrayindex){
 		coords = new Integer[2];
-		coords[0] = (int)(MapConstants.COUNTRY_COORD[arrayindex][0]*MapConstants.SCALING_CONSTANT);
+		coords[0] = (int)(MapConstants.COUNTRY_COORD[arrayindex][0]*(panel_size.getWidth() / MapConstants.FRAME_WIDTH));
 		coords[1] = (int)(MapConstants.COUNTRY_COORD[arrayindex][1]*MapConstants.SCALING_CONSTANT);
 	}
 	public Integer getXCoords(){
@@ -64,7 +64,7 @@ public class Country {
 		return color;
 	}
 	private void setFont(){
-		Integer fontsize = (int)(11 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
+		Integer fontsize = (int)(12 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
 		this.font = new Font(MapConstants.CONT_FONTS[continentid], Font.BOLD, fontsize);
 	}
 	public Font getFont(){
