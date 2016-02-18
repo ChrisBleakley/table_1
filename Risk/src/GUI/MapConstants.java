@@ -1,17 +1,11 @@
-/*
-===========================================================================================
-||	Project:			Risk Game														||
-||	Module:				COMP20050														||
-||	Author(s):			Rory Buckley, Chris Bleakley									||
-||	Contact:			Rory.Buckley.89@gmail.com										||
-||	Contact 2:			14745991@ucdconnect.ie											||
-||	Description:		MapConstants class for MapPanel and component					||
-||	Version:			0.2																||
-||																						||
-===========================================================================================
- */
-
 package GUI;
+
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+The class that contains the map constants
+*/
 
 public class MapConstants {
 	public static final int NUM_PLAYERS = 2;

@@ -1,5 +1,12 @@
 package GUI;
 
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+The class that draws the countries
+*/
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -67,6 +74,7 @@ public class Countries extends JComponent{
 		y = country.getYCoords() - radius;
 		gfx2d.setPaint(country.getColor());
 		gfx2d.fill(new Ellipse2D.Double(x, y, radius*2, radius*2));
+		
 	}
 	private void drawName(Graphics2D gfx2d, Country country){
 		Integer radius = country.getRadius();

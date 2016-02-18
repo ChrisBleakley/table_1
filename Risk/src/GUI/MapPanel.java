@@ -1,5 +1,12 @@
 package GUI;
 
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+The class that contains the map components
+*/
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

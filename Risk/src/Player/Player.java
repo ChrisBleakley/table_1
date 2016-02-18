@@ -13,6 +13,7 @@ import java.util.EmptyStackException;
 import GUI.Output;
 
 public class Player {
+
 	private String playerName = "";
 	private Color playerColour = null;
 	
@@ -28,7 +29,7 @@ public class Player {
 			catch (EmptyStackException e) { }
 			
 		}
-		
+
 		gui.popFromInputStack();
 		gui.updateGameInfoPanel("Player " + playerName + " has joined the game");
 	}

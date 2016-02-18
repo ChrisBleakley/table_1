@@ -1,6 +1,14 @@
 package GUI;
 
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+The class that draws the armies
+*/
+
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -17,6 +25,11 @@ public class Armies extends JComponent {
 		this.panel_size = panel_size;
 		this.setPreferredSize(this.panel_size);
 		this.armies = armies;
+		this.setLayout(new BorderLayout());
+		Continents continentkey = new Continents(this.panel_size);
+		this.add(continentkey, BorderLayout.WEST);
+		PlayerComponent playerkey = new PlayerComponent(this.panel_size);
+		this.add(playerkey, BorderLayout.EAST);
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -31,32 +44,44 @@ public class Armies extends JComponent {
 	}	
 	private void drawArmies(Graphics2D gfx2d){
 		for (Army army : armies){
-			Integer diameter = army.getCountry().getRadius() +
-					((army.getCountry().getRadius() / 16) * army.getSize());
-			Integer x = army.getCountry().getXCoords() - (diameter/2);
-			Integer y = army.getCountry().getYCoords() - (diameter/2);
-			gfx2d.setPaint(army.getPlayer().getPlayerColour());
-			Integer stroke = army.getSize();
-			gfx2d.setStroke(new BasicStroke(stroke + 1));
-			gfx2d.draw(new Ellipse2D.Double(x, y, diameter, diameter));
-			
-			diameter = army.getCountry().getRadius();
-			x = army.getCountry().getXCoords() - (diameter/2);
-			y = army.getCountry().getYCoords() - (diameter/2);
-			gfx2d.setPaint(army.getPlayer().getPlayerColour().darker());
-			gfx2d.fill(new Ellipse2D.Double(x, y, diameter, diameter));
-			
-			x = army.getCountry().getXCoords() - (int)(4*MapConstants.SCALING_CONSTANT);
-			y = army.getCountry().getYCoords() + (int)(2*MapConstants.SCALING_CONSTANT);
-			gfx2d.setPaint(Color.black);
-			gfx2d.setFont(army.getCountry().getFont());	
-			String size = String.valueOf(army.getSize());
-			gfx2d.drawString(size, x - 1, y - 1);
-			gfx2d.drawString(size, x - 1, y + 1);
-			gfx2d.drawString(size, x + 1, y - 1);
-			gfx2d.drawString(size, x + 1, y + 1);
-			gfx2d.setPaint(Color.white);
-			gfx2d.drawString(size, x, y);
+			if (army.getSize() > 0){
+				Integer diameter = army.getCountry().getRadius() +
+						((army.getCountry().getRadius() / 32) * army.getSize());
+				Integer x = army.getCountry().getXCoords() - (diameter/2);
+				Integer y = army.getCountry().getYCoords() - (diameter/2);
+				Color color;
+				if (army.getPlayer() != null){
+					color = army.getPlayer().getPlayerColour();
+				}
+				else { //neutral == null
+					color = Color.GRAY;
+				}
+				//draw scalable circle for army
+				gfx2d.setPaint(color);
+				Integer stroke = army.getSize();
+				gfx2d.setStroke(new BasicStroke(stroke + 1));
+				gfx2d.draw(new Ellipse2D.Double(x, y, diameter, diameter));
+				//Draw circle for army
+				diameter = army.getCountry().getRadius();
+				x = army.getCountry().getXCoords() - (diameter/2);
+				y = army.getCountry().getYCoords() - (diameter/2);
+				gfx2d.setPaint(color.darker());
+				gfx2d.fill(new Ellipse2D.Double(x, y, diameter, diameter));
+				//Draw army number
+				x = army.getCountry().getXCoords() - (int)(4*MapConstants.SCALING_CONSTANT);
+				y = army.getCountry().getYCoords() + (int)(2*MapConstants.SCALING_CONSTANT);
+				gfx2d.setPaint(Color.black);
+				gfx2d.setFont(army.getCountry().getFont());	
+				String size = String.valueOf(army.getSize());
+				//Draw outline
+				gfx2d.drawString(size, x - 1, y - 1);
+				gfx2d.drawString(size, x - 1, y + 1);
+				gfx2d.drawString(size, x + 1, y - 1);
+				gfx2d.drawString(size, x + 1, y + 1);
+				//Draw number
+				gfx2d.setPaint(Color.white);
+				gfx2d.drawString(size, x, y);
+			}
 		}
 	}
 	private ArrayList<Army> armies;

@@ -1,5 +1,12 @@
 package GUI;
 
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+The class that stores Country information
+*/
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -57,7 +64,7 @@ public class Country {
 		return color;
 	}
 	private void setFont(){
-		Integer fontsize = (int)(12 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
+		Integer fontsize = (int)(11 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
 		this.font = new Font(MapConstants.CONT_FONTS[continentid], Font.BOLD, fontsize);
 	}
 	public Font getFont(){
