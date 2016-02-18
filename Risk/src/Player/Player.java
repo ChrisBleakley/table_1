@@ -1,18 +1,16 @@
 package Player;
 
+/*
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
+  
+	Class stores information about the players, i.e. Name, Colour. 
+	Setting the information involves interacting with the GUI's text field.
+*/
+
 import java.awt.Color;
 import java.util.EmptyStackException;
-
 import GUI.Output;
-
-/*
-	Make sure that the team names and student numbers are included as comments in the header of all
-	source files and the documentation file.
-
-  
-	Class stores information about the players.
-	i.e. Name, Colour. 
-*/
 
 public class Player {
 
@@ -25,7 +23,6 @@ public class Player {
 		while (gui.isInputStackEmpty()) {
 			
 			try {
-				//playerName = gui.getPreviousInputFromStack();
 				playerName = gui.getTextField().getText();
 			}
 			
@@ -33,7 +30,7 @@ public class Player {
 			
 		}
 		
-		gui.popInputStack();
+		gui.popFromInputStack();
 		gui.updateGameInfoPanel("Player " + playerName + " has joined the game");
 	}
 	
@@ -50,4 +47,3 @@ public class Player {
 	}
 	
 }
-

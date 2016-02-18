@@ -1,15 +1,16 @@
 package Listeners;
 
 /*
-	Make sure that the team names and student numbers are included as comments in the header of all
-	source files and the documentation file.
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
 	
-	CLASS COMMENT.
+	Listener we assign to the JTextField in the GUI.
+	When an action event occurs, the actionPerformed method is invoked.
+	The action we listen for is the user hitting the ENTER key.
 */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import GUI.Output;
 
 public class TextActionListener implements ActionListener {
@@ -35,5 +36,3 @@ public class TextActionListener implements ActionListener {
 	}
 	
 }
-
-

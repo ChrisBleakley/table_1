@@ -1,18 +1,18 @@
 package Main;
 
 /*
-	Make sure that the team names and student numbers are included as comments in the header of all
-	source files and the documentation file.
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
 	
-	CLASS COMMENT.
+	The class from which the game will run.
 */
 
 import java.awt.Color;
-
 import GUI.*;
 import Player.Player;
 
 public class PlayGame {
+	
 	public static void main(String args[]){ 
 		
 		Output gui = new Output();

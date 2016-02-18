@@ -1,15 +1,15 @@
 package GUI;
 
 /*
-	Make sure that the team names and student numbers are included as comments in the header of all
-	source files and the documentation file.
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
 	
-	CLASS COMMENT.
+	Create the GUI and add the various components, e.g. Map, Game Info, Text Field.
+	We use a stack structure to store commands entered in the Text Field.
 */
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -83,24 +83,15 @@ public class Output extends JFrame {
 		//set what happens when "X" is clicked in right top corner.
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
+		
 		//ensures window can't be resized and dimensions aren't ruined.
 		this.setResizable(false);
+		
 		//make gui visible
 		this.setVisible(true);
  
 		// Text field stuff
-		tf.addActionListener(new TextActionListener(this));
-		
-	}
-	
-	//FOR TESTING ONLY. REMOVE ONCE MECHANISM HAS BEEN DEVISED FOR PRINTING HISTORY TO PANEL
-	public void printStack() {
-		for(String x: inputHistory){
-			System.out.println(x);
-		}
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		tf.addActionListener(new TextActionListener(this));	
 	}
 	
 	//takes user input as argument and adds it to the stack "inputHistory"
@@ -108,25 +99,19 @@ public class Output extends JFrame {
 		inputHistory.add(input);
 	}
 	
-	// returns the top element of the stack (used to store the inputs).
-	public String getPreviousInputFromStack() {		
-		return inputHistory.peek();
-	}
-	
 	public boolean isInputStackEmpty() {
 		return inputHistory.isEmpty();
 	}
 	
-	public void popInputStack() {
+	public void popFromInputStack() {
 		inputHistory.pop();
 	}
 	
-	// relies on 'game_info' JLabel being declared outside constructor.
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.setText(updatedText);
 	}
 	
-	//used to make TextField accessible from Listener class
+	//used to make TextField accessible from Listener class.
 	public JTextField getTextField(){
 		return this.tf;
 	}
