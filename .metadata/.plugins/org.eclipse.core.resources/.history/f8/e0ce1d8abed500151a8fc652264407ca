@@ -1,0 +1,62 @@
+package Player;
+
+import java.awt.Color;
+import java.util.EmptyStackException;
+
+import GUI.Output;
+
+/*
+	Class stores information about the players.
+	I.e. Name, Colour. 
+*/
+
+public class Player {
+	int i=1;
+	
+	private String playerName = "";
+	private Color playerColour = null;
+	
+	public void setPlayerName(Output gui) {
+		gui.updateGameInfoPanel("Enter player" + i++ + "'s name:");
+		
+		String text= new String();
+		
+		do {
+			text = gui.getTextField().getText();
+			playerName=text;
+		}while(text==" ");
+		
+		while (gui.isInputStackEmpty()) {
+			try {
+				playerName = gui.getPreviousInputFromStack();
+			}
+			
+			catch (EmptyStackException e) {}
+			
+		}
+		
+		gui.popInputStack();
+		gui.updateGameInfoPanel("Player " + playerName + " has joined the game");
+		
+		try{
+			Thread.sleep(3000);                 //1000 milliseconds is one second.
+		}
+		catch(InterruptedException e){
+			Thread.currentThread().interrupt();
+		}
+	}
+	
+	public String getPlayerName() {
+		return playerName;
+	}
+	
+	public void setPlayerColour(Color _playerColour) {
+		playerColour = _playerColour;
+	}
+	
+	public Color getPlayerColour() {
+		return playerColour;
+	}
+	
+}
+

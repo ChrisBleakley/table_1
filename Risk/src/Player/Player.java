@@ -13,12 +13,11 @@ import java.util.EmptyStackException;
 import GUI.Output;
 
 public class Player {
-
 	private String playerName = "";
 	private Color playerColour = null;
 	
-	public void setPlayerName(Output gui) {
-		gui.updateGameInfoPanel("Enter player name:");
+	public void setPlayerName(Output gui, int playerNumber) {
+		gui.updateGameInfoPanel("Enter player " + playerNumber + "'s name:");
 		
 		while (gui.isInputStackEmpty()) {
 			

@@ -19,10 +19,10 @@ public class PlayGame {
 		Player player1 = new Player();
 		Player player2 = new Player();
 		
-		player1.setPlayerName(gui);
+		player1.setPlayerName(gui,1);
 		player1.setPlayerColour(Color.BLUE);
 		
-		player2.setPlayerName(gui);
+		player2.setPlayerName(gui,2);
 		player2.setPlayerColour(Color.RED);
 		
 		int i = 0, j = 0;
