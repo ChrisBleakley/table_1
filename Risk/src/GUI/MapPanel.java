@@ -55,6 +55,7 @@ public class MapPanel extends JPanel {
 				found = true;
 				armies.get(i).setPlayer(player);
 				armies.get(i).setSize(armysize);
+				this.repaint();
 			}
 			else {
 				i++;
@@ -62,6 +63,7 @@ public class MapPanel extends JPanel {
 		}
 		if (!found){
 			armies.add(new Army(armysize, player, country));
+			this.repaint();
 		}
 	}	
 	private ArrayList<Army> armies;

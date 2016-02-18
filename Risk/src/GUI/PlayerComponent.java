@@ -33,19 +33,16 @@ public class PlayerComponent extends JComponent{
 	}
 	private void drawPlayerKey(Graphics2D gfx2d){
 		Integer x = (int)(panel_size.getWidth()/2 - 192);
-		Integer y = (int)(panel_size.getHeight() * 3 / 5);
-		//Hardcoded players so player key is hardcoded for now
-		gfx2d.setFont(new Font("Arial", Font.BOLD, 18));
-		gfx2d.setPaint(Color.RED);
-		gfx2d.drawString("Player 2", x, y - 32);
-		this.drawRectangle(gfx2d, x, y - 32);
-		gfx2d.setPaint(Color.BLUE);
-		gfx2d.drawString("Player 1", x, y - 64);
-		this.drawRectangle(gfx2d, x, y - 64);
-		gfx2d.setPaint(Color.GRAY);
-		gfx2d.drawString("Neutral", x, y - 96);
-		this.drawRectangle(gfx2d, x, y - 96);
-		
+		Integer ystart = (int)(panel_size.getHeight() * 44 / 100);
+		gfx2d.setFont(new Font("Arial", Font.PLAIN, 20));
+		int i = 0, y;
+		for (String name : MapConstants.PLAYER_NAMES){
+			y = ystart + (height * i);
+			this.drawNameOutline(gfx2d, name, x, y);
+			gfx2d.setPaint(MapConstants.PLAYER_COLORS[i++]);
+			gfx2d.drawString(name, x, y);
+			this.drawRectangle(gfx2d, x, y);
+		}
 	}
 	private void drawRectangle(Graphics2D gfx2d, int x, int y){
 		gfx2d.fill(new Rectangle(x + (int)(64 * MapConstants.SCALING_CONSTANT),
@@ -53,6 +50,14 @@ public class PlayerComponent extends JComponent{
 				(int)(32 * MapConstants.SCALING_CONSTANT),
 				(int)(16 * MapConstants.SCALING_CONSTANT)));
 	}
+	private void drawNameOutline(Graphics2D gfx2d, String name, Integer x, Integer y){
+		gfx2d.setPaint(Color.black);
+		gfx2d.drawString(name, x - 1, y - 1);
+		gfx2d.drawString(name, x - 1, y + 1);
+		gfx2d.drawString(name, x + 1, y - 1);
+		gfx2d.drawString(name, x + 1, y + 1);
+	}
 	private Dimension panel_size;
+	private Integer height = 32;
 	private static final long serialVersionUID = 1L;
 }

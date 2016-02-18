@@ -73,8 +73,7 @@ public class Countries extends JComponent{
 		x = country.getXCoords() - radius;
 		y = country.getYCoords() - radius;
 		gfx2d.setPaint(country.getColor());
-		gfx2d.fill(new Ellipse2D.Double(x, y, radius*2, radius*2));
-		
+		gfx2d.fill(new Ellipse2D.Double(x, y, radius*2, radius*2));	
 	}
 	private void drawName(Graphics2D gfx2d, Country country){
 		Integer radius = country.getRadius();
@@ -82,17 +81,17 @@ public class Countries extends JComponent{
 		Integer name_x = country.getXCoords() - nameoffset;
 		Integer name_y = country.getYCoords() - nameoffset;
 		String name = country.getName();
-		
 		gfx2d.setFont(country.getFont());
-		//Draw outline
-		gfx2d.setPaint(Color.black);
-		gfx2d.drawString(name, name_x - 1, name_y - 1);
-		gfx2d.drawString(name, name_x - 1, name_y + 1);
-		gfx2d.drawString(name, name_x + 1, name_y - 1);
-		gfx2d.drawString(name, name_x + 1, name_y + 1);
-		//Draw name
+		this.drawNameOutline(gfx2d, name, name_x, name_y);
 		gfx2d.setPaint(country.getColor().darker());
 		gfx2d.drawString(name, name_x, name_y);
+	}
+	private void drawNameOutline(Graphics2D gfx2d, String name, Integer x, Integer y){
+		gfx2d.setPaint(Color.black);
+		gfx2d.drawString(name, x - 1, y - 1);
+		gfx2d.drawString(name, x - 1, y + 1);
+		gfx2d.drawString(name, x + 1, y - 1);
+		gfx2d.drawString(name, x + 1, y + 1);
 	}
 	private ArrayList<Country> countries;
 	private Armies armiescomponent;

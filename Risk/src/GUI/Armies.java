@@ -49,13 +49,7 @@ public class Armies extends JComponent {
 						((army.getCountry().getRadius() / 32) * army.getSize());
 				Integer x = army.getCountry().getXCoords() - (diameter/2);
 				Integer y = army.getCountry().getYCoords() - (diameter/2);
-				Color color;
-				if (army.getPlayer() != null){
-					color = army.getPlayer().getPlayerColour();
-				}
-				else { //neutral == null
-					color = Color.GRAY;
-				}
+				Color color = army.getPlayer().getPlayerColour();
 				//draw scalable circle for army
 				gfx2d.setPaint(color);
 				Integer stroke = army.getSize();
@@ -70,19 +64,20 @@ public class Armies extends JComponent {
 				//Draw army number
 				x = army.getCountry().getXCoords() - (int)(4*MapConstants.SCALING_CONSTANT);
 				y = army.getCountry().getYCoords() + (int)(2*MapConstants.SCALING_CONSTANT);
-				gfx2d.setPaint(Color.black);
 				gfx2d.setFont(army.getCountry().getFont());	
 				String size = String.valueOf(army.getSize());
-				//Draw outline
-				gfx2d.drawString(size, x - 1, y - 1);
-				gfx2d.drawString(size, x - 1, y + 1);
-				gfx2d.drawString(size, x + 1, y - 1);
-				gfx2d.drawString(size, x + 1, y + 1);
-				//Draw number
+				this.drawSizeOutline(gfx2d, size, x, y);
 				gfx2d.setPaint(Color.white);
 				gfx2d.drawString(size, x, y);
 			}
 		}
+	}
+	private void drawSizeOutline(Graphics2D gfx2d, String name, Integer x, Integer y){
+		gfx2d.setPaint(Color.black);
+		gfx2d.drawString(name, x - 1, y - 1);
+		gfx2d.drawString(name, x - 1, y + 1);
+		gfx2d.drawString(name, x + 1, y - 1);
+		gfx2d.drawString(name, x + 1, y + 1);
 	}
 	private ArrayList<Army> armies;
 	private Dimension panel_size;

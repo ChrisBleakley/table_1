@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.Color;
+
 /*
 Team Name: table_1
 Student Numbers: 14480278, 14461158, 14745991
@@ -137,5 +139,20 @@ public class MapConstants {
 	public static void setScaling(double scaling){
 		SCALING_CONSTANT = scaling;
 	}
+	public static final String[] PLAYER_NAMES = {
+		"Player 1",
+		"Player 2",
+		"Neutral 1",
+		"Neutral 2",
+		"Neutral 3",
+		"Neutral 4"
+	};
+	public static final Color[] PLAYER_COLORS = {
+		Color.BLUE,
+		Color.RED,
+		Color.GRAY,
+		Color.GRAY.darker(),
+		Color.GRAY.brighter(),
+		Color.GRAY.darker().darker()
+	};
 }
-

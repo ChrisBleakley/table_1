@@ -38,14 +38,9 @@ public class Continents extends JComponent{
 		for (String name : MapConstants.CONTINENT_NAMES){
 			y = y - (int)(32 * MapConstants.SCALING_CONSTANT);
 			//Set color
-			gfx2d.setFont(new Font(MapConstants.CONT_FONTS[i], Font.BOLD, 16));
+			gfx2d.setFont(new Font(MapConstants.CONT_FONTS[i], Font.PLAIN, 20));
 			int[] color = MapConstants.CONT_COLORS[i];
-			//Draw outline
-			gfx2d.setPaint(Color.black);
-			gfx2d.drawString(name, x - 1, y - 1);
-			gfx2d.drawString(name, x - 1, y + 1);
-			gfx2d.drawString(name, x + 1, y - 1);
-			gfx2d.drawString(name, x + 1, y + 1);
+			this.drawNameOutline(gfx2d, name, x, y);
 			//Draw name
 			gfx2d.setPaint(new Color(color[0], color[1], color[2]));
 			gfx2d.drawString(name, x, y);
@@ -57,7 +52,13 @@ public class Continents extends JComponent{
 			//shift down to draw next name
 			i++;
 		}
-		
+	}
+	private void drawNameOutline(Graphics2D gfx2d, String name, Integer x, Integer y){
+		gfx2d.setPaint(Color.black);
+		gfx2d.drawString(name, x - 1, y - 1);
+		gfx2d.drawString(name, x - 1, y + 1);
+		gfx2d.drawString(name, x + 1, y - 1);
+		gfx2d.drawString(name, x + 1, y + 1);
 	}
 	private Dimension panel_size;
 	private static final long serialVersionUID = 1L;
