@@ -31,12 +31,6 @@ public class PlayGame {
 			gui.setArmies(player2, i++, j++);
 		}
 		
-		gui.updateGameInfoPanel("Player 1: " + player1.getPlayerName() + "  Player 2: " + player2.getPlayerName());
-		
-		// remove before submission
-		System.out.println("Player one name: " + player1.getPlayerName());
-		System.out.println("Player two name: " + player2.getPlayerName());
-		System.out.println("Player one colour: " + player1.getPlayerColour());
-		System.out.println("Player two colour: " + player2.getPlayerColour());
+		gui.updateGameInfoPanel("Welcome to RISK,  " + player1.getPlayerName() + " (Player 1), and " + player2.getPlayerName() + " (Player 2).");
 	}
 }
