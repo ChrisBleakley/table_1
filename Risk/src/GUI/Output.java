@@ -38,8 +38,8 @@ public class Output extends JFrame {
 		
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int)(screensize.getWidth() - 150);
-		int map_height = (int)(screensize.getHeight() - gameinfoheight - 150);
+		int map_width = (int)(screensize.getWidth() - 100);
+		int map_height = (int)(screensize.getHeight() - gameinfoheight - 160);
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");

@@ -38,7 +38,7 @@ public class Continents extends JComponent{
 		for (String name : MapConstants.CONTINENT_NAMES){
 			y = y - (int)(32 * MapConstants.SCALING_CONSTANT);
 			//Set color
-			gfx2d.setFont(new Font(MapConstants.CONT_FONTS[i], Font.PLAIN, 20));
+			gfx2d.setFont(new Font(MapConstants.CONT_FONTS[i], Font.PLAIN, (int)(12*MapConstants.SCALING_CONSTANT)));
 			int[] color = MapConstants.CONT_COLORS[i];
 			this.drawNameOutline(gfx2d, name, x, y);
 			//Draw name

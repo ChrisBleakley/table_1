@@ -34,10 +34,10 @@ public class PlayerComponent extends JComponent{
 	private void drawPlayerKey(Graphics2D gfx2d){
 		Integer x = (int)(panel_size.getWidth()/2 - 192);
 		Integer ystart = (int)(panel_size.getHeight() * 44 / 100);
-		gfx2d.setFont(new Font("Arial", Font.PLAIN, 20));
+		gfx2d.setFont(new Font("Arial", Font.PLAIN, (int)(12*MapConstants.SCALING_CONSTANT)));
 		int i = 0, y;
 		for (String name : MapConstants.PLAYER_NAMES){
-			y = ystart + (height * i);
+			y = ystart + ((int)(height * MapConstants.SCALING_CONSTANT) * i);
 			this.drawNameOutline(gfx2d, name, x, y);
 			gfx2d.setPaint(MapConstants.PLAYER_COLORS[i++]);
 			gfx2d.drawString(name, x, y);
@@ -58,6 +58,6 @@ public class PlayerComponent extends JComponent{
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
 	private Dimension panel_size;
-	private Integer height = 32;
+	private Integer height = 20;
 	private static final long serialVersionUID = 1L;
 }
