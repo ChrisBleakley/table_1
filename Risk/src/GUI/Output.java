@@ -13,9 +13,10 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import Listeners.TextActionListener;
 import Player.Player;
 import java.util.Stack;
@@ -27,9 +28,10 @@ public class Output extends JFrame {
 	private JTextField tf;
 	private JPanel input_panel;
 	private JPanel game_info_panel;
+	private JScrollPane scrollablepanel;
+	private JTextArea game_info = new JTextArea(5,109);
 	private MapPanel map_panel;
 	private int gameinfoheight = 100;
-	private JLabel game_info = new JLabel("Game Information", SwingConstants.CENTER);
 	private JLabel input = new JLabel("User input");
 	private Dimension map_size;
 	private Stack<String> inputHistory = new Stack<String>();
@@ -46,6 +48,7 @@ public class Output extends JFrame {
 	
 		//create panels
 		this.game_info_panel = new JPanel();
+		this.scrollablepanel = new JScrollPane(game_info_panel);
 		this.input_panel = new JPanel();
 		this.map_panel = new MapPanel(map_size);
 		
@@ -57,12 +60,16 @@ public class Output extends JFrame {
 		game_info_panel.add(game_info);
 		input_panel.add(input);
 		
+		//make JTextArea uneditable and change background to opaque.
+		game_info.setEditable(false);
+		game_info.setOpaque(false);
+		
 		//add text field to user input panel.
 		input_panel.add(tf);
 		
 		//create a new panel which consists of panels "game_info_panel" and "input_panel" on top of one another
 		JSplitPane bottom_panels = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
-		        true, game_info_panel, input_panel);
+		        true, scrollablepanel, input_panel);
 		        
 		//create a new panel which consists of "bottom_panels" beneath "map_panel"
 		JSplitPane full_gui= new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
@@ -70,7 +77,7 @@ public class Output extends JFrame {
 		
 		//set dimensions for panels
 		map_panel.setPreferredSize(map_size);
-		game_info.setPreferredSize(new Dimension(map_width, gameinfoheight));
+		scrollablepanel.setPreferredSize(new Dimension(map_width, gameinfoheight));
 		
 		//prevent panels from being resizeable
 		bottom_panels.setEnabled(false);
@@ -108,7 +115,7 @@ public class Output extends JFrame {
 	}
 	
 	public void updateGameInfoPanel(String updatedText) {
-		game_info.setText(updatedText);
+		game_info.append("\n" + updatedText);
 	}
 	
 	//used to make TextField accessible from Listener class.
