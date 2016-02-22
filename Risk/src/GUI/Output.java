@@ -10,6 +10,7 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,8 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import Input.Input;
 import Listeners.TextActionListener;
 import Player.Player;
+
 import java.util.Stack;
 
 public class Output extends JFrame {

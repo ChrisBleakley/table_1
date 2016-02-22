@@ -10,7 +10,7 @@ public class Die {
 	
 	//assign random number between 1 and 6 to diceFace
 	public void roll(){
-		diceFace = (int)(Math.random() * 6);
+		diceFace = (int)(Math.random() * 6)+1;
 	}
 	
 	//return diceFace

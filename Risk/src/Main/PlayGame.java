@@ -9,12 +9,14 @@ package Main;
 
 import java.awt.Color;
 
+import Dice.Die;
 import GUI.*;
 import Player.Player;
 
 public class PlayGame {
 	public static void main(String args[]){ 	
 		Output gui = new Output();
+		
 		Player player1 = new Player();
 		Player player2 = new Player();
 		Player player3 = new Player();
