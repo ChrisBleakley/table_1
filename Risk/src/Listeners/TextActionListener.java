@@ -25,14 +25,22 @@ public class TextActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		// If the user hits ENTER and there is content in the TextField,
-		// we retrieve this content, storing it in the input command stack.
-		if (!gui.getTextField().getText().isEmpty()) {
+//		// If the user hits ENTER and there is content in the TextField,
+//		// we retrieve this content, storing it in the input command stack.
+//		if (!gui.getTextField().getText().isEmpty()) {
+//		
+//			String text = gui.getTextField().getText();
+//			gui.addInputToHistory(text);
+//			gui.getTextField().setText(""); 
+//		}
 		
-			String text = gui.getTextField().getText();
-			gui.addInputToHistory(text);
-			gui.getTextField().setText(""); 
+		synchronized (gui.getInputHistory()) {
+			gui.addInputToHistory(gui.getTextField().getText());
+			gui.getTextField().setText("");
+			gui.getInputHistory().notify();
 		}
+		
+		return;
 	}
 	
 }

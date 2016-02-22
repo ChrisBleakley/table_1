@@ -31,7 +31,9 @@ public class PlayGame {
 		player4.setPlayerColour(Color.GRAY.darker());
 		player5.setPlayerColour(Color.GRAY.brighter());
 		player6.setPlayerColour(Color.GRAY.darker().darker());
+		
 		int i = 0, p1max= 9, p2max = 9, p3max = 6, p4max = 6, p5max = 6, p6max = 6;
+		
 		while (i < GUI.MapConstants.COUNTRY_COORD.length){
 			if (p1max > 0){
 				gui.setArmies(player1, i++, 1);
@@ -58,6 +60,7 @@ public class PlayGame {
 				p6max--;
 			}			
 		}	
+		
 		gui.updateGameInfoPanel("Welcome to RISK,  " + player1.getPlayerName() + " (Player 1), and " + player2.getPlayerName() + " (Player 2).");
 	}
 }

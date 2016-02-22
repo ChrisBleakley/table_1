@@ -19,7 +19,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Input.Input;
 import Listeners.TextActionListener;
 import Player.Player;
 
@@ -29,7 +28,7 @@ public class Output extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JTextField tf;
+	private JTextField textField;
 	private JPanel input_panel;
 	private JPanel game_info_panel;
 	private JScrollPane scrollablepanel;
@@ -57,8 +56,8 @@ public class Output extends JFrame {
 		this.map_panel = new MapPanel(map_size);
 		
 		//create text field to be added to user input panel.
-		this.tf = new JTextField("");
-		tf.setPreferredSize(new Dimension(400,24));
+		this.textField = new JTextField("");
+		textField.setPreferredSize(new Dimension(400,24));
 		
 		//add the labels to the panels
 		game_info_panel.add(game_info);
@@ -69,7 +68,7 @@ public class Output extends JFrame {
 		game_info.setOpaque(false);
 		
 		//add text field to user input panel.
-		input_panel.add(tf);
+		input_panel.add(textField);
 		
 		//create a new panel which consists of panels "game_info_panel" and "input_panel" on top of one another
 		JSplitPane bottom_panels = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
@@ -101,30 +100,51 @@ public class Output extends JFrame {
 		//make gui visible
 		this.setVisible(true);
  
-		// Text field stuff
-		tf.addActionListener(new TextActionListener(this));	
+		// Add an action listener for the text field.
+		textField.addActionListener(new TextActionListener(this));	
 	}
+	
 	
 	//takes user input as argument and adds it to the stack "inputHistory"
 	public void addInputToHistory(String input) {
 		inputHistory.add(input);
 	}
 	
-	public boolean isInputStackEmpty() {
-		return inputHistory.isEmpty();
+	public Stack<String> getInputHistory() {
+		return inputHistory;
 	}
 	
-	public void popFromInputStack() {
-		inputHistory.pop();
-	}
-	
+	// Updates the game information panel to display new text.
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.append("\n" + updatedText);
 	}
 	
+	// Method used to get input command from the user.
+	public String getInputCommand() {
+		String inputCommand;
+		
+		synchronized (inputHistory) {
+			while (inputHistory.isEmpty()) {
+				
+				try {
+					inputHistory.wait();
+				}
+				
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			inputCommand = inputHistory.pop();
+		}
+		
+		return inputCommand;
+	}
+	
 	//used to make TextField accessible from Listener class.
 	public JTextField getTextField(){
-		return this.tf;
+		return this.textField;
 	}
 	
 	//change Armies displayed on a particular country
