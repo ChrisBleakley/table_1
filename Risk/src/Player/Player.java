@@ -9,14 +9,20 @@ package Player;
 */
 
 import java.awt.Color;
+import java.util.ArrayList;
+
 import GUI.Output;
 
 public class Player {
 
 	private String playerName = "";
 	private Color playerColour = null;
+	private int playerNumber = -1;
+	private ArrayList<String> playerHand = new ArrayList<String>();
 	
-	public void setPlayerName(Output gui, int playerNumber) {
+	public void setPlayerName(Output gui, int _playerNumber) {
+		
+		playerNumber = _playerNumber;
 		gui.updateGameInfoPanel("Enter player " + playerNumber + "'s name:");
 		
 		playerName = gui.getInputCommand();
@@ -34,6 +40,14 @@ public class Player {
 	
 	public Color getPlayerColour() {
 		return playerColour;
+	}
+	
+	public int getPlayerNumber() {
+		return this.playerNumber;
+	}
+	
+	public ArrayList<String> getPlayerHand() {
+		return this.playerHand;
 	}
 	
 }
