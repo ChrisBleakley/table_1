@@ -36,6 +36,7 @@ public class TextActionListener implements ActionListener {
 		
 		synchronized (gui.getInputHistory()) {
 			gui.addInputToHistory(gui.getTextField().getText());
+			gui.updateGameInfoPanel(">" + gui.getTextField().getText());
 			gui.getTextField().setText("");
 			gui.getInputHistory().notify();
 		}
