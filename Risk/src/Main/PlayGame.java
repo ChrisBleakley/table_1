@@ -17,6 +17,10 @@ import Player.Player;
 public class PlayGame {
 	public static void main(String args[]){ 
 		
+		Die die = new Die();
+		int player1die = 0;
+		int player2die = 0;
+		
 		Output gui = new Output();
 		
 		Player player1 = new Player();
@@ -42,8 +46,36 @@ public class PlayGame {
 		gui.updateGameInfoPanel("Welcome to RISK,  " + player1.getPlayerName() + " (Player 1), and " + player2.getPlayerName() + " (Player 2).");
 		
 		// Players will draw their initial hands from the deck.
-		initalTerrritoryGameDeck.drawPlayerHand(player1, gui);
-		initalTerrritoryGameDeck.drawPlayerHand(player2, gui);
+		
+		while(player1die==player2die){
+			gui.updateGameInfoPanel("\nPlayer 1 enter any key to roll!");
+			gui.getInputCommand();
+			die.roll();
+			player1die=die.getFace();
+			gui.updateGameInfoPanel("\nPlayer 1 rolled " + player1die + "!");
+			
+			gui.updateGameInfoPanel("\nPlayer 2 enter any key to roll!");
+			gui.getInputCommand();
+			die.roll();
+			player2die=die.getFace();
+			gui.updateGameInfoPanel("\nPlayer 2 rolled " + player2die + "!");
+			
+			if(player1die==player2die){
+				gui.updateGameInfoPanel("\nTie!");
+			}
+		}
+		
+		if(player1die>player2die){
+			gui.updateGameInfoPanel("\nPlayer 1 draws first!");
+			initalTerrritoryGameDeck.drawPlayerHand(player1, gui);
+			initalTerrritoryGameDeck.drawPlayerHand(player2, gui);
+		}
+		if(player1die<player2die){
+			gui.updateGameInfoPanel("\nPlayer 2 draws first!");
+			initalTerrritoryGameDeck.drawPlayerHand(player2, gui);
+			initalTerrritoryGameDeck.drawPlayerHand(player1, gui);
+		}
+		
 		
 		// This is here just as a buffer.
 		gui.updateGameInfoPanel("\nDrawing Neutral Hands, hit any key to continue.");
