@@ -117,6 +117,7 @@ public class Output extends JFrame {
 	// Updates the game information panel to display new text.
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.append("\n" + updatedText);
+		game_info.setCaretPosition(game_info.getDocument().getLength()); //jumps to bottom of game_info panel.
 	}
 	
 	// Method used to get input command from the user.
