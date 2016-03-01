@@ -39,6 +39,8 @@ public class PlayGame {
 		
 		gui.updateGameInfoPanel("Welcome to RISK,  " + player1.getPlayerName() + " (Player 1), and " + player2.getPlayerName() + " (Player 2).");
 		
+		// Do we need to add text to notify players of their colours?
+		
 		// Drawing the cards goes here
 		gameDeck.drawPlayerHand(player1, gui);
 		gameDeck.drawPlayerHand(player2, gui);
@@ -51,35 +53,6 @@ public class PlayGame {
 		gameDeck.drawNeutralPlayerHand(player4, gui);
 		gameDeck.drawNeutralPlayerHand(player5, gui);
 		gameDeck.drawNeutralPlayerHand(player6, gui);
-		
-		/** TEST BLOCK START **/
-		
-		for (String card : player1.getPlayerHand())
-			System.out.println(card);
-		
-		System.out.println("\n");
-		
-		for (String card : player2.getPlayerHand())
-			System.out.println(card);
-		
-		System.out.println("\n");
-		
-		for (String card : player3.getPlayerHand())
-			System.out.println(card);
-		
-		System.out.println("\n");
-		
-		for (String card : player4.getPlayerHand())
-			System.out.println(card);
-		
-		for (String card : player5.getPlayerHand())
-			System.out.println(card);
-		
-		System.out.println("\n");
-		for (String card : player6.getPlayerHand())
-			System.out.println(card);
-		
-		/** TEST BLOCK END **/
 		
 		// set the territory colours based on the territory cards each player has.
 		gui.updateGameInfoPanel("\nDrawing complete.");

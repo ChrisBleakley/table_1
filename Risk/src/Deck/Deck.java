@@ -60,6 +60,7 @@ public class Deck {
 		cardCount = cardDeck.size();
 	}
 	
+	/* Method draws a card from the deck, removing it from the card list. */
 	public String drawCard() {
 		
 		int tempCount = cardCount;
@@ -73,10 +74,7 @@ public class Deck {
 		return card;
 	}
 	
-	public int getDeckCardCount() {
-		return this.cardCount;
-	}
-	
+	/* Draws a player's hand */
 	public void drawPlayerHand(Player player, Output gui) {
 		
 		gui.updateGameInfoPanel("\nPlayer " + player.getPlayerNumber() + " draw a card (Hit any key)");
@@ -91,6 +89,7 @@ public class Deck {
 		}
 	}
 	
+	/* Method automatically draws cards for the neutral players. */
 	public void drawNeutralPlayerHand(Player player, Output gui) {
 		
 		gui.updateGameInfoPanel("\nDrawing hand for neutral player");
