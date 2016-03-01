@@ -53,7 +53,7 @@ public class Deck {
 		cardDeck.add("Territory Card:  Congo  /  Army Type: Cavalry");
 		cardDeck.add("Territory Card:  N Africa  /  Army Type: Infantry");
 		cardDeck.add("Territory Card:  S Africa  /  Army Type: Artillery");
-		cardDeck.add("Territory Card:  Eqypt  /  Army Type: Infantry");
+		cardDeck.add("Territory Card:  Egypt  /  Army Type: Infantry");
 		cardDeck.add("Territory Card:  E Africa  /  Army Type: Artillery");
 		cardDeck.add("Territory Card:  Madagascar  /  Army Type: Infantry");
 		

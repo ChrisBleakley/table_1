@@ -50,4 +50,10 @@ public class Player {
 		return this.playerHand;
 	}
 	
+	/* Removes all cards from the player's card list.
+	   This is done after the inital allocation of territories. */
+	public void resetPlayerHand() {
+		this.playerHand.clear();
+	}
+	
 }

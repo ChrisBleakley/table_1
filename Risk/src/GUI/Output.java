@@ -157,4 +157,18 @@ public class Output extends JFrame {
 		}	
 	}
 	
+	/* Method sets a single army for every territory, based on the territory 
+	   cards the player has in their hand. */
+	public void setInitialTerritoryArmies(Player player){
+		
+		for (Country country : map_panel.getCountries())
+		{
+			for (String card : player.getPlayerHand())
+			{
+				if (card.contains(country.getName()))
+					this.map_panel.setArmies(country, player, 1);
+			}
+		}	
+	}
+	
 }
