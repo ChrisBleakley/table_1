@@ -4,44 +4,30 @@ package Listeners;
 	Team Name: table_1
 	Student Numbers: 14480278, 14461158, 14745991
 	
-	Listener we assign to the JTextField in the GUI.
+	Listener we assign to the JTextField in the input.
 	When an action event occurs, the actionPerformed method is invoked.
 	The action we listen for is the user hitting the ENTER key.
 */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import GUI.Output;
+
+import Input.Input;
 
 public class TextActionListener implements ActionListener {
 	
-	private Output gui;
-	
+	private Input input;
 	// This Method is used in order to make JTextField from output class accessible.
-	public TextActionListener(Output gui){
-		this.gui = gui;
+	public TextActionListener(Input input){
+		this.input = input;
 	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-//		// If the user hits ENTER and there is content in the TextField,
-//		// we retrieve this content, storing it in the input command stack.
-//		if (!gui.getTextField().getText().isEmpty()) {
-//		
-//			String text = gui.getTextField().getText();
-//			gui.addInputToHistory(text);
-//			gui.getTextField().setText(""); 
-//		}
-		
-		synchronized (gui.getInputHistory()) {
-			gui.addInputToHistory(gui.getTextField().getText());
-			gui.updateGameInfoPanel(">" + gui.getTextField().getText());
-			gui.getTextField().setText("");
-			gui.getInputHistory().notify();
+		synchronized (input.getInputBuffer()) {
+			input.addInputToBuffer(input.getTextField().getText());
+			input.getTextField().setText("");
+			input.getInputBuffer().notify();
 		}
-		
 		return;
 	}
-	
 }

@@ -18,9 +18,9 @@ import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 public class Continents extends JComponent{
-	public Continents(Dimension panel_size){
-		this.panel_size = panel_size;
-		this.setPreferredSize(new Dimension((int)panel_size.getWidth()/2, (int)panel_size.getHeight()));
+	public Continents(Output output){
+		this.output = output;
+		this.setPreferredSize(new Dimension((int)this.output.getPanelSize().getWidth()/2, (int)this.output.getPanelSize().getHeight()));
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -33,7 +33,7 @@ public class Continents extends JComponent{
 	}
 	private void drawContinentKey(Graphics2D gfx2d){
 		Integer x = 16;
-		Integer y = (int) panel_size.getHeight();
+		Integer y = (int) this.output.getPanelSize().getHeight();
 		Integer i = 0;
 		for (String name : MapConstants.CONTINENT_NAMES){
 			y = y - (int)(32 * MapConstants.SCALING_CONSTANT);
@@ -60,6 +60,6 @@ public class Continents extends JComponent{
 		gfx2d.drawString(name, x + 1, y - 1);
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
-	private Dimension panel_size;
+	private Output output;
 	private static final long serialVersionUID = 1L;
 }

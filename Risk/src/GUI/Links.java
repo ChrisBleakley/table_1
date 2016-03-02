@@ -10,23 +10,22 @@ The class that draws the links between countries
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import Game.Country;
+
 public class Links extends JComponent{
-	public Links(Dimension panel_size, ArrayList<Country> countries, ArrayList<Army> armies){
-		this.panel_size = panel_size;
-		this.setPreferredSize(panel_size);
-		this.countries = countries;
+	public Links(Output output){
+		this.output = output;
+		this.setPreferredSize(output.getPanelSize());
 		this.setLayout(new BorderLayout());
-		this.countriescomponent = new Countries(panel_size, countries, armies);
-		this.add(countriescomponent);
+		output.setCountries(new Countries(output));
+		this.add(output.getCountries());
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -43,7 +42,7 @@ public class Links extends JComponent{
 		return gfx2d;
 	}
 	private void drawLinks(Graphics2D gfx2d){
-		for (Country country : countries){
+		for (Country country : output.getCountryList()){
 			for (Country othercountry : country.getAdjacentCountries()){
 				if (country.getID() < othercountry.getID()){
 					drawLink(gfx2d, country, othercountry);
@@ -61,7 +60,7 @@ public class Links extends JComponent{
 			othery = country.getYCoords();
 		}
 		else if (country.getID() == 22){
-			otherx = (int)(panel_size.getWidth());
+			otherx = (int)(output.getPanelSize().getWidth());
 			othery = country.getYCoords();
 		}
 		else {
@@ -100,8 +99,6 @@ public class Links extends JComponent{
 		}
 		return c;
 	}
-	private Dimension panel_size;
-	private ArrayList<Country> countries;
-	private Countries countriescomponent;
+	private Output output;
 	private static final long serialVersionUID = 1L;
 }

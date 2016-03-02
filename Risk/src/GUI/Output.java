@@ -19,28 +19,16 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Listeners.TextActionListener;
-import Player.Player;
+import Game.Army;
+import Game.Country;
+import Game.GameMechanics;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
-public class Output extends JFrame {
+public class Output extends JFrame implements Main.Output{
 	
-	private static final long serialVersionUID = 1L;
-	
-	private JTextField textField;
-	private JPanel input_panel;
-	private JPanel game_info_panel;
-	private JScrollPane scrollablepanel;
-	private JTextArea game_info = new JTextArea(5,109);
-	private MapPanel map_panel;
-	private int gameinfoheight = 100;
-	private JLabel input = new JLabel("User input");
-	private Dimension map_size;
-	private Stack<String> inputHistory = new Stack<String>();
-	
-	public Output() {
-		
+	public Output(Game.GameMechanics gamemechanics) {
+		this.gamemechanics = gamemechanics;
 		//Set map dimensions using current screensize
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		int map_width = (int)(screensize.getWidth() - 100);
@@ -48,16 +36,8 @@ public class Output extends JFrame {
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
-	
-		//create panels
-		this.game_info_panel = new JPanel();
-		this.scrollablepanel = new JScrollPane(game_info_panel);
-		this.input_panel = new JPanel();
-		this.map_panel = new MapPanel(map_size);
-		
-		//create text field to be added to user input panel.
-		this.textField = new JTextField("");
-		textField.setPreferredSize(new Dimension(400,24));
+		this.setTextField();
+		this.createPanels();
 		
 		//add the labels to the panels
 		game_info_panel.add(game_info);
@@ -100,18 +80,12 @@ public class Output extends JFrame {
 		//make gui visible
 		this.setVisible(true);
  
-		// Add an action listener for the text field.
-		textField.addActionListener(new TextActionListener(this));	
 	}
-	
-	
-	//takes user input as argument and adds it to the stack "inputHistory"
-	public void addInputToHistory(String input) {
-		inputHistory.add(input);
-	}
-	
-	public Stack<String> getInputHistory() {
-		return inputHistory;
+	void createPanels(){
+		this.game_info_panel = new JPanel();
+		this.scrollablepanel = new JScrollPane(game_info_panel);
+		this.input_panel = new JPanel();
+		this.map_panel = new MapPanel(this);
 	}
 	
 	// Updates the game information panel to display new text.
@@ -119,56 +93,68 @@ public class Output extends JFrame {
 		game_info.append("\n" + updatedText);
 		game_info.setCaretPosition(game_info.getDocument().getLength()); //jumps to bottom of game_info panel.
 	}
-	
-	// Method used to get input command from the user.
-	public String getInputCommand() {
-		String inputCommand;
-		
-		synchronized (inputHistory) {
-			while (inputHistory.isEmpty()) {
-				
-				try {
-					inputHistory.wait();
-				}
-				
-				catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
-			}
-			
-			inputCommand = inputHistory.pop();
-		}
-		
-		return inputCommand;
+	public void updateMapPanel(){
+		this.map_panel.repaint();
 	}
-	
-	//used to make TextField accessible from Listener class.
-	public JTextField getTextField(){
-		return this.textField;
+	private void setTextField() {
+		this.textField = gamemechanics.getInputField();	
+		this.textField.setPreferredSize(new Dimension(400,24));
 	}
-	
-	//change Armies displayed on a particular country
-	public void setArmies(Player player, int country_index, Integer armysize){
-		for (Country country : map_panel.getCountries()){
-			if (country.getID() == country_index){
-				this.map_panel.setArmies(country, player, armysize);
-			}
-		}	
+	public Dimension getPanelSize(){
+		return map_size;
 	}
-	
-	/* Method sets a single army for every territory, based on the territory 
-	   cards the player has in their hand. */
-	public void setInitialTerritoryArmies(Player player){
-		
-		for (Country country : map_panel.getCountries())
-		{
-			for (String card : player.getPlayerHand())
-			{
-				if (card.contains(country.getName()))
-					this.map_panel.setArmies(country, player, 1);
-			}
-		}	
+	Links getLinks(){
+		return this.linkscomponent;
 	}
+	void setLinks(Links links){
+		this.linkscomponent = links;
+	}
+	Countries getCountries(){
+		return countriescomponent;
+	}
+	void setCountries(Countries countries){
+		this.countriescomponent = countries;
+	}
+	Armies getArmies(){
+		return armiescomponent;
+	}
+	void setArmies(Armies armies){
+		this.armiescomponent = armies;
+	}
+	Continents getContinents(){
+		return this.continentskey;
+	}
+	void setContinents(Continents continents){
+		this.continentskey = continents;
+	}
+	PlayerComponent getPlayerKey(){
+		return this.playerkey;
+	}
+	void setPlayerKey(PlayerComponent playerkey){
+		this.playerkey = playerkey;
+	}
+	ArrayList<Army> getArmyList(){
+		return gamemechanics.getArmyList();
+	}
+	ArrayList<Country> getCountryList(){
+		return gamemechanics.getCountryList();
+	}
+	private GameMechanics gamemechanics;
+	private Links linkscomponent;
+	private Countries countriescomponent;
+	private Armies armiescomponent;
+	private Continents continentskey;
+	private PlayerComponent playerkey;
+	private MapPanel map_panel;
+	private Dimension map_size;
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField textField;
+	private JPanel input_panel;
+	private JPanel game_info_panel;
+	private JScrollPane scrollablepanel;
+	private JTextArea game_info = new JTextArea(5,109);
+	private int gameinfoheight = 100;
+	private JLabel input = new JLabel("User input");
 	
 }

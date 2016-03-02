@@ -2,35 +2,51 @@ package Input;
 
 import javax.swing.JTextField;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import Listeners.TextActionListener;
+import Game.GameMechanics;
+
 import java.util.Stack;
 
-public class Input {
+public class Input implements Main.Input {
 	
-	// DOES NOTHING AT THE MOMENT!
+	public Input(GameMechanics gamemechanics) {
+		inputField = gamemechanics.getInputField();
+		inputBuffer = new Stack<String>();
+		inputHistory = new Stack<String>();
+		// Add an action listener for the text field.
+		inputField.addActionListener(new TextActionListener(this));
+		this.gamemechanics = gamemechanics;
+	}
+	//takes user input as argument and adds it to the stack "inputBuffer"
+	public void addInputToBuffer(String input) {
+		inputBuffer.add(input);
+		inputHistory.add(input);
+		gamemechanics.getOutput().updateGameInfoPanel(">" + input);
+	}
 	
-	private JTextField inputField = new JTextField();
-	private Stack<String> inputBuffer = new Stack<String>();
-	
-	Input() {
-		
-		class AddActionListener implements ActionListener {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				synchronized (inputBuffer) {
-					inputBuffer.add(inputField.getText());
-					inputField.setText("");
-					inputBuffer.notify();
+	public Stack<String> getInputBuffer() {
+		return inputBuffer;
+	}
+	//used to make TextField accessible from Listener class.
+	public JTextField getTextField(){
+		return this.inputField;
+	}
+	// Method used to get input command from the user.
+	public String getInputCommand() {
+		synchronized (inputBuffer) {
+			while (inputBuffer.isEmpty()) {		
+				try {
+					inputBuffer.wait();
+				}		
+				catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}
-
-
-		ActionListener listener = new AddActionListener();
-		inputField.addActionListener(listener);
-		
-		
+		return inputBuffer.pop();
 	}
+	private JTextField inputField;
+	private Stack<String> inputBuffer;
+	private Stack<String> inputHistory; 
+	private GameMechanics gamemechanics;
 }

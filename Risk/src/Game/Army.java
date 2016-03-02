@@ -1,4 +1,4 @@
-package GUI;
+package Game;
 
 /*
 Team Name: table_1

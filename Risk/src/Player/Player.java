@@ -10,8 +10,7 @@ package Player;
 
 import java.awt.Color;
 import java.util.ArrayList;
-
-import GUI.Output;
+import Main.GameMechanics;
 
 public class Player {
 
@@ -20,14 +19,20 @@ public class Player {
 	private int playerNumber = -1;
 	private ArrayList<String> playerHand = new ArrayList<String>();
 	
-	public void setPlayerName(Output gui, int _playerNumber) {
-		
-		playerNumber = _playerNumber;
-		gui.updateGameInfoPanel("Enter player " + playerNumber + "'s name:");
-		
-		playerName = gui.getInputCommand();
-		
-		gui.updateGameInfoPanel("Player " + playerName + " has joined the game");
+	public void setPlayerName(GameMechanics gamemechanics, int _playerNumber) {
+		if (_playerNumber < 3){
+			human = true;
+			playerNumber = _playerNumber;
+			gamemechanics.getOutput().updateGameInfoPanel("Enter player " + playerNumber + "'s name:");
+			
+			playerName = gamemechanics.getInput().getInputCommand();
+			
+			gamemechanics.getOutput().updateGameInfoPanel("Player " + playerName + " has joined the game");
+		}
+		else {
+			human = false;
+			playerName = "Neutral " + String.valueOf(_playerNumber);
+		}
 	}
 	
 	public String getPlayerName() {
@@ -50,10 +55,15 @@ public class Player {
 		return this.playerHand;
 	}
 	
+	public boolean getHuman(){
+		return this.human;
+	}
+	
 	/* Removes all cards from the player's card list.
 	   This is done after the inital allocation of territories. */
 	public void resetPlayerHand() {
 		this.playerHand.clear();
 	}
 	
+	private boolean human;
 }

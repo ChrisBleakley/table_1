@@ -1,6 +1,8 @@
 package Dice;
 
-public class Die {
+import Main.Dice;
+
+public class Die implements Dice {
 	private int diceFace;
 	
 	//constructor

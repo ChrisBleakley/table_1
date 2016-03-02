@@ -150,9 +150,9 @@ public class MapConstants {
 	public static final Color[] PLAYER_COLORS = {
 		Color.BLUE,
 		Color.RED,
-		Color.GREEN,
+		Color.GRAY,
 		Color.GRAY.brighter(),
 		Color.GRAY.darker().darker(),
-		Color.YELLOW
+		Color.GRAY.brighter().brighter()
 	};
 }

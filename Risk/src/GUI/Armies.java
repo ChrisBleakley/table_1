@@ -10,26 +10,25 @@ The class that draws the armies
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import Game.Army;
+
 public class Armies extends JComponent {
 	
-	public Armies(Dimension panel_size, ArrayList<Army> armies){
-		this.panel_size = panel_size;
-		this.setPreferredSize(this.panel_size);
-		this.armies = armies;
+	public Armies(Output output){
+		this.output = output;
+		this.setPreferredSize(output.getPanelSize());
 		this.setLayout(new BorderLayout());
-		Continents continentkey = new Continents(this.panel_size);
-		this.add(continentkey, BorderLayout.WEST);
-		PlayerComponent playerkey = new PlayerComponent(this.panel_size);
-		this.add(playerkey, BorderLayout.EAST);
+		output.setContinents(new Continents(output));
+		this.add(output.getContinents(), BorderLayout.WEST);
+		output.setPlayerKey(new PlayerComponent(output));
+		this.add(output.getPlayerKey(), BorderLayout.EAST);
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -43,7 +42,7 @@ public class Armies extends JComponent {
 		return gfx2d;
 	}	
 	private void drawArmies(Graphics2D gfx2d){
-		for (Army army : armies){
+		for (Army army : output.getArmyList()){
 			if (army.getSize() > 0){
 				Integer diameter = army.getCountry().getRadius() +
 						((army.getCountry().getRadius() / 32) * army.getSize());
@@ -79,7 +78,6 @@ public class Armies extends JComponent {
 		gfx2d.drawString(name, x + 1, y - 1);
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
-	private ArrayList<Army> armies;
-	private Dimension panel_size;
+	private Output output;
 	private static final long serialVersionUID = 1L;
 }

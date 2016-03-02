@@ -18,9 +18,9 @@ import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 public class PlayerComponent extends JComponent{
-	public PlayerComponent(Dimension panel_size){
-		this.panel_size = panel_size;
-		this.setPreferredSize(new Dimension((int)panel_size.getWidth()/2, (int)panel_size.getHeight()));
+	public PlayerComponent(Output output){
+		this.output = output;
+		this.setPreferredSize(new Dimension((int)output.getPanelSize().getWidth()/2, (int)output.getPanelSize().getHeight()));
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -32,8 +32,8 @@ public class PlayerComponent extends JComponent{
 		this.drawPlayerKey(gfx2d);
 	}
 	private void drawPlayerKey(Graphics2D gfx2d){
-		Integer x = (int)(panel_size.getWidth()/2 - 192);
-		Integer ystart = (int)(panel_size.getHeight() * 44 / 100);
+		Integer x = (int)(output.getPanelSize().getWidth()/2 - 192);
+		Integer ystart = (int)(output.getPanelSize().getHeight() * 44 / 100);
 		gfx2d.setFont(new Font("Arial", Font.PLAIN, (int)(12*MapConstants.SCALING_CONSTANT)));
 		int i = 0, y;
 		for (String name : MapConstants.PLAYER_NAMES){
@@ -57,7 +57,7 @@ public class PlayerComponent extends JComponent{
 		gfx2d.drawString(name, x + 1, y - 1);
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
-	private Dimension panel_size;
+	private Output output;
 	private Integer height = 20;
 	private static final long serialVersionUID = 1L;
 }

@@ -1,4 +1,4 @@
-package GUI;
+package Game;
 
 /*
 Team Name: table_1
@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+
+import GUI.MapConstants;
 
 public class Country {
 	public Country(Integer arrayindex, ArrayList<Country> othercountries, Dimension panel_size){

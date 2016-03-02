@@ -10,23 +10,23 @@ The class that draws the countries
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import Game.Country;
+
 public class Countries extends JComponent{
 
-	public Countries(Dimension panel_size, ArrayList<Country> countries, ArrayList<Army> armies){
-		this.setPreferredSize(panel_size);
-		this.countries = countries;
+	public Countries(Output output){
+		this.output = output;
+		this.setPreferredSize(output.getPanelSize());
 		this.setLayout(new BorderLayout());
-		this.armiescomponent = new Armies(panel_size, armies);
-		this.add(armiescomponent);
+		output.setArmies(new Armies(output));
+		this.add(output.getArmies());
 	}
 	@Override
 	public void paintComponent(Graphics g){		
@@ -40,7 +40,7 @@ public class Countries extends JComponent{
 		return gfx2d;
 	}	
 	private void drawCountries(Graphics2D gfx2d){
-		for (Country country : countries){
+		for (Country country : output.getCountryList()){
 			drawCountry(gfx2d, country);
 			drawName(gfx2d, country);
 		}
@@ -93,7 +93,6 @@ public class Countries extends JComponent{
 		gfx2d.drawString(name, x + 1, y - 1);
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
-	private ArrayList<Country> countries;
-	private Armies armiescomponent;
+	Output output;
 	private static final long serialVersionUID = 1L;
 }
