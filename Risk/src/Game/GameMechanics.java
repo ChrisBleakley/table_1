@@ -1,14 +1,19 @@
 package Game;
 
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+GameMechanics class
+*/
+
 import GUI.MapConstants;
-import Main.Dice;
 import Input.Input;
-import Player.Player;
-import Reinforce.Reinforce;
 import java.util.ArrayList;
 import javax.swing.JTextField;
 import GUI.Output;
 import Deck.Deck;
+import Dice.Die;
 
 public class GameMechanics implements Main.GameMechanics{
 	public GameMechanics(){
@@ -48,17 +53,26 @@ public class GameMechanics implements Main.GameMechanics{
 		while (!found && i < armylist.size()){
 			if (armylist.get(i).getCountry() == country){
 				found = true;
-				armylist.get(i).setPlayer(player);
+				if (armylist.get(i).getPlayer() != player){
+					armylist.get(i).getPlayer().removePlacedArmy(armylist.get(i));
+					armylist.get(i).setPlayer(player);
+					player.addPlacedArmies(armylist.get(i));
+				}
 				armylist.get(i).setSize(armysize);
 				output.updateMapPanel();
+				player.setAvailableArmies(player.getAvailableArmies() - armysize);
+
 			}
 			else {
 				i++;
 			}
 		}
 		if (!found){
-			armylist.add(new Army(armysize, player, country));
+			Army newarmy = new Army(armysize, player, country);
+			armylist.add(newarmy);
 			output.updateMapPanel();
+			player.addPlacedArmies(newarmy);
+			player.setAvailableArmies(player.getAvailableArmies() - armysize);
 		}
 	}
 	public ArrayList<Army> getArmyList(){
@@ -74,16 +88,28 @@ public class GameMechanics implements Main.GameMechanics{
 		this.deck = new Deck();
 		this.deck.setCountryList(this.countrylist);
 	}
+	public void setDice(){
+		this.die = new Die();
+	}
+	public Die getDice(){
+		return this.die;
+	}
+	public Integer getInitialHumanArmySize(){
+		return this.initialhumanarmysize;
+	}
+	public Integer getInitialBotArmySize(){
+		return this.initialbotarmysize;
+	}
 	public void initialiseGameMap(){
 		while (!deck.isEmpty()){
 			for (Player player : playerlist){
 				if (player.getHuman()){
-					output.updateGameInfoPanel(player.getPlayerName() + " press any key to draw a card!");
+					output.updateGameInfoPanel(player.getPlayerName() + " enter any character to draw a card!");
 					input.getInputCommand();		
 				}
 				Country card = deck.getCountryCard();
 				this.setArmyList(player, card, 1);
-				output.updateGameInfoPanel(player.getPlayerName() + " drew the country card: " + card.getName());			
+				output.updateGameInfoPanel(player.getPlayerName() + " drew the country card:  " + card.getName() + "  !");			
 			}
 		}
 	}
@@ -91,8 +117,61 @@ public class GameMechanics implements Main.GameMechanics{
 		this.reinforcemechanics = new Reinforce(this);
 	}
 	public void reinforce(){
-		//output.updateGameInfoPanel(player.getPlayerName() + "Enter country name to reinforce:");
-		//this.reinforcemechanics.setReinforcements(input.getInputCommand());
+		Integer players2reinforce;
+		Integer index = this.decideFirstReinforce();
+		this.reinforcemechanics.setReinforcements(playerlist.get(index));
+		do{
+			players2reinforce = 6;
+			for (Player player : playerlist){
+				if (player.getAvailableArmies() > 0){
+					this.reinforcemechanics.setReinforcements(player);
+				}
+				else {
+					players2reinforce--;
+				}
+			}
+		} while(players2reinforce > 0);
+		System.out.println("Reinforcement finished!");
+		for (Player player: playerlist){
+			System.out.println(player.getPlayerName());
+			System.out.println(player.getAvailableArmies());
+			Integer placedarmiessize = 0;
+			for (Army army : player.getPlacedArmies()){
+				placedarmiessize += army.getSize();
+			}
+			System.out.println(placedarmiessize);
+		}
+		
+	}
+	private Integer decideFirstReinforce(){
+		boolean draw;
+		ArrayList<Integer> rolls = new ArrayList<Integer>();
+		Integer index = 0;
+		do{
+			for (int i = 0; i < 2; i++){
+				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " press any character to roll the dice!");
+				this.getInput().getInputCommand();
+				die.roll();
+				Integer roll = die.getFace();
+				rolls.add(roll);
+				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()));
+			}
+			if (rolls.get(0) == rolls.get(1)){
+				draw = true;
+				this.getOutput().updateGameInfoPanel("It's a draw! Let's roll again!");
+			}
+			else if (rolls.get(0) > rolls.get(1)){
+				draw = false;
+				index = 0;
+				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
+			}
+			else {
+				draw = false;
+				index = 1;
+				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
+			}			
+		} while (draw);
+		return index;
 	}
 	private JTextField tf;
 	private Output output;
@@ -101,6 +180,8 @@ public class GameMechanics implements Main.GameMechanics{
 	private ArrayList<Army> armylist;
 	private ArrayList<Player> playerlist;
 	private Deck deck;
-	private Dice die;
+	private Die die;
 	private Reinforce reinforcemechanics;
+	private Integer initialhumanarmysize = 36;
+	private Integer initialbotarmysize = 24;
 }

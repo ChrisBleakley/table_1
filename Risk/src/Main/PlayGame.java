@@ -8,11 +8,12 @@ package Main;
 */
 
 import java.util.ArrayList;
+
 import GUI.MapConstants;
 import GUI.Output;
 import Input.Input;
-import Player.Player;
 import Game.GameMechanics;
+import Game.Player;
 
 public class PlayGame {
 	public static void main(String args[]){ 
@@ -22,6 +23,7 @@ public class PlayGame {
 		gamemechanics.setCountryList();
 		gamemechanics.setPlayerList(createPlayerList(gamemechanics));
 		gamemechanics.setDeck();
+		gamemechanics.setDice();
 		gamemechanics.initialiseGameMap();
 		gamemechanics.setReinforceMechanics();
 		gamemechanics.reinforce();
@@ -29,10 +31,10 @@ public class PlayGame {
 	
 	private static ArrayList<Player> createPlayerList(GameMechanics game){
 		ArrayList<Player> playerlist = new ArrayList<Player>();
-		for (int i = 0; i < 6; i++){
-			Player player = new Player();
-			player.setPlayerName(game, i + 1);
-			player.setPlayerColour(MapConstants.PLAYER_COLORS[i]);
+		for (int i = 1; i <= 6; i++){
+			Player player = new Player(game, (i == 1 || i == 2));
+			player.setPlayerName(i);
+			player.setPlayerColour(MapConstants.PLAYER_COLORS[i - 1]);
 			playerlist.add(player);
 		}
 		return playerlist;

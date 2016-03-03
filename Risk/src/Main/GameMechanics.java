@@ -1,14 +1,22 @@
 package Main;
 
+/*
+Team Name: table_1
+Student Numbers: 14480278, 14461158, 14745991
+
+Development-by-Contract GameMechanics Interface
+*/
+
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
+import Dice.Die;
 import GUI.Output;
 import Game.Army;
 import Game.Country;
+import Game.Player;
 import Input.Input;
-import Player.Player;
 
 public interface GameMechanics {
 	public JTextField getInputField();
@@ -23,6 +31,10 @@ public interface GameMechanics {
 	public void setPlayerList(ArrayList<Player> playerlist);
 	public ArrayList<Player> getPlayerList();
 	public void setDeck();
+	public void setDice();
+	public Die getDice();
+	public Integer getInitialHumanArmySize();
+	public Integer getInitialBotArmySize();
 	public void initialiseGameMap();
 	public void setReinforceMechanics();
 	public void reinforce();
