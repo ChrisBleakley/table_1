@@ -131,17 +131,6 @@ public class GameMechanics implements Main.GameMechanics{
 				}
 			}
 		} while(players2reinforce > 0);
-		System.out.println("Reinforcement finished!");
-		for (Player player: playerlist){
-			System.out.println(player.getPlayerName());
-			System.out.println(player.getAvailableArmies());
-			Integer placedarmiessize = 0;
-			for (Army army : player.getPlacedArmies()){
-				placedarmiessize += army.getSize();
-			}
-			System.out.println(placedarmiessize);
-		}
-		
 	}
 	private Integer decideFirstReinforce(){
 		boolean draw;

@@ -46,7 +46,7 @@ public class Reinforce implements Main.Reinforce {
 	private void checkMatches(Player player){
 		switch (matches.size()){
 			case 0:	gamemechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +
-						" the Inputed String was not found as a substring in the name of a country your armies occupy!");
+						" No matches found for that word in the list of countries you occupy!");
 					break;
 			case 1:	matches.get(0).setSize(matches.get(0).getSize() + 3);
 					player.setAvailableArmies(player.getAvailableArmies() - 3);
