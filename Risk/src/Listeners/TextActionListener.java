@@ -17,17 +17,26 @@ import Input.Input;
 public class TextActionListener implements ActionListener {
 	
 	private Input input;
+	
 	// This Method is used in order to make JTextField from output class accessible.
 	public TextActionListener(Input input){
 		this.input = input;
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		synchronized (input.getInputBuffer()) {
-			input.addInputToBuffer(input.getTextField().getText());
-			input.getTextField().setText("");
-			input.getInputBuffer().notify();
+			
+			/* Check for empty input before processing */
+			if (!input.getTextField().getText().equals("")) {
+				input.addInputToBuffer(input.getTextField().getText());
+				input.getTextField().setText("");
+				input.getInputBuffer().notify();
+			}
 		}
+		
 		return;
 	}
+	
 }

@@ -16,7 +16,9 @@ import Game.GameMechanics;
 import Game.Player;
 
 public class PlayGame {
+	
 	public static void main(String args[]){ 
+		
 		GameMechanics gamemechanics = new GameMechanics();
 		gamemechanics.setInput(new Input(gamemechanics));
 		gamemechanics.setOutput(new Output(gamemechanics));
@@ -29,14 +31,18 @@ public class PlayGame {
 		gamemechanics.reinforce();
 	}
 	
+	/* Create the player objects for each player in the game. */
 	private static ArrayList<Player> createPlayerList(GameMechanics game){
 		ArrayList<Player> playerlist = new ArrayList<Player>();
+		
 		for (int i = 1; i <= 6; i++){
+			
 			Player player = new Player(game, (i == 1 || i == 2));
 			player.setPlayerName(i);
 			player.setPlayerColour(MapConstants.PLAYER_COLORS[i - 1]);
 			playerlist.add(player);
 		}
+		
 		return playerlist;
 	}
 }

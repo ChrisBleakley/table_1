@@ -1,10 +1,10 @@
 package Game;
 
 /*
-Team Name: table_1
-Student Numbers: 14480278, 14461158, 14745991
-
-GameMechanics class
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
+	
+	GameMechanics class: handles most of the logic of a game of RISK.
 */
 
 import GUI.MapConstants;
@@ -15,153 +15,8 @@ import GUI.Output;
 import Deck.Deck;
 import Dice.Die;
 
-public class GameMechanics implements Main.GameMechanics{
-	public GameMechanics(){
-		this.tf = new JTextField();
-		this.armylist = new ArrayList<Army>();
-	}
-	public JTextField getInputField(){
-		return tf;
-	}
-	public void setOutput(Output output){
-		this.output = output;
-	}
-	public Output getOutput(){
-		return this.output;
-	}
-	public void setInput(Input input){
-		this.input = input;
-	}
-	public Input getInput(){
-		return this.input;
-	}
-	public void setCountryList(){
-		this.countrylist = new ArrayList<Country>();
-		for (int i = 0; i < MapConstants.COUNTRY_COORD.length; i++){
-			countrylist.add(new Country(i, countrylist, output.getPanelSize()));
-		}
-		for (int i = 0; i < MapConstants.COUNTRY_COORD.length; i++){
-			countrylist.get(i).setAdjacentCountries(MapConstants.ADJACENT[i]);
-		}
-	}
-	public ArrayList<Country> getCountryList(){
-		return this.countrylist;
-	}
-	public void setArmyList(Player player, Country country, Integer armysize){
-		boolean found = false;
-		int i = 0;
-		while (!found && i < armylist.size()){
-			if (armylist.get(i).getCountry() == country){
-				found = true;
-				if (armylist.get(i).getPlayer() != player){
-					armylist.get(i).getPlayer().removePlacedArmy(armylist.get(i));
-					armylist.get(i).setPlayer(player);
-					player.addPlacedArmies(armylist.get(i));
-				}
-				armylist.get(i).setSize(armysize);
-				output.updateMapPanel();
-				player.setAvailableArmies(player.getAvailableArmies() - armysize);
-
-			}
-			else {
-				i++;
-			}
-		}
-		if (!found){
-			Army newarmy = new Army(armysize, player, country);
-			armylist.add(newarmy);
-			output.updateMapPanel();
-			player.addPlacedArmies(newarmy);
-			player.setAvailableArmies(player.getAvailableArmies() - armysize);
-		}
-	}
-	public ArrayList<Army> getArmyList(){
-		return this.armylist;
-	}
-	public void setPlayerList(ArrayList<Player> playerlist){
-		this.playerlist = playerlist;
-	}
-	public ArrayList<Player> getPlayerList(){
-		return this.playerlist;
-	}
-	public void setDeck(){
-		this.deck = new Deck();
-		this.deck.setCountryList(this.countrylist);
-	}
-	public void setDice(){
-		this.die = new Die();
-	}
-	public Die getDice(){
-		return this.die;
-	}
-	public Integer getInitialHumanArmySize(){
-		return this.initialhumanarmysize;
-	}
-	public Integer getInitialBotArmySize(){
-		return this.initialbotarmysize;
-	}
-	public void initialiseGameMap(){
-		while (!deck.isEmpty()){
-			for (Player player : playerlist){
-				if (player.getHuman()){
-					output.updateGameInfoPanel(player.getPlayerName() + " enter any character to draw a card!");
-					input.getInputCommand();		
-				}
-				Country card = deck.getCountryCard();
-				this.setArmyList(player, card, 1);
-				output.updateGameInfoPanel(player.getPlayerName() + " drew the country card:  " + card.getName() + "  !");			
-			}
-		}
-	}
-	public void setReinforceMechanics(){
-		this.reinforcemechanics = new Reinforce(this);
-	}
-	public void reinforce(){
-		Integer players2reinforce;
-		Integer index = this.decideFirstReinforce();
-		this.reinforcemechanics.setReinforcements(playerlist.get(index));
-		do{
-			players2reinforce = 6;
-			for (Player player : playerlist){
-				if (player.getAvailableArmies() > 0){
-					this.reinforcemechanics.setReinforcements(player);
-				}
-				else {
-					players2reinforce--;
-				}
-			}
-		} while(players2reinforce > 0);
-	}
-	private Integer decideFirstReinforce(){
-		boolean draw;
-		ArrayList<Integer> rolls = new ArrayList<Integer>();
-		Integer index = 0;
-		do{
-			for (int i = 0; i < 2; i++){
-				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " press any character to roll the dice!");
-				this.getInput().getInputCommand();
-				die.roll();
-				Integer roll = die.getFace();
-				rolls.add(roll);
-				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()));
-			}
-			if (rolls.get(0) == rolls.get(1)){
-				draw = true;
-				this.getOutput().updateGameInfoPanel("It's a draw! Let's roll again!");
-			}
-			else if (rolls.get(0) > rolls.get(1)){
-				draw = false;
-				index = 0;
-				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
-			}
-			else {
-				draw = false;
-				index = 1;
-				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
-			}			
-		} while (draw);
-		return index;
-	}
+public class GameMechanics implements Main.GameMechanics {
+	
 	private JTextField tf;
 	private Output output;
 	private Input input;
@@ -173,4 +28,197 @@ public class GameMechanics implements Main.GameMechanics{
 	private Reinforce reinforcemechanics;
 	private Integer initialhumanarmysize = 36;
 	private Integer initialbotarmysize = 24;
+	
+	public GameMechanics(){
+		this.tf = new JTextField();
+		this.armylist = new ArrayList<Army>();
+	}
+	
+	public JTextField getInputField(){
+		return tf;
+	}
+	
+	public void setOutput(Output output){
+		this.output = output;
+	}
+	
+	public Output getOutput(){
+		return this.output;
+	}
+	
+	public void setInput(Input input){
+		this.input = input;
+	}
+	
+	public Input getInput(){
+		return this.input;
+	}
+	
+	public void setCountryList(){
+		
+		this.countrylist = new ArrayList<Country>();
+		
+		for (int i = 0; i < MapConstants.COUNTRY_COORD.length; i++){
+			countrylist.add(new Country(i, countrylist, output.getPanelSize()));
+		}
+		
+		for (int i = 0; i < MapConstants.COUNTRY_COORD.length; i++){
+			countrylist.get(i).setAdjacentCountries(MapConstants.ADJACENT[i]);
+		}
+	}
+	
+	public ArrayList<Country> getCountryList(){
+		return this.countrylist;
+	}
+	
+	public void setArmyList(Player player, Country country, Integer armysize){
+		
+		boolean found = false;
+		int i = 0;
+		
+		while (!found && i < armylist.size()) {
+			if (armylist.get(i).getCountry() == country) {
+				found = true;
+				
+				if (armylist.get(i).getPlayer() != player) {
+					armylist.get(i).getPlayer().removePlacedArmy(armylist.get(i));
+					armylist.get(i).setPlayer(player);
+					player.addPlacedArmies(armylist.get(i));
+				}
+				
+				armylist.get(i).setSize(armysize);
+				output.updateMapPanel();
+				player.setAvailableArmies(player.getAvailableArmies() - armysize);
+
+			}
+			
+			else
+				i++;
+		}
+		
+		if (!found) {
+			Army newarmy = new Army(armysize, player, country);
+			armylist.add(newarmy);
+			output.updateMapPanel();
+			player.addPlacedArmies(newarmy);
+			player.setAvailableArmies(player.getAvailableArmies() - armysize);
+		}
+	}
+	
+	public ArrayList<Army> getArmyList(){
+		return this.armylist;
+	}
+	
+	public void setPlayerList(ArrayList<Player> playerlist){
+		this.playerlist = playerlist;
+	}
+	
+	public ArrayList<Player> getPlayerList(){
+		return this.playerlist;
+	}
+	
+	public void setDeck(){
+		this.deck = new Deck();
+		this.deck.setCountryList(this.countrylist);
+	}
+	
+	public void setDice(){
+		this.die = new Die();
+	}
+	
+	public Die getDice(){
+		return this.die;
+	}
+	
+	public Integer getInitialHumanArmySize(){
+		return this.initialhumanarmysize;
+	}
+	
+	public Integer getInitialBotArmySize(){
+		return this.initialbotarmysize;
+	}
+	
+	public void initialiseGameMap(){
+		
+		while (!deck.isEmpty()) {
+			
+			for (Player player : playerlist) {
+				
+				if (player.getHuman()){
+					output.updateGameInfoPanel(player.getPlayerName() + " enter any character to draw a card!");
+					input.getInputCommand();		
+				}
+				
+				Country card = deck.getCountryCard();
+				this.setArmyList(player, card, 1);
+				output.updateGameInfoPanel(player.getPlayerName() + " drew the country card:  " + card.getName() + "  !");			
+			}
+		}
+	}
+	
+	public void setReinforceMechanics() {
+		this.reinforcemechanics = new Reinforce(this);
+	}
+	
+	public void reinforce() {
+		Integer players2reinforce;
+		Integer index = this.decideFirstReinforce();
+		
+		this.reinforcemechanics.setReinforcements(playerlist.get(index));
+		
+		do{
+			players2reinforce = 6;
+			
+			for (Player player : playerlist){
+				
+				if (player.getAvailableArmies() > 0)
+					this.reinforcemechanics.setReinforcements(player);
+				
+				else
+					players2reinforce--;
+			}
+			
+		} while(players2reinforce > 0);
+	}
+	
+	private Integer decideFirstReinforce(){
+		
+		boolean draw;
+		ArrayList<Integer> rolls = new ArrayList<Integer>();
+		Integer index = 0;
+		
+		do{
+			
+			for (int i = 0; i < 2; i++){
+				
+				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " press any character to roll the dice!");
+				this.getInput().getInputCommand();
+				die.roll();
+				Integer roll = die.getFace();
+				rolls.add(roll);
+				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()));
+			}
+			
+			if (rolls.get(0) == rolls.get(1)){
+				draw = true;
+				this.getOutput().updateGameInfoPanel("It's a draw! Let's roll again!");
+			}
+			
+			else if (rolls.get(0) > rolls.get(1)){
+				draw = false;
+				index = 0;
+				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
+			}
+			
+			else {
+				draw = false;
+				index = 1;
+				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
+			}	
+			
+		} while (draw);
+		
+		return index;
+	}
+	
 }

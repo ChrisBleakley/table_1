@@ -1,10 +1,10 @@
 package Main;
 
 /*
-Team Name: table_1
-Student Numbers: 14480278, 14461158, 14745991
-
-Development-by-Contract GameMechanics Interface
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
+	
+	Development-by-Contract GameMechanics Interface
 */
 
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import Game.Player;
 import Input.Input;
 
 public interface GameMechanics {
+	
 	public JTextField getInputField();
 	public void setOutput(Output output);
 	public Output getOutput();
@@ -39,3 +40,4 @@ public interface GameMechanics {
 	public void setReinforceMechanics();
 	public void reinforce();
 }
+

@@ -1,10 +1,10 @@
 package Deck;
 
 /*
-Team Name: table_1
-Student Numbers: 14480278, 14461158, 14745991
-
-Card Deck class for drawing cards (Only Country cards at the moment
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158, 14745991
+	
+	Card-Deck class for drawing cards (Only Country cards at the moment)
 */
 
 import java.util.ArrayList;
@@ -13,27 +13,38 @@ import Game.Country;
 
 public class Deck implements Main.Deck {
 	
+	private ArrayList<Country> countrycards;
+	
+	/* Add the inital territory cards to the game deck. */
 	public void setCountryList(ArrayList<Country> countrylist){
+		
 		this.countrycards = new ArrayList<Country>();
+		
 		for (Country country : countrylist){
 			this.countrycards.add(country);
 		}
 	}
+	
 	public Country getCountryCard(){
+		
 		Collections.shuffle(countrycards);
 		Country countrycard = countrycards.get(0);
 		countrycards.remove(0);
+		
 		return countrycard;
 	}
+	
 	public boolean isEmpty(){
+		
 		boolean empty;
-		if (countrycards.size() == 0){
+		
+		if (countrycards.size() == 0)
 			empty = true;
-		}
-		else {
+		
+		else 
 			empty = false;
-		}
+		
 		return empty;
 	}
-	private ArrayList<Country> countrycards;
+	
 }
