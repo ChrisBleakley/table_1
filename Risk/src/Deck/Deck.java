@@ -2,7 +2,7 @@ package Deck;
 
 /*
 	Team Name: table_1
-	Student Numbers: 14480278, 14461158, 14745991
+	Student Numbers: 14480278, 14461158.
 	
 	Card-Deck class for drawing cards (Only Country cards at the moment)
 */

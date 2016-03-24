@@ -2,7 +2,7 @@ package Listeners;
 
 /*
 	Team Name: table_1
-	Student Numbers: 14480278, 14461158, 14745991
+	Student Numbers: 14480278, 14461158.
 	
 	Listener we assign to the JTextField in the input.
 	When an action event occurs, the actionPerformed method is invoked.

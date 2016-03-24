@@ -1,10 +1,10 @@
 package Main;
 
 /*
-Team Name: table_1
-Student Numbers: 14480278, 14461158, 14745991
-
-Development-by-Contract Input Interface
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158.
+	
+	Development-by-Contract Input Interface
 */
 
 import javax.swing.JTextField;

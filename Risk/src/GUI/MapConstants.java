@@ -3,13 +3,14 @@ package GUI;
 import java.awt.Color;
 
 /*
-Team Name: table_1
-Student Numbers: 14480278, 14461158, 14745991
-
-The class that contains the map constants
+	Team Name: table_1
+	Student Numbers: 14480278, 14461158.
+	
+	The class that contains the map constants
 */
 
 public class MapConstants {
+	
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;
 	public static final int NUM_PLAYERS_PLUS_NEUTRALS = NUM_PLAYERS + NUM_NEUTRALS;
@@ -18,6 +19,7 @@ public class MapConstants {
 	public static final int INIT_COUNTRIES_NEUTRAL = 6;
 	public static final int INIT_UNITS_PLAYER = 36;
 	public static final int INIT_UNITS_NEUTRAL = 24;
+	
 	public static final String[] COUNTRY_NAMES = {
 		"Ontario","Quebec","NW Territory","Alberta","Greenland","E United States","W United States","Central America","Alaska",
 		"Great Britain","W Europe","S Europe","Ukraine","N Europe","Iceland","Scandinavia",
@@ -25,6 +27,7 @@ public class MapConstants {
 		"E Australia","New Guinea","W Australia","Indonesia",
 		"Venezuela","Peru","Brazil","Argentina",
 		"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  // for reference
+	
 	public static final int[][] ADJACENT = { 
 		{4,1,5,6,3,2},    // 0
 		{4,5,0},
@@ -69,12 +72,14 @@ public class MapConstants {
 		{39,18,41,38,36,37},  //40
 		{38,40}
 	};
+	
 	public static final int NUM_CONTINENTS = 6;
 	public static final String[] CONTINENT_NAMES = {"N America","Europe","Asia","Australia","S America","Africa"};  // for reference 
 	public static final int[] CONTINENT_IDS = {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5};
 	public static final int[] CONTINENT_VALUES = {5,5,7,2,2,3};
 	public static final int FRAME_WIDTH = 1000;    // must be even
 	public static final int FRAME_HEIGHT = 600;
+	
 	public static final int[][] COUNTRY_COORD = {
 		{191,150},     // 0
 		{255,161},
@@ -119,6 +124,7 @@ public class MapConstants {
 		{547,432},        // 40
 		{586,545}
 	};
+	
 	public static final int[][] CONT_COLORS = {
 		{107,142,35},
 		{154,205,50},
@@ -127,6 +133,7 @@ public class MapConstants {
 		{85,107,47},
 		{34,139,34}
 	};
+	
 	public static final String[] CONT_FONTS = {
 		"Baskerville Old Face",
 		"Bookman Old Style",
@@ -135,10 +142,13 @@ public class MapConstants {
 		"Bauhaus 93",
 		"Papyrus"
 	};
+	
 	public static double SCALING_CONSTANT;
+	
 	public static void setScaling(double scaling){
 		SCALING_CONSTANT = scaling;
 	}
+	
 	public static final String[] PLAYER_NAMES = {
 		"Player 1",
 		"Player 2",
@@ -147,12 +157,15 @@ public class MapConstants {
 		"Neutral 3",
 		"Neutral 4"
 	};
+	
 	public static final Color[] PLAYER_COLORS = {
 		Color.BLUE,
 		Color.RED,
-		Color.GRAY,
-		Color.GRAY.brighter(),
-		Color.GRAY.darker().darker(),
-		Color.GRAY.brighter().brighter()
+		Color.GRAY.darker(),
+		Color.YELLOW,
+		Color.CYAN,
+		Color.MAGENTA
 	};
 }
+
+

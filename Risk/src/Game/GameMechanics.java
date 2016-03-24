@@ -2,7 +2,7 @@ package Game;
 
 /*
 	Team Name: table_1
-	Student Numbers: 14480278, 14461158, 14745991
+	Student Numbers: 14480278, 14461158.
 	
 	GameMechanics class: handles most of the logic of a game of RISK.
 */
@@ -138,6 +138,27 @@ public class GameMechanics implements Main.GameMechanics {
 		return this.initialbotarmysize;
 	}
 	
+//	public void initialiseGameMap(){
+//		
+//		while (!deck.isEmpty()) {
+//			
+//			for (Player player : playerlist) {
+//				
+//				if (player.getHuman()){
+//					output.updateGameInfoPanel("\n" + player.getPlayerName() + " enter 'draw' to draw a card");
+//					
+//					while (!input.getInputCommand().equals("draw"))
+//						output.updateGameInfoPanel("That's not a command, " + player.getPlayerName() + " try using 'draw'");
+//							
+//				}
+//				
+//				Country card = deck.getCountryCard();
+//				this.setArmyList(player, card, 1);
+//				output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());			
+//			}
+//		}
+//	}
+	
 	public void initialiseGameMap(){
 		
 		while (!deck.isEmpty()) {
@@ -145,16 +166,34 @@ public class GameMechanics implements Main.GameMechanics {
 			for (Player player : playerlist) {
 				
 				if (player.getHuman()){
-					output.updateGameInfoPanel(player.getPlayerName() + " enter any character to draw a card!");
-					input.getInputCommand();		
+					output.updateGameInfoPanel("\n" + player.getPlayerName() + " enter 'draw' to draw a card");
+					
+					while (!input.getInputCommand().equals("draw"))
+						output.updateGameInfoPanel("That's not a command, " + player.getPlayerName() + " try using 'draw'");
+					
+					for (int i = 0; i < 9; i++) {
+						Country card = deck.getCountryCard();
+						this.setArmyList(player, card, 1);
+						output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
+					}
+							
 				}
 				
-				Country card = deck.getCountryCard();
-				this.setArmyList(player, card, 1);
-				output.updateGameInfoPanel(player.getPlayerName() + " drew the country card:  " + card.getName() + "  !");			
+				else {
+					output.updateGameInfoPanel("\nDrawing cards for " + player.getPlayerName());
+					
+					for (int i = 0; i < 6; i++) {
+						Country card = deck.getCountryCard();
+						this.setArmyList(player, card, 1);
+						output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
+					}
+				}
+				
+							
 			}
 		}
 	}
+	
 	
 	public void setReinforceMechanics() {
 		this.reinforcemechanics = new Reinforce(this);
@@ -191,8 +230,11 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			for (int i = 0; i < 2; i++){
 				
-				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " press any character to roll the dice!");
-				this.getInput().getInputCommand();
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " press any character to roll the dice!");
+				
+				while (!input.getInputCommand().equals("roll"))
+					output.updateGameInfoPanel("That's not a command, try using 'roll'");
+				
 				die.roll();
 				Integer roll = die.getFace();
 				rolls.add(roll);
@@ -201,19 +243,19 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if (rolls.get(0) == rolls.get(1)){
 				draw = true;
-				this.getOutput().updateGameInfoPanel("It's a draw! Let's roll again!");
+				this.getOutput().updateGameInfoPanel("\nIt's a draw! Let's roll again!\n");
 			}
 			
 			else if (rolls.get(0) > rolls.get(1)){
 				draw = false;
 				index = 0;
-				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
 			}
 			
 			else {
 				draw = false;
 				index = 1;
-				this.getOutput().updateGameInfoPanel(playerlist.get(index).getPlayerName() + " rolled the highest!");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
 			}	
 			
 		} while (draw);

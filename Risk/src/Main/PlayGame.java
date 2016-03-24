@@ -2,7 +2,7 @@ package Main;
 
 /*
 	Team Name: table_1
-	Student Numbers: 14480278, 14461158, 14745991
+	Student Numbers: 14480278, 14461158.
 	
 	The class from which the game will run.
 */
@@ -38,7 +38,15 @@ public class PlayGame {
 		for (int i = 1; i <= 6; i++){
 			
 			Player player = new Player(game, (i == 1 || i == 2));
-			player.setPlayerName(i);
+			
+			player.setPlayerName(i);		
+			
+			/* Logic to check for duplicate player names (not working).
+			while (playerlist.contains(player.getPlayerName())) {
+				game.getOutput().updateGameInfoPanel("Players cannot have the same name!\n");
+				player.setPlayerName(i);
+			} */
+			
 			player.setPlayerColour(MapConstants.PLAYER_COLORS[i - 1]);
 			playerlist.add(player);
 		}

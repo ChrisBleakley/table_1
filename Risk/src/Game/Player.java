@@ -2,7 +2,7 @@ package Game;
 
 /*
 	Team Name: table_1
-	Student Numbers: 14480278, 14461158, 14745991
+	Student Numbers: 14480278, 14461158.
   
 	Class stores information about the players, i.e. Name, Colour. 
 	Setting the information involves interacting with the GUI's text field.
