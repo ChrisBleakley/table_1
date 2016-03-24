@@ -7,13 +7,16 @@ package Game;
 	GameMechanics class: handles most of the logic of a game of RISK.
 */
 
-import GUI.MapConstants;
-import Input.Input;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.swing.JTextField;
-import GUI.Output;
+
 import Deck.Deck;
 import Dice.Die;
+import GUI.MapConstants;
+import GUI.Output;
+import Input.Input;
 
 public class GameMechanics implements Main.GameMechanics {
 	
@@ -34,26 +37,32 @@ public class GameMechanics implements Main.GameMechanics {
 		this.armylist = new ArrayList<Army>();
 	}
 	
+	@Override
 	public JTextField getInputField(){
 		return tf;
 	}
 	
+	@Override
 	public void setOutput(Output output){
 		this.output = output;
 	}
 	
+	@Override
 	public Output getOutput(){
 		return this.output;
 	}
 	
+	@Override
 	public void setInput(Input input){
 		this.input = input;
 	}
 	
+	@Override
 	public Input getInput(){
 		return this.input;
 	}
 	
+	@Override
 	public void setCountryList(){
 		
 		this.countrylist = new ArrayList<Country>();
@@ -67,10 +76,12 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 	}
 	
+	@Override
 	public ArrayList<Country> getCountryList(){
 		return this.countrylist;
 	}
 	
+	@Override
 	public void setArmyList(Player player, Country country, Integer armysize){
 		
 		boolean found = false;
@@ -90,10 +101,9 @@ public class GameMechanics implements Main.GameMechanics {
 				output.updateMapPanel();
 				player.setAvailableArmies(player.getAvailableArmies() - armysize);
 
-			}
-			
-			else
+			} else {
 				i++;
+			}
 		}
 		
 		if (!found) {
@@ -105,35 +115,43 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 	}
 	
+	@Override
 	public ArrayList<Army> getArmyList(){
 		return this.armylist;
 	}
 	
+	@Override
 	public void setPlayerList(ArrayList<Player> playerlist){
 		this.playerlist = playerlist;
 	}
 	
+	@Override
 	public ArrayList<Player> getPlayerList(){
 		return this.playerlist;
 	}
 	
+	@Override
 	public void setDeck(){
 		this.deck = new Deck();
 		this.deck.setCountryList(this.countrylist);
 	}
 	
+	@Override
 	public void setDice(){
 		this.die = new Die();
 	}
 	
+	@Override
 	public Die getDice(){
 		return this.die;
 	}
 	
+	@Override
 	public Integer getInitialHumanArmySize(){
 		return this.initialhumanarmysize;
 	}
 	
+	@Override
 	public Integer getInitialBotArmySize(){
 		return this.initialbotarmysize;
 	}
@@ -159,17 +177,27 @@ public class GameMechanics implements Main.GameMechanics {
 //		}
 //	}
 	
+	@Override
 	public void initialiseGameMap(){
 		
 		while (!deck.isEmpty()) {
+			Integer firstplayer = this.decideFirstPlayer();
+			
+			//swap player1 and player2's positions in the list so that player2 goes first.
+			if(firstplayer==1){
+				Collections.swap(playerlist, 0, 1);
+			}
+			
+			output.updateGameInfoPanel(playerlist.get(0).getPlayerName() + " draws first!");
 			
 			for (Player player : playerlist) {
 				
 				if (player.getHuman()){
 					output.updateGameInfoPanel("\n" + player.getPlayerName() + " enter 'draw' to draw a card");
 					
-					while (!input.getInputCommand().equals("draw"))
+					while (!input.getInputCommand().equals("draw")) {
 						output.updateGameInfoPanel("That's not a command, " + player.getPlayerName() + " try using 'draw'");
+					}
 					
 					for (int i = 0; i < 9; i++) {
 						Country card = deck.getCountryCard();
@@ -195,13 +223,15 @@ public class GameMechanics implements Main.GameMechanics {
 	}
 	
 	
+	@Override
 	public void setReinforceMechanics() {
 		this.reinforcemechanics = new Reinforce(this);
 	}
 	
+	@Override
 	public void reinforce() {
 		Integer players2reinforce;
-		Integer index = this.decideFirstReinforce();
+		Integer index = this.decideFirstPlayer();
 		
 		this.reinforcemechanics.setReinforcements(playerlist.get(index));
 		
@@ -210,43 +240,50 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			for (Player player : playerlist){
 				
-				if (player.getAvailableArmies() > 0)
+				if (player.getAvailableArmies() > 0) {
 					this.reinforcemechanics.setReinforcements(player);
-				
-				else
+				} else {
 					players2reinforce--;
+				}
 			}
 			
 		} while(players2reinforce > 0);
 	}
 	
-	private Integer decideFirstReinforce(){
+	private Integer decideFirstPlayer(){
 		
 		boolean draw;
-		ArrayList<Integer> rolls = new ArrayList<Integer>();
 		Integer index = 0;
+		int player1die = 0;
+		int player2die = 0;
 		
 		do{
 			
 			for (int i = 0; i < 2; i++){
 				
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " press any character to roll the dice!");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " type 'roll' to roll the dice!");
 				
-				while (!input.getInputCommand().equals("roll"))
+				while (!input.getInputCommand().equals("roll")) {
 					output.updateGameInfoPanel("That's not a command, try using 'roll'");
+				}
 				
 				die.roll();
-				Integer roll = die.getFace();
-				rolls.add(roll);
+				if(i==0){	
+					player1die = die.getFace();
+				}
+				else {
+					player2die = die.getFace();
+				}
+				
 				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()));
 			}
 			
-			if (rolls.get(0) == rolls.get(1)){
+			if (player1die==player2die){
 				draw = true;
 				this.getOutput().updateGameInfoPanel("\nIt's a draw! Let's roll again!\n");
 			}
 			
-			else if (rolls.get(0) > rolls.get(1)){
+			else if (player1die > player2die){
 				draw = false;
 				index = 0;
 				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
