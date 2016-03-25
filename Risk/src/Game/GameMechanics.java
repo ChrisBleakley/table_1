@@ -197,7 +197,6 @@ public class GameMechanics implements Main.GameMechanics {
 						output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
 					}
 				}
-				
 							
 			}
 		}
@@ -208,7 +207,9 @@ public class GameMechanics implements Main.GameMechanics {
 		Turns gameTurns = new Turns(this.playerlist, this);
 		
 		gameTurns.setTurnOrder();
-		gameTurns.placeReinforcements();
+		gameTurns.placeReinforcements(gameTurns.getPlayerList().get(0));
+		
+		output.updateGameInfoPanel("Turn sequence has ended!");
 	}
 	
 	
@@ -231,7 +232,9 @@ public class GameMechanics implements Main.GameMechanics {
 				
 				if (player.getAvailableArmies() > 0) {
 					this.reinforcemechanics.setReinforcements(player);
-				} else {
+				} 
+				
+				else {
 					players2reinforce--;
 				}
 			}
@@ -250,7 +253,7 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			for (int i = 0; i < 2; i++){
 				
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " type 'roll' to roll the dice!");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " type 'roll' to roll the dice");
 				
 				while (!input.getInputCommand().equals("roll")) {
 					output.updateGameInfoPanel("That's not a command, try using 'roll'");
@@ -271,19 +274,19 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if (player1die==player2die){
 				draw = true;
-				this.getOutput().updateGameInfoPanel("\nIt's a draw! Let's roll again!\n");
+				this.getOutput().updateGameInfoPanel("It's a draw! Let's roll again!");
 			}
 			
 			else if (player1die > player2die){
 				draw = false;
 				index = 0;
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!");
 			}
 			
 			else {
 				draw = false;
 				index = 1;
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!");
 			}	
 			
 		} while (draw);

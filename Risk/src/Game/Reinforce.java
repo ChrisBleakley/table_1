@@ -32,8 +32,7 @@ public class Reinforce implements Main.Reinforce {
 	private void reinforceHuman(Player player) {
 		
 		do {
-			gamemechanics.getOutput().updateGameInfoPanel(
-					player.getPlayerName() + " Enter unambiguous country name (your armies already occupy) to reinforce it:\n");
+			gamemechanics.getOutput().updateGameInfoPanel(player.getPlayerName() + ", enter territory name to reinforce it:\n");
 			
 			String input = gamemechanics.getInput().getInputCommand();
 			
@@ -67,19 +66,16 @@ public class Reinforce implements Main.Reinforce {
 		
 		switch (matches.size()) {
 		
-			case 0:	gamemechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +
-						" No matches found for that word in the list of countries you occupy!");
+			case 0:	gamemechanics.getOutput().updateGameInfoPanel("You don't occupy that territory!");
 					break;
 					
 			case 1:	matches.get(0).setSize(matches.get(0).getSize() + 3);
 					player.setAvailableArmies(player.getAvailableArmies() - 3);
-					gamemechanics.getOutput().updateGameInfoPanel(
-					player.getPlayerName() + " reinforced " + matches.get(0).getCountry().getName() + "!");
+					gamemechanics.getOutput().updateGameInfoPanel("Reinforced " + matches.get(0).getCountry().getName().toUpperCase());
 					break;
 					
 			default:
-					gamemechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +
-							" Ambiguous name for country given! Please try again!");
+					gamemechanics.getOutput().updateGameInfoPanel("That's not a territory, try entering again");
 					matches.clear();
 					break;
 		}

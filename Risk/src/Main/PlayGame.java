@@ -28,8 +28,8 @@ public class PlayGame {
 		gamemechanics.setDeck();
 		gamemechanics.setDice();
 		gamemechanics.initialiseGameMap();
-		//gamemechanics.setReinforceMechanics();
-		//gamemechanics.reinforce();
+		gamemechanics.setReinforceMechanics();
+		gamemechanics.reinforce();
 		
 		gamemechanics.turns();
 	}
