@@ -20,7 +20,7 @@ public class Player implements Main.Player {
 	private Color playerColour;
 	private Integer playerNumber;
 	private Integer availablearmies;
-	private ArrayList<Army> placedarmies;
+	private ArrayList<Army> placedArmies;
 	
 	public Player(GameMechanics gamemechanics, boolean human) {
 		
@@ -33,7 +33,7 @@ public class Player implements Main.Player {
 		else 
 			this.availablearmies = gamemechanics.getInitialBotArmySize();
 		
-		this.placedarmies = new ArrayList<Army>();
+		this.placedArmies = new ArrayList<Army>();
 	}
 	
 	public void setPlayerName(Integer playernumber) {
@@ -80,23 +80,30 @@ public class Player implements Main.Player {
 	}
 	
 	public void addPlacedArmies(Army army) {
-		this.placedarmies.add(army);
+		this.placedArmies.add(army);
 	}
 	
 	public void removePlacedArmy(Army armytoremove) {
 		
-		for (int i = 0; i < placedarmies.size(); i++) {
+		for (int i = 0; i < placedArmies.size(); i++) {
 			
-			if (placedarmies.get(i).getCountry().getName().equals(armytoremove.getCountry().getName())) {
-				this.placedarmies.remove(i);
-				i = placedarmies.size();
+			if (placedArmies.get(i).getCountry().getName().equals(armytoremove.getCountry().getName())) {
+				this.placedArmies.remove(i);
+				i = placedArmies.size();
 			}
 			
 		}
 	}
 	
 	public ArrayList<Army> getPlacedArmies() {
-		return this.placedarmies;
+		return this.placedArmies;
+	}
+	
+	public int getNumberOfTerritoriesOccupied() {
+		return this.placedArmies.size();
 	}
 	
 }
+
+
+

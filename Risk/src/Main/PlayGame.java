@@ -20,6 +20,7 @@ public class PlayGame {
 	public static void main(String args[]){ 
 		
 		GameMechanics gamemechanics = new GameMechanics();
+		
 		gamemechanics.setInput(new Input(gamemechanics));
 		gamemechanics.setOutput(new Output(gamemechanics));
 		gamemechanics.setCountryList();
@@ -27,8 +28,10 @@ public class PlayGame {
 		gamemechanics.setDeck();
 		gamemechanics.setDice();
 		gamemechanics.initialiseGameMap();
-		gamemechanics.setReinforceMechanics();
-		gamemechanics.reinforce();
+		//gamemechanics.setReinforceMechanics();
+		//gamemechanics.reinforce();
+		
+		gamemechanics.turns();
 	}
 	
 	/* Create the player objects for each player in the game. */

@@ -17,6 +17,7 @@ import Dice.Die;
 import GUI.MapConstants;
 import GUI.Output;
 import Input.Input;
+import Turns.Turns;
 
 public class GameMechanics implements Main.GameMechanics {
 	
@@ -156,35 +157,15 @@ public class GameMechanics implements Main.GameMechanics {
 		return this.initialbotarmysize;
 	}
 	
-//	public void initialiseGameMap(){
-//		
-//		while (!deck.isEmpty()) {
-//			
-//			for (Player player : playerlist) {
-//				
-//				if (player.getHuman()){
-//					output.updateGameInfoPanel("\n" + player.getPlayerName() + " enter 'draw' to draw a card");
-//					
-//					while (!input.getInputCommand().equals("draw"))
-//						output.updateGameInfoPanel("That's not a command, " + player.getPlayerName() + " try using 'draw'");
-//							
-//				}
-//				
-//				Country card = deck.getCountryCard();
-//				this.setArmyList(player, card, 1);
-//				output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());			
-//			}
-//		}
-//	}
-	
 	@Override
 	public void initialiseGameMap(){
 		
 		while (!deck.isEmpty()) {
-			Integer firstplayer = this.decideFirstPlayer();
 			
-			//swap player1 and player2's positions in the list so that player2 goes first.
-			if(firstplayer==1){
+			int firstplayer = this.decideFirstPlayer();
+			
+			// swap player1 and player2's positions in the list so that player2 goes first.
+			if(firstplayer == 1){
 				Collections.swap(playerlist, 0, 1);
 			}
 			
@@ -222,6 +203,14 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 	}
 	
+	/* This method handles the turn based logic for the two players */
+	public void turns() {
+		Turns gameTurns = new Turns(this.playerlist, this);
+		
+		gameTurns.setTurnOrder();
+		gameTurns.placeReinforcements();
+	}
+	
 	
 	@Override
 	public void setReinforceMechanics() {
@@ -250,10 +239,10 @@ public class GameMechanics implements Main.GameMechanics {
 		} while(players2reinforce > 0);
 	}
 	
-	private Integer decideFirstPlayer(){
+	public int decideFirstPlayer(){
 		
 		boolean draw;
-		Integer index = 0;
+		int index = 0;
 		int player1die = 0;
 		int player2die = 0;
 		
@@ -268,9 +257,11 @@ public class GameMechanics implements Main.GameMechanics {
 				}
 				
 				die.roll();
+				
 				if(i==0){	
 					player1die = die.getFace();
 				}
+				
 				else {
 					player2die = die.getFace();
 				}
