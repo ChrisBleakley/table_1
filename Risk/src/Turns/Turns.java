@@ -76,9 +76,9 @@ public class Turns {
 	/* Following two methods add the reinforcements to the player's territories and update the map */
 	private void reinforce(Player player, int playerReinforcements) {
 		
-		player.setAvailableArmies(playerReinforcements);
-		
 		if(player.getHuman()){
+			player.setAvailableArmies(playerReinforcements);
+		
 			while (player.getAvailableArmies() > 0) {
 				
 				do {
@@ -123,15 +123,6 @@ public class Turns {
 				this.matches.clear();
 			}
 		}
-		else{
-			Integer i = (int) Math.floor(Math.random() * player.getPlacedArmies().size());
-					
-			Army army = player.getPlacedArmies().get(i);
-			army.setSize(army.getSize() + 1);
-			
-			player.setAvailableArmies(player.getAvailableArmies() - 1);
-		}
-		
 	}
 	
 	private int checkMatches(Player player, int unitsToAdd) {
