@@ -3,6 +3,8 @@ package Turns;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import Game.Army;
 import Game.GameMechanics;
 import Game.Player;
@@ -49,8 +51,9 @@ public class Turns {
 		
 		int reinforcements = 3;
 		
-		if (numberOfTerritories / 3 > 3)
+		if (numberOfTerritories / 3 > 3) {
 			reinforcements = numberOfTerritories / 3;
+		}
 		
 		return reinforcements;
 	}
@@ -71,46 +74,65 @@ public class Turns {
 		reinforce(player, reinforcements);
 	}
 	
-	
 	/* Following two methods add the reinforcements to the player's territories and update the map */
 	private void reinforce(Player player, int playerReinforcements) {
 		
 		player.setAvailableArmies(playerReinforcements);
 		
-		while (player.getAvailableArmies() > 0) {
-			
-			do {
-				gameMechanics.getOutput().updateGameInfoPanel("Enter territory name to reinforce it:\n");
+		if(player.getHuman()){
+			while (player.getAvailableArmies() > 0) {
 				
-				String input = gameMechanics.getInput().getInputCommand();
-				
-				// Units holds the number of units a territory will be reinforced with.
-				gameMechanics.getOutput().updateGameInfoPanel("Enter number of units to place on territory");
-				
-				String units = gameMechanics.getInput().getInputCommand();
-				
-				while (Integer.valueOf(units) > player.getAvailableArmies()) {
-					gameMechanics.getOutput().updateGameInfoPanel("You only have " + player.getAvailableArmies() + " reinforcements!");
+				do {
+					gameMechanics.getOutput().updateGameInfoPanel("Enter territory name to reinforce it:\n");
 					
+					String input = gameMechanics.getInput().getInputCommand();
+					
+					// Units holds the number of units a territory will be reinforced with.
 					gameMechanics.getOutput().updateGameInfoPanel("Enter number of units to place on territory");
-					units = gameMechanics.getInput().getInputCommand();
-				}
-				
-				
-				for (Army army : player.getPlacedArmies()) {
 					
-					String countryname = army.getCountry().getName();
+					String units = null;
 					
-					if (countryname.toLowerCase().contains(input.toLowerCase()))
-						matches.add(army);
-				}
+					while(!NumberUtils.isNumber(units)){
+						units = gameMechanics.getInput().getInputCommand();
+						
+						if(!NumberUtils.isNumber(units)){
+							gameMechanics.getOutput().updateGameInfoPanel("Please enter a number!");
+						}
+					}
+					
+					while (Integer.valueOf(units) > player.getAvailableArmies()) {
+						gameMechanics.getOutput().updateGameInfoPanel("You only have " + player.getAvailableArmies() + " reinforcements!");
+						
+						gameMechanics.getOutput().updateGameInfoPanel("Enter number of units to place on territory");
+						units = gameMechanics.getInput().getInputCommand();
+					}
+					
+					
+					for (Army army : player.getPlacedArmies()) {
+						
+						String countryname = army.getCountry().getName();
+						
+						if (countryname.toLowerCase().contains(input.toLowerCase())) {
+							matches.add(army);
+						}
+					}
+					
+					player.setAvailableArmies(this.checkMatches(player, Integer.valueOf(units)));
+					
+				} while (matches.size() == 0);
 				
-				player.setAvailableArmies(this.checkMatches(player, Integer.valueOf(units)));
-				
-			} while (matches.size() == 0);
-			
-			this.matches.clear();
+				this.matches.clear();
+			}
 		}
+		else{
+			Integer i = (int) Math.floor(Math.random() * player.getPlacedArmies().size());
+					
+			Army army = player.getPlacedArmies().get(i);
+			army.setSize(army.getSize() + 1);
+			
+			player.setAvailableArmies(player.getAvailableArmies() - 1);
+		}
+		
 	}
 	
 	private int checkMatches(Player player, int unitsToAdd) {
@@ -125,8 +147,9 @@ public class Turns {
 					gameMechanics.getOutput().updateGameInfoPanel(
 							"Reinforced " + matches.get(0).getCountry().getName().toUpperCase() + " with " + unitsToAdd + " units");
 					
-					if (player.getAvailableArmies() > 0)
+					if (player.getAvailableArmies() > 0) {
 						gameMechanics.getOutput().updateGameInfoPanel(player.getAvailableArmies() + " units left to add");
+					}
 					break;
 					
 			default:

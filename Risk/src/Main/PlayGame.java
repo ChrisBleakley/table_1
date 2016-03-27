@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 import GUI.MapConstants;
 import GUI.Output;
-import Input.Input;
 import Game.GameMechanics;
 import Game.Player;
+import Input.Input;
 
 public class PlayGame {
 	
@@ -31,7 +31,10 @@ public class PlayGame {
 		gamemechanics.setReinforceMechanics();
 		gamemechanics.reinforce();
 		
-		gamemechanics.turns();
+		//keep loop infinite until breaking condition is added
+		while(true){
+			gamemechanics.turns();
+		}
 	}
 	
 	/* Create the player objects for each player in the game. */

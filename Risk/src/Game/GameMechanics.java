@@ -207,8 +207,11 @@ public class GameMechanics implements Main.GameMechanics {
 		Turns gameTurns = new Turns(this.playerlist, this);
 		
 		gameTurns.setTurnOrder();
-		gameTurns.placeReinforcements(gameTurns.getPlayerList().get(0));
 		
+		int i=0;
+		for(i=0;i<gameTurns.getPlayerList().size();i++){
+			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(i));
+		}
 		output.updateGameInfoPanel("Turn sequence has ended!");
 	}
 	
