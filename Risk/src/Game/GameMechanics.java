@@ -8,7 +8,6 @@ package Game;
 */
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.JTextField;
 
@@ -165,9 +164,9 @@ public class GameMechanics implements Main.GameMechanics {
 			int firstplayer = this.decideFirstPlayer();
 			
 			// swap player1 and player2's positions in the list so that player2 goes first.
-			if(firstplayer == 1){
-				Collections.swap(playerlist, 0, 1);
-			}
+//			if(firstplayer == 1){
+//				Collections.swap(playerlist, 0, 1);
+//			}
 			
 			output.updateGameInfoPanel(playerlist.get(0).getPlayerName() + " draws first!");
 			
@@ -206,7 +205,7 @@ public class GameMechanics implements Main.GameMechanics {
 	public void turns() {
 		Turns gameTurns = new Turns(this.playerlist, this);
 		
-		gameTurns.setTurnOrder();
+		//gameTurns.setTurnOrder();
 		
 		int i=0;
 		for(i=0;i<gameTurns.getPlayerList().size();i++){

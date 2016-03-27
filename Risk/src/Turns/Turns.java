@@ -1,7 +1,6 @@
 package Turns;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -34,17 +33,17 @@ public class Turns {
 	}
 	
 	// Roll dice to decide who goes first
-	public void setTurnOrder() {
-		
-		int firstplayer = gameMechanics.decideFirstPlayer();
-		
-		// swap player1 and player2's positions in the list so that player2 goes first.
-		if(firstplayer == 1){
-			Collections.swap(playerList, 0, 1);
-		}
-		
-		gameMechanics.getOutput().updateGameInfoPanel(playerList.get(0).getPlayerName() + " will go first");
-	}
+//	public void setTurnOrder() {
+//		
+//		int firstplayer = gameMechanics.decideFirstPlayer();
+//		
+//		// swap player1 and player2's positions in the list so that player2 goes first.
+//		if(firstplayer == 1){
+//			Collections.swap(playerList, 0, 1);
+//		}
+//		
+//		gameMechanics.getOutput().updateGameInfoPanel(playerList.get(0).getPlayerName() + " will go first");
+//	}
 	
 	// The number of reinforcements a player gets at the start of each turn.
 	private int calculateReinforements(int numberOfTerritories) {

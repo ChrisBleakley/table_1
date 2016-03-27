@@ -10,6 +10,7 @@ package GUI;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -57,6 +58,7 @@ public class Armies extends JComponent {
 		for (Player player: output.getPlayerList()){
 			y = ystart + ((int)(20 * MapConstants.SCALING_CONSTANT) * i);
 			gfx2d.setPaint(MapConstants.PLAYER_COLORS[i++]);
+			gfx2d.setFont(new Font("ARIAL", Font.BOLD, 14));	
 			gfx2d.setStroke(new BasicStroke(2));
 			gfx2d.drawString(player.getPlayerName() + " " +player.getAvailableArmies().toString(), x, y);
 		}
@@ -70,6 +72,7 @@ public class Armies extends JComponent {
 				int x = army.getCountry().getXCoords() - (diameter/2);
 				int y = army.getCountry().getYCoords() - (diameter/2);
 				Color color = army.getPlayer().getPlayerColour();
+				System.out.println(army.getPlayer().getPlayerName());
 				//draw scalable circle for army
 				gfx2d.setPaint(color);
 				Integer stroke = army.getSize();
