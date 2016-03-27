@@ -161,57 +161,74 @@ public class GameMechanics implements Main.GameMechanics {
 		
 		while (!deck.isEmpty()) {
 			
-			int firstplayer = this.decideFirstPlayer();
+			int indexOfFirstPlayer = decideFirstPlayer();
+			int indexOfSecondPlayer = -1;
 			
-			// swap player1 and player2's positions in the list so that player2 goes first.
-//			if(firstplayer == 1){
-//				Collections.swap(playerlist, 0, 1);
-//			}
+			if (indexOfFirstPlayer == 0)
+				indexOfSecondPlayer = 1;
 			
-			output.updateGameInfoPanel(playerlist.get(0).getPlayerName() + " draws first!");
+			else
+				indexOfSecondPlayer = 0;
 			
-			for (Player player : playerlist) {
-				
-				if (player.getHuman()){
-					output.updateGameInfoPanel("\n" + player.getPlayerName() + " enter 'draw' to draw a card");
+			output.updateGameInfoPanel(playerlist.get(indexOfFirstPlayer).getPlayerName() + " draws first!");
+			
+			drawCardsAndSetTerritories(playerlist.get(indexOfFirstPlayer));
+			drawCardsAndSetTerritories(playerlist.get(indexOfSecondPlayer));
+			
+			for (int i = 2; i < 6; i++)
+				drawCardsAndSetTerritories(playerlist.get(i));
+			
+		}
+	}
+	
+	public void drawCardsAndSetTerritories(Player player) {
+		
+		if (player.getHuman()){
+			output.updateGameInfoPanel("\n" + player.getPlayerName() + " enter 'draw' to draw a card");
+			
+			while (!input.getInputCommand().equals("draw")) {
+				output.updateGameInfoPanel("That's not a command, " + player.getPlayerName() + " try using 'draw'");
+			}
+			
+			for (int i = 0; i < 9; i++) {
+				Country card = deck.getCountryCard();
+				this.setArmyList(player, card, 1);
+				output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
+			}
 					
-					while (!input.getInputCommand().equals("draw")) {
-						output.updateGameInfoPanel("That's not a command, " + player.getPlayerName() + " try using 'draw'");
-					}
-					
-					for (int i = 0; i < 9; i++) {
-						Country card = deck.getCountryCard();
-						this.setArmyList(player, card, 1);
-						output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
-					}
-							
-				}
-				
-				else {
-					output.updateGameInfoPanel("\nDrawing cards for " + player.getPlayerName());
-					
-					for (int i = 0; i < 6; i++) {
-						Country card = deck.getCountryCard();
-						this.setArmyList(player, card, 1);
-						output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
-					}
-				}
-							
+		}
+		
+		else {
+			output.updateGameInfoPanel("\nDrawing cards for " + player.getPlayerName());
+			
+			for (int i = 0; i < 6; i++) {
+				Country card = deck.getCountryCard();
+				this.setArmyList(player, card, 1);
+				output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
 			}
 		}
+		
 	}
 	
 	/* This method handles the turn based logic for the two players */
 	public void turns() {
 		Turns gameTurns = new Turns(this.playerlist, this);
 		
-		//gameTurns.setTurnOrder();
+		int indexOfFirstPlayer = decideFirstPlayer();
+		int indexOfSecondPlayer = -1;
 		
-		int i=0;
-		for(i=0;i<gameTurns.getPlayerList().size();i++){
-			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(i));
+		if (indexOfFirstPlayer == 0)
+			indexOfSecondPlayer = 1;
+		
+		else
+			indexOfSecondPlayer = 0;
+		
+		while (true) {
+			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 		}
-		output.updateGameInfoPanel("Turn sequence has ended!");
+		
+		//output.updateGameInfoPanel("Turn sequence has ended!");
 	}
 	
 	

@@ -30,11 +30,8 @@ public class PlayGame {
 		gamemechanics.initialiseGameMap();
 		gamemechanics.setReinforceMechanics();
 		gamemechanics.reinforce();
-		
-		//keep loop infinite until breaking condition is added
-		while(true){
-			gamemechanics.turns();
-		}
+	
+		gamemechanics.turns();
 	}
 	
 	/* Create the player objects for each player in the game. */
