@@ -12,12 +12,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.JComponent;
 
 import Game.Army;
+import Game.GameMechanics;
+import Game.Player;
 
 public class Armies extends JComponent {
 	
@@ -41,13 +44,31 @@ public class Armies extends JComponent {
 				RenderingHints.VALUE_ANTIALIAS_ON);	
 		return gfx2d;
 	}	
+	private void drawRemainingArmies(Graphics2D gfx2d){
+		int x = (int)(output.getPanelSize().getWidth()/9);
+			int ystart = (int)((output.getPanelSize().getHeight() / 12) *9);
+			int i = 0, y;
+		
+		gfx2d.setPaint(Color.LIGHT_GRAY);
+		gfx2d.fill(new Rectangle(x-5,ystart-20,91,105));
+		gfx2d.setPaint(Color.white);
+		gfx2d.setStroke(new BasicStroke(2));
+		gfx2d.drawRect(x-5, ystart-20, 91, 105);
+		for (Player player: output.getPlayerList()){
+			y = ystart + ((int)(20 * MapConstants.SCALING_CONSTANT) * i);
+			gfx2d.setPaint(MapConstants.PLAYER_COLORS[i++]);
+			gfx2d.setStroke(new BasicStroke(2));
+			gfx2d.drawString(player.getPlayerName() + " " +player.getAvailableArmies().toString(), x, y);
+		}
+	}
 	private void drawArmies(Graphics2D gfx2d){
+		int c=0;
 		for (Army army : output.getArmyList()){
 			if (army.getSize() > 0){
 				Integer diameter = army.getCountry().getRadius() +
 						((army.getCountry().getRadius() / 32) * army.getSize());
-				Integer x = army.getCountry().getXCoords() - (diameter/2);
-				Integer y = army.getCountry().getYCoords() - (diameter/2);
+				int x = army.getCountry().getXCoords() - (diameter/2);
+				int y = army.getCountry().getYCoords() - (diameter/2);
 				Color color = army.getPlayer().getPlayerColour();
 				//draw scalable circle for army
 				gfx2d.setPaint(color);
@@ -68,6 +89,10 @@ public class Armies extends JComponent {
 				this.drawSizeOutline(gfx2d, size, x, y);
 				gfx2d.setPaint(Color.white);
 				gfx2d.drawString(size, x, y);
+				if(c==0){
+					this.drawRemainingArmies(gfx2d);
+					c++;
+				}
 			}
 		}
 	}
@@ -79,5 +104,6 @@ public class Armies extends JComponent {
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
 	private Output output;
+	private GameMechanics gamemechanics;
 	private static final long serialVersionUID = 1L;
 }

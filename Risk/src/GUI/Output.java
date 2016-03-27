@@ -10,6 +10,7 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,8 +23,7 @@ import javax.swing.JTextField;
 import Game.Army;
 import Game.Country;
 import Game.GameMechanics;
-
-import java.util.ArrayList;
+import Game.Player;
 
 public class Output extends JFrame implements Main.Output{
 	
@@ -89,10 +89,12 @@ public class Output extends JFrame implements Main.Output{
 	}
 	
 	// Updates the game information panel to display new text.
+	@Override
 	public void updateGameInfoPanel(String updatedText) {
 		game_info.append("\n" + updatedText);
 		game_info.setCaretPosition(game_info.getDocument().getLength()); //jumps to bottom of game_info panel.
 	}
+	@Override
 	public void updateMapPanel(){
 		this.map_panel.repaint();
 	}
@@ -100,6 +102,7 @@ public class Output extends JFrame implements Main.Output{
 		this.textField = gamemechanics.getInputField();	
 		this.textField.setPreferredSize(new Dimension(400,24));
 	}
+	@Override
 	public Dimension getPanelSize(){
 		return map_size;
 	}
@@ -138,6 +141,9 @@ public class Output extends JFrame implements Main.Output{
 	}
 	ArrayList<Country> getCountryList(){
 		return gamemechanics.getCountryList();
+	}
+	ArrayList<Player> getPlayerList(){
+		return gamemechanics.getPlayerList();
 	}
 	private GameMechanics gamemechanics;
 	private Links linkscomponent;

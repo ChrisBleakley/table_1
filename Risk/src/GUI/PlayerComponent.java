@@ -9,7 +9,6 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -32,17 +31,25 @@ public class PlayerComponent extends JComponent{
 		this.drawPlayerKey(gfx2d);
 	}
 	private void drawPlayerKey(Graphics2D gfx2d){
-		Integer x = (int)(output.getPanelSize().getWidth()/2 - 192);
-		Integer ystart = (int)(output.getPanelSize().getHeight() * 44 / 100);
-		gfx2d.setFont(new Font("Arial", Font.PLAIN, (int)(12*MapConstants.SCALING_CONSTANT)));
-		int i = 0, y;
-		for (String name : MapConstants.PLAYER_NAMES){
-			y = ystart + ((int)(height * MapConstants.SCALING_CONSTANT) * i);
-			this.drawNameOutline(gfx2d, name, x, y);
-			gfx2d.setPaint(MapConstants.PLAYER_COLORS[i++]);
-			gfx2d.drawString(name, x, y);
-			this.drawRectangle(gfx2d, x, y);
-		}
+//		int x = (int)(output.getPanelSize().getWidth()/2 - 100);
+//		int ystart = (int)(output.getPanelSize().getHeight() * 44 / 100);
+//		//draw rectangle around key
+//		gfx2d.setPaint(Color.LIGHT_GRAY);
+//		gfx2d.fill(new Rectangle(x-5,ystart-20,91,105));
+//		gfx2d.setPaint(Color.white);
+//		gfx2d.setStroke(new BasicStroke(2));
+//		gfx2d.drawRect(x-5, ystart-20, 91, 105);
+//		
+//		
+//		gfx2d.setFont(new Font("Arial", Font.PLAIN, (int)(12*MapConstants.SCALING_CONSTANT)));
+//		int i = 0, y;
+//		for (String name : MapConstants.PLAYER_NAMES){
+//			y = ystart + ((int)(height * MapConstants.SCALING_CONSTANT) * i);
+//			this.drawNameOutline(gfx2d, name, x, y);
+//			gfx2d.setPaint(MapConstants.PLAYER_COLORS[i++]);
+//			gfx2d.drawString(name, x, y);
+//			this.drawRectangle(gfx2d, x, y);
+//		}
 	}
 	private void drawRectangle(Graphics2D gfx2d, int x, int y){
 		gfx2d.fill(new Rectangle(x + (int)(64 * MapConstants.SCALING_CONSTANT),
