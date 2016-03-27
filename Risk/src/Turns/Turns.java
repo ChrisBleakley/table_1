@@ -65,12 +65,13 @@ public class Turns {
 	
 	// Method to allow the current player to reinforce their territories.
 	public void placeReinforcements(Player player) {
-		
-		int reinforcements = calculateReinforements(getNumberOfPlayerTerritories(player));
-		
-		gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() + " gets " + reinforcements + " reinforcements this turn.");
-		
-		reinforce(player, reinforcements);
+		if(player.getHuman()){
+			int reinforcements = calculateReinforements(getNumberOfPlayerTerritories(player));
+			
+			gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() + " gets " + reinforcements + " reinforcements this turn.");
+			
+			reinforce(player, reinforcements);
+		}
 	}
 	
 	/* Following two methods add the reinforcements to the player's territories and update the map */
