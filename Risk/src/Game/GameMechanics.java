@@ -239,26 +239,44 @@ public class GameMechanics implements Main.GameMechanics {
 	
 	@Override
 	public void reinforce() {
-		Integer players2reinforce;
-		Integer index = this.decideFirstPlayer();
+		int playersToReinforce = 6;
 		
-		this.reinforcemechanics.setReinforcements(playerlist.get(index));
+		int indexOfFirstPlayer = decideFirstPlayer();
+		int indexOfSecondPlayer = -1;
 		
-		do{
-			players2reinforce = 6;
+		if (indexOfFirstPlayer == 0)
+			indexOfSecondPlayer = 1;
+		
+		else
+			indexOfSecondPlayer = 0;
+		
+		do {
+			// These two if/else blocks handle the case of either player reinforcing first/second.
+			if (playerlist.get(indexOfFirstPlayer).getAvailableArmies() > 0)
+				reinforcemechanics.setReinforcements(playerlist.get(indexOfFirstPlayer));
 			
-			for (Player player : playerlist){
+			else
+				playersToReinforce--;
+			
+			if (playerlist.get(indexOfSecondPlayer).getAvailableArmies() > 0)
+				reinforcemechanics.setReinforcements(playerlist.get(indexOfSecondPlayer));
+			
+			else playersToReinforce--;
 				
-				if (player.getAvailableArmies() > 0) {
-					this.reinforcemechanics.setReinforcements(player);
+			
+			// Handle neutral reinforcements.
+			for (int i = 2; i < playerlist.size(); i++) {
+				
+				if (playerlist.get(i).getAvailableArmies() > 0) {
+					this.reinforcemechanics.setReinforcements(playerlist.get(i));
 				} 
 				
 				else {
-					players2reinforce--;
+					playersToReinforce--;
 				}
 			}
 			
-		} while(players2reinforce > 0);
+		} while(playersToReinforce > 0);
 	}
 	
 	public int decideFirstPlayer(){
