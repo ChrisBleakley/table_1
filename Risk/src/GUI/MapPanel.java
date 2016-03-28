@@ -17,9 +17,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+//import javax.swing.SwingUtilities;
 
 public class MapPanel extends JPanel {
 	public MapPanel(Output output){
@@ -58,7 +58,8 @@ public class MapPanel extends JPanel {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		
+		//JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		Graphics2D gfx2d = (Graphics2D)g;
 		gfx2d.fill(new Rectangle(0, 0, (int)output.getPanelSize().getWidth()+60, (int)output.getPanelSize().getHeight()));	
 		Image scaled = image.getScaledInstance(this.getWidth(),this.getHeight(),Image.SCALE_SMOOTH);

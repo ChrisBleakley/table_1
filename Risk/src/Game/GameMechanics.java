@@ -8,9 +8,7 @@ package Game;
 */
 
 import java.util.ArrayList;
-
 import javax.swing.JTextField;
-
 import Deck.Deck;
 import Dice.Die;
 import GUI.MapConstants;
@@ -20,7 +18,7 @@ import Turns.Turns;
 
 public class GameMechanics implements Main.GameMechanics {
 	
-	private JTextField tf;
+	private JTextField textField;
 	private Output output;
 	private Input input;
 	private ArrayList<Country> countrylist;
@@ -33,13 +31,13 @@ public class GameMechanics implements Main.GameMechanics {
 	private Integer initialbotarmysize = 24;
 	
 	public GameMechanics(){
-		this.tf = new JTextField();
+		this.textField = new JTextField();
 		this.armylist = new ArrayList<Army>();
 	}
 	
 	@Override
 	public JTextField getInputField(){
-		return tf;
+		return textField;
 	}
 	
 	@Override
@@ -156,6 +154,7 @@ public class GameMechanics implements Main.GameMechanics {
 		return this.initialbotarmysize;
 	}
 	
+	/* Roll dice and draw cards to set inital territories */
 	@Override
 	public void initialiseGameMap(){
 		
@@ -181,6 +180,7 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 	}
 	
+	/* Allow the player to draw a card, and set units on that territory. */
 	public void drawCardsAndSetTerritories(Player player) {
 		
 		if (player.getHuman()){
@@ -192,6 +192,7 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			for (int i = 0; i < 9; i++) {
 				Country card = deck.getCountryCard();
+				
 				this.setArmyList(player, card, 1);
 				output.updateGameInfoPanel(player.getPlayerName() + " drew territory card:  " + card.getName().toUpperCase());
 			}
@@ -223,12 +224,17 @@ public class GameMechanics implements Main.GameMechanics {
 		else
 			indexOfSecondPlayer = 0;
 		
-		while (true) {
+		// Just for testing, java complains about infinite loops.
+		int i = 0;
+		
+		while (i < 5) {
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
+			
+			i++;
 		}
 		
-		//output.updateGameInfoPanel("Turn sequence has ended!");
+		output.updateGameInfoPanel("Turn sequence has ended!");
 	}
 	
 	
@@ -279,6 +285,7 @@ public class GameMechanics implements Main.GameMechanics {
 		} while(playersToReinforce > 0);
 	}
 	
+	/* Dice roll logic that is used to determine which human player goes first */
 	public int decideFirstPlayer(){
 		
 		boolean draw;
@@ -298,7 +305,7 @@ public class GameMechanics implements Main.GameMechanics {
 				
 				die.roll();
 				
-				if(i==0){	
+				if(i == 0){	
 					player1die = die.getFace();
 				}
 				
@@ -309,7 +316,7 @@ public class GameMechanics implements Main.GameMechanics {
 				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()));
 			}
 			
-			if (player1die==player2die){
+			if (player1die == player2die){
 				draw = true;
 				this.getOutput().updateGameInfoPanel("It's a draw! Let's roll again!");
 			}
