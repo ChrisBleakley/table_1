@@ -31,7 +31,7 @@ public class Country {
 		
 		this.panel_size = panel_size;
 		id = arrayindex;
-		radius = (int)(20*MapConstants.SCALING_CONSTANT);
+		radius = (int)(15*MapConstants.SCALING_CONSTANT);
 		this.name = MapConstants.COUNTRY_NAMES[arrayindex];
 		this.setCoords(arrayindex);
 		this.othercountries = othercountries;
@@ -93,7 +93,7 @@ public class Country {
 	}
 	
 	private void setFont(){
-		Integer fontsize = (int)(12 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
+		Integer fontsize = (int)(11 * (panel_size.getWidth()) / MapConstants.FRAME_WIDTH);
 		this.font = new Font(MapConstants.CONT_FONTS[continentid], Font.BOLD, fontsize);
 	}
 	

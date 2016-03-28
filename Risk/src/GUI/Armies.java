@@ -20,7 +20,7 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JComponent;
 
 import Game.Army;
-import Game.GameMechanics;
+//import Game.GameMechanics;
 import Game.Player;
 
 public class Armies extends JComponent {
@@ -107,6 +107,7 @@ public class Armies extends JComponent {
 		gfx2d.drawString(name, x + 1, y + 1);
 	}
 	private Output output;
-	private GameMechanics gamemechanics;
+	//private GameMechanics gamemechanics;
 	private static final long serialVersionUID = 1L;
 }
+

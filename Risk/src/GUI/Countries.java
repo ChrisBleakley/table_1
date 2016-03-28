@@ -48,14 +48,14 @@ public class Countries extends JComponent{
 	private void drawCountry(Graphics2D gfx2d, Country country){
 		//Draw Country Outline
 		//Draw central Outline
-		Integer radius = country.getRadius() + (int)(4*MapConstants.SCALING_CONSTANT);
+		Integer radius = country.getRadius() + (int)(1*MapConstants.SCALING_CONSTANT);
 		Integer x = country.getXCoords() - radius;
 		Integer	y = country.getYCoords() - radius;
 		gfx2d.setStroke(new BasicStroke((int)(4*MapConstants.SCALING_CONSTANT)));
 		gfx2d.setPaint(new Color(240,230,140));
 		gfx2d.draw(new Ellipse2D.Double(x, y, radius*2, radius*2));
 		//Draw Outer Outline
-		radius = country.getRadius() + (int)(7*MapConstants.SCALING_CONSTANT);
+		radius = country.getRadius() + (int)(3*MapConstants.SCALING_CONSTANT);
 		x = country.getXCoords() - radius;
 		y = country.getYCoords() - radius;
 		gfx2d.setStroke(new BasicStroke((int)(2*MapConstants.SCALING_CONSTANT)));
