@@ -10,13 +10,9 @@ package GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 //import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import javax.swing.SwingUtilities;
@@ -32,12 +28,12 @@ public class MapPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g){
 		//get image locally
-		try {
-			image = ImageIO.read(new File("MapImages/worldmap.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			image = ImageIO.read(new File("MapImages/worldmap.png"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		//FRANCIS TODO CHANGE CO-ORDINATES ON MAP
 		super.paintComponent(g);
@@ -62,8 +58,8 @@ public class MapPanel extends JPanel {
 		//JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		Graphics2D gfx2d = (Graphics2D)g;
 		gfx2d.fill(new Rectangle(0, 0, (int)output.getPanelSize().getWidth()+60, (int)output.getPanelSize().getHeight()));	
-		Image scaled = image.getScaledInstance(this.getWidth(),this.getHeight(),Image.SCALE_SMOOTH);
-		g.drawImage(scaled, 0, 0, null);
+		//Image scaled = image.getScaledInstance(this.getWidth(),this.getHeight(),Image.SCALE_SMOOTH);
+		//g.drawImage(scaled, 0, 0, null);
 		gfx2d.setColor(new Color(0,191,255));
 	}
 	private Output output;
