@@ -8,7 +8,10 @@ package Game;
 */
 
 import java.util.ArrayList;
+
 import javax.swing.JTextField;
+
+import Combat.Combat;
 import Deck.Deck;
 import Dice.Die;
 import GUI.MapConstants;
@@ -163,19 +166,20 @@ public class GameMechanics implements Main.GameMechanics {
 			int indexOfFirstPlayer = decideFirstPlayer();
 			int indexOfSecondPlayer = -1;
 			
-			if (indexOfFirstPlayer == 0)
+			if (indexOfFirstPlayer == 0) {
 				indexOfSecondPlayer = 1;
-			
-			else
+			} else {
 				indexOfSecondPlayer = 0;
+			}
 			
 			output.updateGameInfoPanel(playerlist.get(indexOfFirstPlayer).getPlayerName() + " draws first!");
 			
 			drawCardsAndSetTerritories(playerlist.get(indexOfFirstPlayer));
 			drawCardsAndSetTerritories(playerlist.get(indexOfSecondPlayer));
 			
-			for (int i = 2; i < 6; i++)
+			for (int i = 2; i < 6; i++) {
 				drawCardsAndSetTerritories(playerlist.get(i));
+			}
 			
 		}
 	}
@@ -214,15 +218,16 @@ public class GameMechanics implements Main.GameMechanics {
 	/* This method handles the turn based logic for the two players */
 	public void turns() {
 		Turns gameTurns = new Turns(this.playerlist, this);
-		
+		Combat combat = new Combat(this.playerlist, this, this.getArmyList());
+
 		int indexOfFirstPlayer = decideFirstPlayer();
 		int indexOfSecondPlayer = -1;
 		
-		if (indexOfFirstPlayer == 0)
+		if (indexOfFirstPlayer == 0) {
 			indexOfSecondPlayer = 1;
-		
-		else
+		} else {
 			indexOfSecondPlayer = 0;
+		}
 		
 		// Just for testing, java complains about infinite loops.
 		int i = 0;
@@ -230,7 +235,9 @@ public class GameMechanics implements Main.GameMechanics {
 		while (i < 5) {
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
-			
+			combat.invasion(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+			combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
+
 			i++;
 		}
 		
@@ -250,24 +257,25 @@ public class GameMechanics implements Main.GameMechanics {
 		int indexOfFirstPlayer = decideFirstPlayer();
 		int indexOfSecondPlayer = -1;
 		
-		if (indexOfFirstPlayer == 0)
+		if (indexOfFirstPlayer == 0) {
 			indexOfSecondPlayer = 1;
-		
-		else
+		} else {
 			indexOfSecondPlayer = 0;
+		}
 		
 		do {
 			// These two if/else blocks handle the case of either player reinforcing first/second.
-			if (playerlist.get(indexOfFirstPlayer).getAvailableArmies() > 0)
+			if (playerlist.get(indexOfFirstPlayer).getAvailableArmies() > 0) {
 				reinforcemechanics.setReinforcements(playerlist.get(indexOfFirstPlayer));
-			
-			else
+			} else {
 				playersToReinforce--;
+			}
 			
-			if (playerlist.get(indexOfSecondPlayer).getAvailableArmies() > 0)
+			if (playerlist.get(indexOfSecondPlayer).getAvailableArmies() > 0) {
 				reinforcemechanics.setReinforcements(playerlist.get(indexOfSecondPlayer));
-			
-			else playersToReinforce--;
+			} else {
+				playersToReinforce--;
+			}
 				
 			
 			// Handle neutral reinforcements.

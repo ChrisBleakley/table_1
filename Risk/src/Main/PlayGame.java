@@ -8,6 +8,7 @@ package Main;
 */
 
 import java.util.ArrayList;
+
 import GUI.MapConstants;
 import GUI.Output;
 import Game.GameMechanics;
@@ -28,7 +29,7 @@ public class PlayGame {
 		gamemechanics.setDice();
 		gamemechanics.initialiseGameMap();
 		gamemechanics.setReinforceMechanics();
-		gamemechanics.reinforce();
+		//gamemechanics.reinforce();
 		gamemechanics.turns();
 		
 	}
