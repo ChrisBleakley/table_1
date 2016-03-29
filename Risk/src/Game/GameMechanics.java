@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import Combat.Combat;
+import Combat.Fortify;
 import Deck.Deck;
 import Dice.Die;
 import GUI.MapConstants;
@@ -219,6 +220,7 @@ public class GameMechanics implements Main.GameMechanics {
 	public void turns() {
 		Turns gameTurns = new Turns(this.playerlist, this);
 		Combat combat = new Combat(this.playerlist, this, this.getArmyList());
+		Fortify fortify = new Fortify(this.playerlist,this, this.getArmyList());
 
 		int indexOfFirstPlayer = decideFirstPlayer();
 		int indexOfSecondPlayer = -1;
@@ -250,6 +252,20 @@ public class GameMechanics implements Main.GameMechanics {
 					while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
 				}
 			while(proceed.equalsIgnoreCase("Continue"));
+			
+			this.getOutput().updateGameInfoPanel("Input 'skip' if you want to skip fortification, and 'continue' to fortify!");
+			do
+				{
+					proceed=this.getInput().getInputCommand();
+					if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
+						this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+					}
+				}
+			while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
+			
+			if(proceed.equalsIgnoreCase("continue")){
+				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+			}
 			
 			combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 

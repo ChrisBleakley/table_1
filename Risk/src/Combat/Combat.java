@@ -24,17 +24,12 @@ public class Combat {
 		this.playerList = _playerList;
 		this.gameMechanics = _gameMechanics;
 		this.armies=armies;
-		
-		gameMechanics.getOutput().updateGameInfoPanel("\n--- Game Turns ---");
 	}
 	
 	public void invasion(Player player){
 		gameMechanics.getOutput().updateGameInfoPanel("\n<----------Combat--------->\n");
 		battle(player);
 		
-		//ask user to input next move i.e. invade or skip 
-		//if invade call this method again
-		//if skip next player's turn
 	}
 	public void battle(Player player){
 		LinkedList<Integer> player1rolls = new LinkedList<Integer>();
@@ -147,9 +142,17 @@ public class Combat {
 			{
 				gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +", enter country you'd like to attack with!");
 				attacking = gameMechanics.getInput().getInputCommand();
+				System.out.println(attacking);
 				//check if user has that army
 				enoughunits=true;
 				owned=false;
+				System.out.println(attacking);
+				for(String s: MapConstants.COUNTRY_NAMES){
+					if(s.toLowerCase().contains(attacking.toLowerCase())&&attacking.length()>3){
+						attacking=s;
+						System.out.println(attacking);
+					}
+				}
 				for(Army a: player.getPlacedArmies()){
 					if(a.getCountry().getName().equalsIgnoreCase(attacking)){
 						attackingarmy=a;
@@ -158,12 +161,13 @@ public class Combat {
 				}
 				
 				if(owned==true){
+					gameMechanics.getOutput().updateGameInfoPanel("\nYou selected " + attacking.toUpperCase()+ "\n");
 					if(attackingarmy.getSize()<2){
 						enoughunits=false;
 					}
 				}
 				if(owned==false){
-					gameMechanics.getOutput().updateGameInfoPanel("You don't own that country!");
+					gameMechanics.getOutput().updateGameInfoPanel("That's not a country you own!");
 				}
 				if(enoughunits==false && owned==true){
 					gameMechanics.getOutput().updateGameInfoPanel("Territory must have at least two units!");
@@ -182,11 +186,20 @@ public class Combat {
 				owned=false;
 				exists=false;
 				borders=true;
+				for(String s: MapConstants.COUNTRY_NAMES){
+					if(s.toLowerCase().contains(defending.toLowerCase())&&defending.length()>3){
+						defending=s;
+					}
+				}
 				for(Army a: player.getPlacedArmies()){
 					if(a.getCountry().getName().equalsIgnoreCase(defending)){
 						attackingarmy=a;
 						owned=true;
 					}
+				}
+				
+				if(owned==false){
+						gameMechanics.getOutput().updateGameInfoPanel("\nYou selected " + defending.toUpperCase()+ " to attack!"+"\n");
 				}
 				
 				//check if countries border
