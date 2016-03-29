@@ -231,11 +231,26 @@ public class GameMechanics implements Main.GameMechanics {
 		
 		// Just for testing, java complains about infinite loops.
 		int i = 0;
-		
+		String proceed = new String();
 		while (i < 5) {
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
-			combat.invasion(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+			
+			do
+				{
+					combat.invasion(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+					this.getOutput().updateGameInfoPanel("Input 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
+					do
+						{
+							proceed=this.getInput().getInputCommand();
+							if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
+								this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+							}
+						}
+					while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
+				}
+			while(proceed.equalsIgnoreCase("Continue"));
+			
 			combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 
 			i++;

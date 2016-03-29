@@ -72,7 +72,6 @@ public class Armies extends JComponent {
 				int x = army.getCountry().getXCoords() - (diameter/2);
 				int y = army.getCountry().getYCoords() - (diameter/2);
 				Color color = army.getPlayer().getPlayerColour();
-				System.out.println(army.getPlayer().getPlayerName());
 				//draw scalable circle for army
 				gfx2d.setPaint(color);
 				Integer stroke = army.getSize();

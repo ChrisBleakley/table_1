@@ -103,7 +103,14 @@ public class Turns {
 					}
 				}
 				
+				if(matches.size()>0){
+					System.out.println("before: " + matches.get(0).getSize());
+				}
 				player.setAvailableArmies(this.checkMatches(player, Integer.valueOf(units)));
+				if(matches.size()>0){
+					System.out.println("after: " + matches.get(0).getSize());
+				}
+				
 				
 			} while (matches.size() == 0);
 			

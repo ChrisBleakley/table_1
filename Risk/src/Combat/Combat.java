@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import GUI.MapConstants;
 import Game.Army;
+import Game.Country;
 import Game.GameMechanics;
 import Game.Player;
 
@@ -30,9 +30,6 @@ public class Combat {
 	
 	public void invasion(Player player){
 		gameMechanics.getOutput().updateGameInfoPanel("\n<----------Combat--------->\n");
-		for(Army w: armies){
-			System.out.println(w.getPlayer().getPlayerName() + " " + w.getSize() + " " + w.getCountry().getName());
-		}
 		battle(player);
 		
 		//ask user to input next move i.e. invade or skip 
@@ -45,58 +42,98 @@ public class Combat {
 		int attunits=attack(player);
 		int defunits = defend(defendingarmy);
 		
-		//roll attack() dice
+		//identify number of dice pairs
+		int pairs;
+		if(attunits>defunits){
+			pairs=defunits;
+		}
+		else{
+			pairs=attunits;
+		}
+		
+		System.out.println(pairs);
+		
+		//roll attacker dice
 		int c;
+		String command = new String();
 		
-		for(c=0;c<attunits;c++){
-			gameMechanics.getDice().roll();
-			player1rolls.push(gameMechanics.getDice().getFace());
-			gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +" rolls " + player1rolls.peekFirst());
-		}
-		
-		gameMechanics.getOutput().updateGameInfoPanel(" ");
-		
-		//roll defend() dice		
-		for(c=0;c<defunits;c++){
-			gameMechanics.getDice().roll();
-			player2rolls.push(gameMechanics.getDice().getFace());
-			gameMechanics.getOutput().updateGameInfoPanel(defendingarmy.getPlayer().getPlayerName() +" rolls " + player2rolls.peekFirst());
-		}
+		do
+			{
+				gameMechanics.getOutput().updateGameInfoPanel("Enter command 'roll' to begin battle rolls!");
+				command = gameMechanics.getInput().getInputCommand();
+				if(command.equalsIgnoreCase("roll")){
+					for(c=0;c<attunits;c++){
+						gameMechanics.getDice().roll();
+						player1rolls.push(gameMechanics.getDice().getFace());
+						gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +" rolls " + player1rolls.peekFirst());
+					}
+					
+					gameMechanics.getOutput().updateGameInfoPanel(" ");
+					
+					//roll defend() dice		
+					for(c=0;c<defunits;c++){
+						gameMechanics.getDice().roll();
+						player2rolls.push(gameMechanics.getDice().getFace());
+						gameMechanics.getOutput().updateGameInfoPanel(defendingarmy.getPlayer().getPlayerName() +" rolls " + player2rolls.peekFirst());
+					}
+				}
+				if(!command.equalsIgnoreCase("roll")){
+					gameMechanics.getOutput().updateGameInfoPanel("You need to enter command 'roll'!");
+				}
+			}
+		while(!command.equalsIgnoreCase("roll"));
 		
 		//sort lists in order starting with highest
 		Collections.sort(player1rolls);
 		Collections.sort(player2rolls);
 		
-		//compare lists
-		int matches;
-		
-		if(player1rolls.size()>player2rolls.size()){
-			matches=player2rolls.size();
-		}
-		else{
-			matches=player1rolls.size();
-		}
-		
+		//calculate units to be removed
 		int removep1=0;
 		int removep2=0;
 		
-		for(c=0;c<matches;c++){
-			if(player1rolls.get(c)<player2rolls.get(c)){
+		for(c=0;c<pairs;c++){
+			if(player1rolls.get(player1rolls.size()-1-c)<player2rolls.get(pairs-1-c)){
+				System.out.println("player1: " + player1rolls.get(player1rolls.size()-1-c));
+				System.out.println("player2: " + player2rolls.get(pairs-1-c));
 				removep1++;
 			}
-			if(player1rolls.get(c)>player2rolls.get(c)){
+			if(player1rolls.get(player1rolls.size()-1-c)>player2rolls.get(pairs-1-c)){
+				System.out.println("player1: " + player1rolls.get(player1rolls.size()-1-c));
+				System.out.println("player2: " + player2rolls.get(pairs-1-c));
 				removep2++;
 			}
 		}
 		
+		System.out.println("player1: " + removep1);
+		System.out.println("player2: " + removep2);
+		
 		//decrease player1 and player2 units accordingly
 		attackingarmy.setSize(attackingarmy.getSize()-removep1);
-		defendingarmy.setSize(attackingarmy.getSize()-removep2);
+		defendingarmy.setSize(defendingarmy.getSize()-removep2);
 		
 		gameMechanics.getOutput().updateMapPanel();
 		
 		//if defender runs out of units attacker gets defender's territory
-		//TO DO
+		if(defendingarmy.getSize()==0){
+			Player temp=defendingarmy.getPlayer();
+			
+			defendingarmy.setSize(player1rolls.size()-removep1);
+			defendingarmy.setPlayer(attackingarmy.getPlayer());
+			attackingarmy.setSize(attackingarmy.getSize()-player1rolls.size()-removep1);
+			
+			attackingarmy.getPlayer().getPlacedArmies().add(defendingarmy);
+			
+			temp.getPlacedArmies().remove(defendingarmy);
+		}
+		if(attackingarmy.getSize()==0){
+			Player temp=attackingarmy.getPlayer();
+			attackingarmy.setSize(player2rolls.size()-removep2);
+			attackingarmy.setPlayer(defendingarmy.getPlayer());
+			defendingarmy.setSize(defendingarmy.getSize()-player2rolls.size()-removep2);
+			
+			defendingarmy.getPlayer().getPlacedArmies().add(attackingarmy);
+			temp.getPlacedArmies().remove(defendingarmy);
+		}
 	}
 	
 	public int attack(Player player){
@@ -105,11 +142,13 @@ public class Combat {
 		String defending=new String();
 		String attacking=new String();
 		
+		boolean enoughunits = true;
 		do 
 			{
 				gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +", enter country you'd like to attack with!");
 				attacking = gameMechanics.getInput().getInputCommand();
 				//check if user has that army
+				enoughunits=true;
 				owned=false;
 				for(Army a: player.getPlacedArmies()){
 					if(a.getCountry().getName().equalsIgnoreCase(attacking)){
@@ -117,14 +156,24 @@ public class Combat {
 						owned=true;
 					}
 				}
+				
+				if(owned==true){
+					if(attackingarmy.getSize()<2){
+						enoughunits=false;
+					}
+				}
 				if(owned==false){
-						gameMechanics.getOutput().updateGameInfoPanel("You don't own that country!");
+					gameMechanics.getOutput().updateGameInfoPanel("You don't own that country!");
+				}
+				if(enoughunits==false && owned==true){
+					gameMechanics.getOutput().updateGameInfoPanel("Territory must have at least two units!");
 				}
 			}
-		while (owned==false);
-		
+		while (owned==false || enoughunits==false);
+				
 		//user enters country to target
 		boolean exists=false;
+		boolean borders=true;
 		do
 			{
 				gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() + ". enter country you'd like to attack!");
@@ -132,6 +181,7 @@ public class Combat {
 				
 				owned=false;
 				exists=false;
+				borders=true;
 				for(Army a: player.getPlacedArmies()){
 					if(a.getCountry().getName().equalsIgnoreCase(defending)){
 						attackingarmy=a;
@@ -139,13 +189,29 @@ public class Combat {
 					}
 				}
 				
+				//check if countries border
+				if(!countriesBorder(defending)){
+					borders=false;
+				}
 				for(String s: MapConstants.COUNTRY_NAMES){
 					if(s.equalsIgnoreCase(defending)){
 						exists=true;
 					}
 				}
+				if(exists==false){
+					gameMechanics.getOutput().updateGameInfoPanel("\nterritory name not recognised!");
+					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
+				}
+				if(borders==false && owned==false && exists==true){
+					gameMechanics.getOutput().updateGameInfoPanel("\nTarget must be a bordering territory!");
+					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
+				}
+				if(owned==true){
+					gameMechanics.getOutput().updateGameInfoPanel("\nYou own this territory!");
+					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
+				}
 			}
-		while(owned==true || exists==false);	
+		while(owned==true || exists==false || borders==false);	
 		
 		//get defending army
 		int x;
@@ -154,13 +220,7 @@ public class Combat {
 				defendingarmy=armies.get(x);
 			}
 		}
-		
-		//check if countries border
-//		if(!countriesBorder(attacking, defending)){
-//			gameMechanics.getOutput().updateGameInfoPanel("Countries do not border!");
-//			attack(player1,player2);
-//		}
-		
+			
 		//user enters how many units he/she will attack with
 		int unitsnum;
 		String units;
@@ -180,10 +240,13 @@ public class Combat {
 				unitsnum = Integer.parseInt(units);
 				
 				if(unitsnum>attackingarmy.getSize() || unitsnum<1){
-					gameMechanics.getOutput().updateGameInfoPanel("Please enter suitable number of units to attack with.");
+					gameMechanics.getOutput().updateGameInfoPanel("Number of attacking units must be at least one and no bigger than your army size! (Also three at max!)");
 				}
+				
+				System.out.println("army size: " + attackingarmy.getSize());
+				System.out.println("unitsnum: " + unitsnum);
 			}
-		while(unitsnum>attackingarmy.getSize() || unitsnum<1);
+		while(unitsnum>=attackingarmy.getSize() || unitsnum>3 || unitsnum<1);
 			
 		//return number of units as int
 		return unitsnum;
@@ -191,55 +254,48 @@ public class Combat {
 	
 	public int defend(Army army){
 		//user inputs how many units he/she would like to defend with, either 1 or 2
-		int unitint;
+		int unitsnum;
+		String units;
+		
 		if(army.getPlayer().getHuman()==true){
-			gameMechanics.getOutput().updateGameInfoPanel(army.getPlayer().getPlayerName() + ", enter number of units you'd like to defend with!");
-			String units = gameMechanics.getInput().getInputCommand();
-			unitint=Integer.parseInt(units);
+			do
+				{
+					do
+						{
+							gameMechanics.getOutput().updateGameInfoPanel(defendingarmy.getPlayer().getPlayerName() + ", enter number of units you'd like to defend with.");
+							units = gameMechanics.getInput().getInputCommand();
+							
+							if(!NumberUtils.isNumber(units)){
+								gameMechanics.getOutput().updateGameInfoPanel("Please enter a number.");
+							}
+						}
+					while(!NumberUtils.isNumber(units));
+					
+					unitsnum = Integer.parseInt(units);
+					
+					if(unitsnum>attackingarmy.getSize() || unitsnum<1){
+						gameMechanics.getOutput().updateGameInfoPanel("Number of attacking units must be at least one and no bigger than your army size! (Also three at max!)");
+					}
+				}
+			while(unitsnum>=attackingarmy.getSize() || unitsnum>2 || unitsnum<1);
 		}
 		else{
-			unitint=(int)(Math.random() * army.getSize())+1;
+			unitsnum=(int)(Math.random() * army.getSize())+1;
 		}
 		//return number of units
-		return unitint;
+		return unitsnum;
 	}
 	
 	//check if countries boarder each other
-	boolean countriesBorder(String country1, String country2){
-		int country1position = 0;
-		int country2position = 0;
-		int p=0;
-		boolean pos1 = false;
-		boolean pos2 = false;
-		
-		for(String name:MapConstants.COUNTRY_NAMES){
-			if(country1.equalsIgnoreCase(name)){
-				country1position=p;
-			}
-			if(country2.equalsIgnoreCase(name)){
-				country2position=p;
-			}
-			p++;
-		}
-		
-		for(int[] positions: MapConstants.ADJACENT){
-			if(ArrayUtils.contains(positions, country1position)){
-				pos1=true;
-			}
-			if(ArrayUtils.contains(positions, country2position)){
-				pos2=true;
-			}
-			if(pos1==true && pos2==true){
+	boolean countriesBorder(String country){
+		for(Country x: attackingarmy.getCountry().getAdjacentCountries()){
+			if(country.equalsIgnoreCase(x.getName())){
+				System.out.println("bop" + " " +x.getName() + " " + country);
 				return true;
 			}
-		} 
+		}
+		System.out.println("dude" + " " + country);
 		return false;
 	}
 	
-	boolean enoughUnits(int armies,Player player){
-		if (player.getAvailableArmies()<armies){
-			return false;
-		}
-		return true;
-	}
 }
