@@ -54,12 +54,12 @@ public class Reinforce implements Main.Reinforce {
 	/* Reinforce the AI territories. */
 	private void reinforceBot(Player player) {
 		
-		Integer i = (int) Math.floor(Math.random() * player.getPlacedArmies().size());
+		int i = (int) Math.floor(Math.random() * player.getPlacedArmies().size());
 		
 		Army army = player.getPlacedArmies().get(i);
-		army.setSize(army.getSize() + 1);
+		army.setSize(army.getSize() + 2);
 		
-		player.setAvailableArmies(player.getAvailableArmies() - 1);
+		player.setAvailableArmies(player.getAvailableArmies() - 2);
 	}
 	
 	private void checkMatches(Player player) {
