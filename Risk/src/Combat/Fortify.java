@@ -27,11 +27,15 @@ public class Fortify {
 		gameMechanics.getOutput().updateGameInfoPanel("\n<----------Fortification--------->\n");
 		int unitsmoved=unitsToMove(player);
 		
-		movefrom.setSize(movefrom.getSize()-unitsmoved);
-		gameMechanics.getOutput().updateGameInfoPanel(movefrom.getCountry().getName()+ "now has " + movefrom.getSize() + " units!");
-		moveto.setSize(moveto.getSize()+unitsmoved);
-		gameMechanics.getOutput().updateGameInfoPanel(moveto.getCountry().getName()+ "now has " + moveto.getSize() + " units!");
-		
+		if(unitsmoved>0){
+			movefrom.setSize(movefrom.getSize()-unitsmoved);
+			gameMechanics.getOutput().updateGameInfoPanel(movefrom.getCountry().getName()+ "now has " + movefrom.getSize() + " units!");
+			moveto.setSize(moveto.getSize()+unitsmoved);
+			gameMechanics.getOutput().updateGameInfoPanel(moveto.getCountry().getName()+ "now has " + moveto.getSize() + " units!");
+		}
+		else{
+			gameMechanics.getOutput().updateGameInfoPanel("\nNo bordering countries!\n");
+		}
 	}
 	
 	public int unitsToMove(Player player){
@@ -73,9 +77,15 @@ public class Fortify {
 				if(enoughunits==false && owned==true){
 					gameMechanics.getOutput().updateGameInfoPanel("Territory must have at least two units!");
 				}
+				
+				System.out.println("owned: " + owned + " enough: " + enoughunits);
 			}
 		while (owned==false || enoughunits==false);
-				
+		
+		if(!hasBorder(movefromstr)){
+			return 0;
+		}
+		
 		//user enters country to move to
 		boolean exists=false;
 		boolean borders=true;
@@ -99,7 +109,7 @@ public class Fortify {
 					}
 				}
 				
-				if(owned==true){
+				if(owned==false){
 						gameMechanics.getOutput().updateGameInfoPanel("\nYou selected " + movetostr.toUpperCase()+"\n");
 				}
 				//check if countries border
@@ -115,16 +125,16 @@ public class Fortify {
 					gameMechanics.getOutput().updateGameInfoPanel("\nterritory name not recognised!");
 					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
 				}
-				if(borders==false && owned==true && exists==true){
+				if(borders==false && owned==false && exists==true){
 					gameMechanics.getOutput().updateGameInfoPanel("\nTarget must be a bordering territory!");
 					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
 				}
-				if(owned==false){
+				if(owned==true){
 					gameMechanics.getOutput().updateGameInfoPanel("\nYou don't own this territory!");
 					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
 				}
 			}
-		while(owned==false || exists==false || borders==false);	
+		while(owned==false || exists==false || borders==true);	
 		
 		//get army units are moved to
 		int x;
@@ -167,6 +177,8 @@ public class Fortify {
 
 	private boolean countriesBorder(String movetostr) {
 		for(Country x: movefrom.getCountry().getAdjacentCountries()){
+			System.out.println(x.getName());
+			System.out.println(movetostr);
 			if(movetostr.equalsIgnoreCase(x.getName())){
 				System.out.println("bop" + " " +x.getName() + " " + movetostr);
 				return true;
@@ -176,4 +188,14 @@ public class Fortify {
 		return false;
 	}
 	
+	private boolean hasBorder(String movetostr){
+		for(Country x:movefrom.getCountry().getAdjacentCountries()){
+			for(Army a: movefrom.getPlayer().getPlacedArmies()){
+				if(a.getCountry().getName().equalsIgnoreCase(x.getName())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

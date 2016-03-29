@@ -232,15 +232,54 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 		
 		// Just for testing, java complains about infinite loops.
-		int i = 0;
 		String proceed = new String();
-		while (i < 5) {
+		String winner = new String();
+		while (true) {
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 			
 			do
 				{
 					combat.invasion(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+					this.getOutput().updateGameInfoPanel("Input 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
+					do
+						{
+							proceed=this.getInput().getInputCommand();
+							if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
+								this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+							}
+						}
+					while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
+				}
+			while(proceed.equalsIgnoreCase("Continue"));
+			
+			//end game when player 2 runs out of armies.
+			if(gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlacedArmies().size()==0){
+				winner=gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlayerName();
+				break;
+			}
+			if(gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlacedArmies().size()==0){
+				winner=gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlayerName();
+				break;
+			}
+			
+			this.getOutput().updateGameInfoPanel("Input 'skip' if you want to skip fortification, and 'continue' to fortify!");
+			do
+				{
+					proceed=this.getInput().getInputCommand();
+					if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
+						this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+					}
+				}
+			while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
+			
+			if(proceed.equalsIgnoreCase("continue")){
+				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+			}
+			
+			do
+				{
+					combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 					this.getOutput().updateGameInfoPanel("Input 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
 					do
 						{
@@ -264,15 +303,21 @@ public class GameMechanics implements Main.GameMechanics {
 			while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
 			
 			if(proceed.equalsIgnoreCase("continue")){
-				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 			}
 			
-			combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
-
-			i++;
+			//check after each turn if the game is over
+			if(gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlacedArmies().size()==0){
+				winner=gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlayerName();
+				break;
+			}
+			if(gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlacedArmies().size()==0){
+				winner=gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlayerName();
+				break;
+			}
 		}
 		
-		output.updateGameInfoPanel("Turn sequence has ended!");
+		output.updateGameInfoPanel("Winner is " + winner +"!\nGAME OVER");
 	}
 	
 	

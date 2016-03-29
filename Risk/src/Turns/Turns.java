@@ -69,7 +69,7 @@ public class Turns {
 		while (player.getAvailableArmies() > 0) {
 			
 			do {
-				gameMechanics.getOutput().updateGameInfoPanel("Enter territory name to reinforce it:\n");
+				gameMechanics.getOutput().updateGameInfoPanel("\nEnter territory name to reinforce it:\n");
 				
 				String input = gameMechanics.getInput().getInputCommand();
 				
