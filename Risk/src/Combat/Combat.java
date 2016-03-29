@@ -193,7 +193,7 @@ public class Combat {
 				}
 				for(Army a: player.getPlacedArmies()){
 					if(a.getCountry().getName().equalsIgnoreCase(defending)){
-						attackingarmy=a;
+						//attackingarmy=a;
 						owned=true;
 					}
 				}

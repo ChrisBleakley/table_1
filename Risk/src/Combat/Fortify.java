@@ -29,13 +29,15 @@ public class Fortify {
 		
 		if(unitsmoved>0){
 			movefrom.setSize(movefrom.getSize()-unitsmoved);
-			gameMechanics.getOutput().updateGameInfoPanel(movefrom.getCountry().getName()+ "now has " + movefrom.getSize() + " units!");
+			gameMechanics.getOutput().updateGameInfoPanel(movefrom.getCountry().getName()+ " now has " + movefrom.getSize() + " units!");
 			moveto.setSize(moveto.getSize()+unitsmoved);
-			gameMechanics.getOutput().updateGameInfoPanel(moveto.getCountry().getName()+ "now has " + moveto.getSize() + " units!");
+			gameMechanics.getOutput().updateGameInfoPanel(moveto.getCountry().getName()+ " now has " + moveto.getSize() + " units!");
 		}
 		else{
 			gameMechanics.getOutput().updateGameInfoPanel("\nNo bordering countries!\n");
 		}
+		
+		gameMechanics.getOutput().updateMapPanel();
 	}
 	
 	public int unitsToMove(Player player){
@@ -65,6 +67,7 @@ public class Fortify {
 					}
 				}
 				
+				System.out.println("movefrom: " + movefrom.getCountry().getName());
 				if(owned==true){
 					gameMechanics.getOutput().updateGameInfoPanel("\nYou selected " + movefromstr.toUpperCase()+ "\n");
 					if(movefrom.getSize()<2){
@@ -104,7 +107,7 @@ public class Fortify {
 				}
 				for(Army a: player.getPlacedArmies()){
 					if(a.getCountry().getName().equalsIgnoreCase(movetostr)){
-						movefrom=a;
+						//movefrom=a;
 						owned=true;
 					}
 				}
@@ -129,14 +132,14 @@ public class Fortify {
 					gameMechanics.getOutput().updateGameInfoPanel("\nTarget must be a bordering territory!");
 					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
 				}
-				if(owned==true){
+				if(owned==false){
 					gameMechanics.getOutput().updateGameInfoPanel("\nYou don't own this territory!");
 					System.out.println("borders: " + borders+ " owned: " + owned + " exists: " + exists);
 				}
 			}
-		while(owned==false || exists==false || borders==true);	
+		while(owned==false || exists==false || borders==false);	
 		
-		//get army units are moved to
+		//get where army units are moved to
 		int x;
 		for(x=0;x<armies.size();x++){
 			if(armies.get(x).getCountry().getName().equalsIgnoreCase(movetostr)){
