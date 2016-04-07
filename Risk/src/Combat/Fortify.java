@@ -67,7 +67,6 @@ public class Fortify {
 					}
 				}
 				
-				System.out.println("movefrom: " + movefrom.getCountry().getName());
 				if(owned==true){
 					gameMechanics.getOutput().updateGameInfoPanel("\nYou selected " + movefromstr.toUpperCase()+ "\n");
 					if(movefrom.getSize()<2){
