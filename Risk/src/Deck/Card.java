@@ -43,7 +43,7 @@ public class Card {
 	/* Returns the entire card as a string, for example:
 	   Peru  /  Army Type: Infantry */
 	public String getCardAsString() {
-		return territory.toString() + "  /  Army Type: " + insignia; 
+		return territory.getName() + "  /  Army Type: " + insignia; 
 	}
 	
 }

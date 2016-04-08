@@ -221,7 +221,10 @@ public class GameMechanics implements Main.GameMechanics {
 		Turns gameTurns = new Turns(this.playerlist, this);
 		Combat combat = new Combat(this.playerlist, this, this.getArmyList());
 		Fortify fortify = new Fortify(this.playerlist,this, this.getArmyList());
-
+		Deck fullDeck = new Deck();
+		
+		fullDeck.setFullDeck(countrylist, MapConstants.COUNTRY_INSIGNIAS);
+		
 		int indexOfFirstPlayer = decideFirstPlayer();
 		int indexOfSecondPlayer = -1;
 		

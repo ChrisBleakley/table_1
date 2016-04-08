@@ -174,6 +174,7 @@ public class MapConstants {
 		Color.CYAN,
 		Color.MAGENTA
 	};
+	
 }
 
 
