@@ -8,7 +8,6 @@ package Main;
 */
 
 import java.util.ArrayList;
-
 import GUI.MapConstants;
 import GUI.Output;
 import Game.GameMechanics;

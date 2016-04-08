@@ -1,9 +1,7 @@
 package Turns;
 
 import java.util.ArrayList;
-
 import org.apache.commons.lang3.math.NumberUtils;
-
 import Game.Army;
 import Game.GameMechanics;
 import Game.Player;
@@ -61,7 +59,7 @@ public class Turns {
 		reinforce(player, reinforcements);
 	}
 	
-	/* Following two methods add the reinforcements to the player's territories and update the map */
+	/* These two methods add the reinforcements to the player's territories and update the map */
 	private void reinforce(Player player, int playerReinforcements) {
 		
 		player.setAvailableArmies(playerReinforcements);
@@ -150,8 +148,6 @@ public class Turns {
 }
 
 	
-
-
 
 
 

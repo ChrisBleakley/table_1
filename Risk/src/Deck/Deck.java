@@ -23,6 +23,7 @@ public class Deck implements Main.Deck {
 		for (Country country : countrylist){
 			this.countrycards.add(country);
 		}
+		
 	}
 	
 	public Country getCountryCard(){
