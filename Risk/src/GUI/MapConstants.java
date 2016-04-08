@@ -26,7 +26,15 @@ public class MapConstants {
 		"Afghanistan","India","Middle East","Japan","Ural","Yakutsk","Kamchatka","Siam","Irkutsk","Siberia","Mongolia","China",
 		"E Australia","New Guinea","W Australia","Indonesia",
 		"Venezuela","Peru","Brazil","Argentina",
-		"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  // for reference
+		"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar" };  // for reference
+	 
+	// Parallel array, works with COUNTRY_NAMES constant for adding insignies to Cards.
+	public static final String[] COUNTRY_INSIGNIAS = {
+		"Cavalry", "Artillery", "Artillery", "Infantry", "Cavalry", "Artillery", "Infantry", "Cavalry", "Infantry",
+		"Cavalry", "Infantry", "Cavalry", "Artillery", "Cavalry", "Infantry", "Artillery", "Infantry", "Infantry",
+		"Artillery", "Infantry", "Cavalry", "Cavalry", "Cavalry", "Artillery", "Infantry", "Artillery", "Artillery",
+		"Cavalry", "Infantry", "Cavalry", "Artillery", "Cavalry", "Artillery", "Cavalry", "Artillery", "Infantry",
+		"Cavalry", "Infantry", "Artillery", "Infantry", "Artillery", "Infantry" };
 	
 	public static final int[][] ADJACENT = { 
 		{4,1,5,6,3,2},    // 0

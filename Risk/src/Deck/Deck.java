@@ -14,6 +14,7 @@ import Game.Country;
 public class Deck implements Main.Deck {
 	
 	private ArrayList<Country> countrycards;
+	private ArrayList<Card> fullGameDeck;
 	
 	/* Add the inital territory cards to the game deck. */
 	public void setCountryList(ArrayList<Country> countrylist){
@@ -24,6 +25,16 @@ public class Deck implements Main.Deck {
 			this.countrycards.add(country);
 		}
 		
+	}
+	
+	/* Whatever */
+	public void setFullDeck(ArrayList<Country> countryList, String[] insignias) {
+		
+	}
+	
+	/* W/e */
+	public ArrayList<Card> getFullDeck() {
+		return this.fullGameDeck;
 	}
 	
 	public Country getCountryCard(){
