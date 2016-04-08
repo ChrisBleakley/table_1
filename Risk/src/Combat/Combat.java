@@ -33,8 +33,8 @@ public class Combat {
 	}
 	public void battle(Player player){
 		LinkedList<Integer> player1rolls = new LinkedList<Integer>();
-		LinkedList<Integer> player2rolls = new LinkedList<Integer>();
-		int attunits=attack(player);
+		LinkedList<Integer> player2rolls = new LinkedList<Integer>();	
+		int attunits = attack(player);
 		int defunits = defend(defendingarmy);
 		
 		//identify number of dice pairs
@@ -142,6 +142,7 @@ public class Combat {
 			{
 				gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +", enter country you'd like to attack with!");
 				attacking = gameMechanics.getInput().getInputCommand();
+				
 				System.out.println(attacking);
 				//check if user has that army
 				enoughunits=true;

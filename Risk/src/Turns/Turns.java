@@ -56,7 +56,7 @@ public class Turns {
 		gameMechanics.getOutput().updateMapPanel();
 		int reinforcements = calculateReinforements(getNumberOfPlayerTerritories(player));
 			
-		gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() + " gets " + reinforcements + " reinforcements this turn.");
+		gameMechanics.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets " + reinforcements + " REINFORCEMENTS this turn.");
 			
 		reinforce(player, reinforcements);
 	}

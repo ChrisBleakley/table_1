@@ -235,8 +235,9 @@ public class GameMechanics implements Main.GameMechanics {
 		String proceed = new String();
 		String winner = new String();
 		while (true) {
+			
+			// turn sequence for first player.
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
-			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 			
 			do
 				{
@@ -276,6 +277,10 @@ public class GameMechanics implements Main.GameMechanics {
 			if(proceed.equalsIgnoreCase("continue")){
 				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			}
+			
+			
+			// turn sequence for the second player.
+			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 			
 			do
 				{
