@@ -227,7 +227,8 @@ public class GameMechanics implements Main.GameMechanics {
 		
 		if (indexOfFirstPlayer == 0) {
 			indexOfSecondPlayer = 1;
-		} else {
+		} 
+		else {
 			indexOfSecondPlayer = 0;
 		}
 		
@@ -348,13 +349,15 @@ public class GameMechanics implements Main.GameMechanics {
 			// These two if/else blocks handle the case of either player reinforcing first/second.
 			if (playerlist.get(indexOfFirstPlayer).getAvailableArmies() > 0) {
 				reinforcemechanics.setReinforcements(playerlist.get(indexOfFirstPlayer));
-			} else {
+			} 
+			else {
 				playersToReinforce--;
 			}
 			
 			if (playerlist.get(indexOfSecondPlayer).getAvailableArmies() > 0) {
 				reinforcemechanics.setReinforcements(playerlist.get(indexOfSecondPlayer));
-			} else {
+			} 
+			else {
 				playersToReinforce--;
 			}
 				

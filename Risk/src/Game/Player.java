@@ -10,6 +10,7 @@ package Game;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import Deck.Card;
 import Main.GameMechanics;
 
 public class Player implements Main.Player {
@@ -21,6 +22,7 @@ public class Player implements Main.Player {
 	private Integer playerNumber;
 	private Integer availablearmies;
 	private ArrayList<Army> placedArmies;
+	private ArrayList<Card> playerHand;
 	
 	public Player(GameMechanics gamemechanics, boolean human) {
 		
@@ -93,6 +95,32 @@ public class Player implements Main.Player {
 			}
 			
 		}
+	}
+	
+	/* Method adds a Card to the player's hand. */
+	public void addCardToPlayerHand(Card card) {
+		playerHand.add(card);
+	}
+	
+	public ArrayList<Card> getPlayerHand() {
+		return this.playerHand;
+	}
+	
+	/* Remove a card from the player's hand, will be useful for when cards are traded in. */
+	public String removeCardFromHand(Card card) {
+		
+		if (playerHand.isEmpty())
+			return playerName + ", you don't have any cards in your hand.";
+		
+		// Remove the card.
+		for (Card c : playerHand) {
+			if (c.getCardTerritoryString().equals(card.getCardTerritoryString())) {
+				playerHand.remove(card);
+				break;
+			}
+		}
+		
+		return "Removed " + card.getCardTerritoryString() + " card from " + playerName + "'s hand";
 	}
 	
 	public ArrayList<Army> getPlacedArmies() {
