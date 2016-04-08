@@ -102,11 +102,13 @@ public class Player implements Main.Player {
 		playerHand.add(card);
 	}
 	
+	/* Returns the players hand. */
 	public ArrayList<Card> getPlayerHand() {
 		return this.playerHand;
 	}
 	
-	/* Remove a card from the player's hand, will be useful for when cards are traded in. */
+	/* Remove a card from the player's hand, will be useful for when cards are traded in. 
+	   Returns a string with the territory name. */
 	public String removeCardFromHand(Card card) {
 		
 		if (playerHand.isEmpty())

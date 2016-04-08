@@ -25,20 +25,25 @@ public class Card {
 		insignia = _insignia;
 	}
 	
+	/* Returns a country object for that card. */
 	public Country getCardTerritory() {
 		return this.territory;
 	}
 	
+	/* Returns a string representation of the territory (country) for that card. */
 	public String getCardTerritoryString() {
 		return this.territory.toString();
 	}
 	
+	/* Returns a string for the card's insignia. */
 	public String getCardInsignia() {
 		return insignia;
 	}
 	
+	/* Returns the entire card as a string, for example:
+	   Peru  /  Army Type: Infantry */
 	public String getCardAsString() {
-		return territory.toString() + "  /  " + insignia; 
+		return territory.toString() + "  /  Army Type: " + insignia; 
 	}
 	
 }
