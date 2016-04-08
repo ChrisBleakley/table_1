@@ -4,7 +4,7 @@ package Deck;
 	Team Name: table_1
 	Student Numbers: 14480278, 14461158.
 	
-	Card-Deck class for drawing cards (Only Country cards at the moment)
+	Card-Deck class for drawing cards
 */
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class Deck implements Main.Deck {
 	private ArrayList<Card> deckBackup = new ArrayList<Card>();
 	
 	
-	/* Add the inital territory cards to the game deck. */
+	/* Add the initial territory cards to the game deck. */
 	public void setCountryList(ArrayList<Country> countrylist){
 		
 		this.countrycards = new ArrayList<Country>();
