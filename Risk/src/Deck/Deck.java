@@ -9,6 +9,7 @@ package Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import Game.Country;
 
 public class Deck implements Main.Deck {
@@ -22,6 +23,7 @@ public class Deck implements Main.Deck {
 	
 	
 	/* Add the initial territory cards to the game deck. */
+	@Override
 	public void setCountryList(ArrayList<Country> countrylist){
 		
 		this.countrycards = new ArrayList<Country>();
@@ -39,25 +41,30 @@ public class Deck implements Main.Deck {
 			
 			Card nextCard = new Card(countryList.get(i), insignias[i]);
 			
+			System.out.println("country name : " + countryList.get(i).getName() + " insiginia: " + insignias[i]);
 			fullGameDeck.add(nextCard);
 		}
 		
 		Collections.shuffle(fullGameDeck);
 		
 		/* Store the deck in the backup list. */
-		for (Card card : fullGameDeck)
+		for (Card card : fullGameDeck) {
 			deckBackup.add(card);
+		}
 	}
 	
 	/* Draw a card from the deck. If deck is empty, reset it and draw. */
 	public Card getCard() {
 		
-		if (fullGameDeck.isEmpty())
+		if (fullGameDeck.isEmpty()) {
 			resetDeck();
+		}
 		
 		Card card = fullGameDeck.get(0);
 		fullGameDeck.remove(0);
 		
+		System.out.println("boop");
+		System.out.println(card);
 		return card;
 	}
 	
@@ -69,8 +76,9 @@ public class Deck implements Main.Deck {
 	/* Clears the deck (if needed), and resets the cards. */
 	public void resetDeck() { 
 		
-		if (!fullGameDeck.isEmpty())
+		if (!fullGameDeck.isEmpty()) {
 			fullGameDeck.clear();
+		}
 		
 		for (Card card : deckBackup) {
 			fullGameDeck.add(card);
@@ -79,6 +87,7 @@ public class Deck implements Main.Deck {
 		Collections.shuffle(fullGameDeck);
 	}
 	
+	@Override
 	public Country getCountryCard(){
 		
 		Collections.shuffle(countrycards);
@@ -88,15 +97,16 @@ public class Deck implements Main.Deck {
 		return countrycard;
 	}
 	
+	@Override
 	public boolean isEmpty(){
 		
 		boolean empty;
 		
-		if (countrycards.size() == 0)
+		if (countrycards.size() == 0) {
 			empty = true;
-		
-		else 
+		} else {
 			empty = false;
+		}
 		
 		return empty;
 	}

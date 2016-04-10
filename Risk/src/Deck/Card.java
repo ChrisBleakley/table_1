@@ -32,7 +32,7 @@ public class Card {
 	
 	/* Returns a string representation of the territory (country) for that card. */
 	public String getCardTerritoryString() {
-		return this.territory.toString();
+		return this.territory.getName();
 	}
 	
 	/* Returns a string for the card's insignia. */

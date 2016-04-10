@@ -218,12 +218,13 @@ public class GameMechanics implements Main.GameMechanics {
 	
 	/* This method handles the turn based logic for the two players */
 	public void turns() {
-		Turns gameTurns = new Turns(this.playerlist, this);
-		Combat combat = new Combat(this.playerlist, this, this.getArmyList());
-		Fortify fortify = new Fortify(this.playerlist,this, this.getArmyList());
+		//make deck object and set deck's contents
 		Deck fullDeck = new Deck();
-		
 		fullDeck.setFullDeck(countrylist, MapConstants.COUNTRY_INSIGNIAS);
+		
+		Turns gameTurns = new Turns(this.playerlist, this);
+		Combat combat = new Combat(this.playerlist, this, this.getArmyList(), fullDeck);
+		Fortify fortify = new Fortify(this.playerlist,this, this.getArmyList());
 		
 		int indexOfFirstPlayer = decideFirstPlayer();
 		int indexOfSecondPlayer = -1;

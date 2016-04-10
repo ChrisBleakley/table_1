@@ -108,6 +108,7 @@ public class Player implements Main.Player {
 	
 	/* Method adds a Card to the player's hand. */
 	public void addCardToPlayerHand(Card card) {
+		System.out.println("inside: " + card);
 		playerHand.add(card);
 	}
 	

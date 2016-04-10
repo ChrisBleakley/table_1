@@ -39,7 +39,6 @@ public class MapPanel extends JPanel {
 		try {
 			image = ImageIO.read(url.openStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

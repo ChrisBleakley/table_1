@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import Deck.Card;
+import Deck.Deck;
 import GUI.MapConstants;
 import Game.Army;
 import Game.Country;
@@ -19,11 +21,13 @@ public class Combat {
 	private ArrayList<Army> armies = new ArrayList<Army>();
 	private Army attackingarmy = null;
 	private Army defendingarmy = null;
+	private Deck deck = new Deck();
 	
-	public Combat(ArrayList<Player> _playerList, GameMechanics _gameMechanics, ArrayList<Army> armies) {
+	public Combat(ArrayList<Player> _playerList, GameMechanics _gameMechanics, ArrayList<Army> armies, Deck deck) {
 		this.playerList = _playerList;
 		this.gameMechanics = _gameMechanics;
 		this.armies=armies;
+		this.deck=deck;
 	}
 	
 	public void invasion(Player player){
@@ -36,6 +40,7 @@ public class Combat {
 		LinkedList<Integer> player2rolls = new LinkedList<Integer>();	
 		int attunits = attack(player);
 		int defunits = defend(defendingarmy);
+		boolean conquered = false;
 		
 		//identify number of dice pairs
 		int pairs;
@@ -120,6 +125,15 @@ public class Combat {
 		if(defendingarmy.getSize()==0){
 			gameMechanics.getOutput().updateGameInfoPanel(attackingarmy.getPlayer().getPlayerName() + " gets " + defendingarmy.getPlayer().getPlayerName() + "'s territory!");			
 			Player temp=defendingarmy.getPlayer();
+			
+			if(conquered==false){
+				Card card=deck.getCard();
+				attackingarmy.getPlayer().addCardToPlayerHand(card);
+				System.out.println("outside: " + card.getCardTerritoryString());
+				gameMechanics.getOutput().updateGameInfoPanel("\n"+attackingarmy.getPlayer().getPlayerName() + " draws " + card.getCardTerritoryString() + "!");		
+			}
+			
+			conquered=true;
 			
 			defendingarmy.setSize(player1rolls.size()-removep1);
 			defendingarmy.setPlayer(attackingarmy.getPlayer());
