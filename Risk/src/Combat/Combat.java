@@ -106,10 +106,18 @@ public class Combat {
 		attackingarmy.setSize(attackingarmy.getSize()-removep1);
 		defendingarmy.setSize(defendingarmy.getSize()-removep2);
 		
+		if(removep1>0){
+			gameMechanics.getOutput().updateGameInfoPanel("\nPlayer 1 loses " + removep1 + " units!");
+		}
+		if(removep2>0){
+			gameMechanics.getOutput().updateGameInfoPanel("\nPlayer 2 loses " + removep2 + " units!");
+		}
+		
 		gameMechanics.getOutput().updateMapPanel();
 		
 		//if defender runs out of units attacker gets defender's territory
 		if(defendingarmy.getSize()==0){
+			gameMechanics.getOutput().updateGameInfoPanel(attackingarmy.getPlayer().getPlayerName() + " gets " + defendingarmy.getPlayer().getPlayerName() + "'s territory!");			
 			Player temp=defendingarmy.getPlayer();
 			
 			defendingarmy.setSize(player1rolls.size()-removep1);
@@ -121,6 +129,7 @@ public class Combat {
 			temp.getPlacedArmies().remove(defendingarmy);
 		}
 		if(attackingarmy.getSize()==0){
+			gameMechanics.getOutput().updateGameInfoPanel(defendingarmy.getPlayer().getPlayerName() + " gets " + attackingarmy.getPlayer().getPlayerName() + "'s territory!");			
 			Player temp=attackingarmy.getPlayer();
 			attackingarmy.setSize(player2rolls.size()-removep2);
 			attackingarmy.setPlayer(defendingarmy.getPlayer());
