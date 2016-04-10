@@ -10,6 +10,7 @@ package Game;
 
 import java.awt.Color;
 import java.util.ArrayList;
+
 import Deck.Card;
 import Main.GameMechanics;
 
@@ -29,58 +30,66 @@ public class Player implements Main.Player {
 		this.gamemechanics = gamemechanics;
 		this.human = human;
 		
-		if (human)
+		if (human) {
 			this.availablearmies = gamemechanics.getInitialHumanArmySize();
-		
-		else 
+		} else {
 			this.availablearmies = gamemechanics.getInitialBotArmySize();
+		}
 		
 		this.placedArmies = new ArrayList<Army>();
 	}
 	
+	@Override
 	public void setPlayerName(Integer playernumber) {
 		
 		if (human) {
 			playerNumber = playernumber;
-			gamemechanics.getOutput().updateGameInfoPanel("Enter player " + playerNumber + "'s name:");
+			gamemechanics.getOutput().updateGameInfoPanel("\nEnter player " + playerNumber + "'s name:");
 			
 			playerName = gamemechanics.getInput().getInputCommand();
 			
-			gamemechanics.getOutput().updateGameInfoPanel("Player " + playerName + " has joined the game");
-		}
-		
-		else
+			gamemechanics.getOutput().updateGameInfoPanel("\nPlayer " + playerName + " has joined the game!");
+		} else {
 			playerName = "Neutral " + String.valueOf(playernumber - 2);
+		}
 	}
 	
+	@Override
 	public String getPlayerName() {
 		return playerName;
 	}
 	
+	@Override
 	public void setPlayerColour(Color _playerColour) {
 		playerColour = _playerColour;
 	}
 	
+	@Override
 	public Color getPlayerColour() {
 		return playerColour;
 	}
 	
+	@Override
 	public int getPlayerNumber() {
 		return this.playerNumber;
 	}
 	
+	@Override
 	public boolean getHuman() {
 		return this.human;
 	}
 	
+	@Override
 	public void setAvailableArmies(Integer availablearmies) {
 		this.availablearmies = availablearmies;
 	}
 	
+	@Override
 	public Integer getAvailableArmies() {
 		return availablearmies;
 	}
 	
+	@Override
 	public void addPlacedArmies(Army army) {
 		this.placedArmies.add(army);
 	}
@@ -111,8 +120,9 @@ public class Player implements Main.Player {
 	   Returns a string with the territory name. */
 	public String removeCardFromHand(Card card) {
 		
-		if (playerHand.isEmpty())
+		if (playerHand.isEmpty()) {
 			return playerName + ", you don't have any cards in your hand.";
+		}
 		
 		// Remove the card.
 		for (Card c : playerHand) {
@@ -125,6 +135,7 @@ public class Player implements Main.Player {
 		return "Removed " + card.getCardTerritoryString() + " card from " + playerName + "'s hand";
 	}
 	
+	@Override
 	public ArrayList<Army> getPlacedArmies() {
 		return this.placedArmies;
 	}

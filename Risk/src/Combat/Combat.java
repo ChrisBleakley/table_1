@@ -54,8 +54,9 @@ public class Combat {
 		
 		do
 			{
-				gameMechanics.getOutput().updateGameInfoPanel("Enter command 'roll' to begin battle rolls!");
+				gameMechanics.getOutput().updateGameInfoPanel("\nEnter command 'roll' to begin battle rolls!");
 				command = gameMechanics.getInput().getInputCommand();
+				gameMechanics.getOutput().updateGameInfoPanel("\n");
 				if(command.equalsIgnoreCase("roll")){
 					for(c=0;c<attunits;c++){
 						gameMechanics.getDice().roll();
@@ -107,10 +108,10 @@ public class Combat {
 		defendingarmy.setSize(defendingarmy.getSize()-removep2);
 		
 		if(removep1>0){
-			gameMechanics.getOutput().updateGameInfoPanel("\nPlayer 1 loses " + removep1 + " units!");
+			gameMechanics.getOutput().updateGameInfoPanel("\nPlayer 1 loses " + removep1 + " units!\n");
 		}
 		if(removep2>0){
-			gameMechanics.getOutput().updateGameInfoPanel("\nPlayer 2 loses " + removep2 + " units!");
+			gameMechanics.getOutput().updateGameInfoPanel("\nPlayer 2 loses " + removep2 + " units!\n");
 		}
 		
 		gameMechanics.getOutput().updateMapPanel();
@@ -255,7 +256,7 @@ public class Combat {
 						units = gameMechanics.getInput().getInputCommand();
 						
 						if(!NumberUtils.isNumber(units)){
-							gameMechanics.getOutput().updateGameInfoPanel("Please enter a number.");
+							gameMechanics.getOutput().updateGameInfoPanel("\nPlease enter a number.");
 						}
 					}
 				while(!NumberUtils.isNumber(units));
@@ -289,7 +290,7 @@ public class Combat {
 							units = gameMechanics.getInput().getInputCommand();
 							
 							if(!NumberUtils.isNumber(units)){
-								gameMechanics.getOutput().updateGameInfoPanel("Please enter a number.");
+								gameMechanics.getOutput().updateGameInfoPanel("\nPlease enter a number.");
 							}
 						}
 					while(!NumberUtils.isNumber(units));

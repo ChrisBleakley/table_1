@@ -1,7 +1,9 @@
 package Turns;
 
 import java.util.ArrayList;
+
 import org.apache.commons.lang3.math.NumberUtils;
+
 import Game.Army;
 import Game.GameMechanics;
 import Game.Player;
@@ -67,12 +69,12 @@ public class Turns {
 		while (player.getAvailableArmies() > 0) {
 			
 			do {
-				gameMechanics.getOutput().updateGameInfoPanel("\nEnter territory name to reinforce it:\n");
+				gameMechanics.getOutput().updateGameInfoPanel("\nEnter territory name to reinforce it:");
 				
 				String input = gameMechanics.getInput().getInputCommand();
 				
 				// Units holds the number of units a territory will be reinforced with.
-				gameMechanics.getOutput().updateGameInfoPanel("Enter number of units to place on territory");
+				gameMechanics.getOutput().updateGameInfoPanel("\nEnter number of units to place on territory!");
 				
 				String units = null;
 				
@@ -126,8 +128,7 @@ public class Turns {
 					
 			case 1:	matches.get(0).setSize(matches.get(0).getSize() + unitsToAdd);
 					player.setAvailableArmies(player.getAvailableArmies() - unitsToAdd);
-					gameMechanics.getOutput().updateGameInfoPanel(
-							"Reinforced " + matches.get(0).getCountry().getName().toUpperCase() + " with " + unitsToAdd + " units");
+					gameMechanics.getOutput().updateGameInfoPanel("\nReinforced " + matches.get(0).getCountry().getName().toUpperCase() + " with " + unitsToAdd + " units!");
 					
 					if (player.getAvailableArmies() > 0) {
 						gameMechanics.getOutput().updateGameInfoPanel(player.getAvailableArmies() + " units left to add");

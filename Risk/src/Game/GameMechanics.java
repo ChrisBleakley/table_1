@@ -205,7 +205,7 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 		
 		else {
-			output.updateGameInfoPanel("\nDrawing cards for " + player.getPlayerName());
+			output.updateGameInfoPanel("\nDrawing cards for " + player.getPlayerName()+".\n");
 			
 			for (int i = 0; i < 6; i++) {
 				Country card = deck.getCountryCard();
@@ -246,12 +246,12 @@ public class GameMechanics implements Main.GameMechanics {
 			do
 				{
 					combat.invasion(gameTurns.getPlayerList().get(indexOfFirstPlayer));
-					this.getOutput().updateGameInfoPanel("Input 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
+					this.getOutput().updateGameInfoPanel("\nInput 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
 					do
 						{
 							proceed=this.getInput().getInputCommand();
 							if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
-								this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+								this.getOutput().updateGameInfoPanel("\nPlease input either 'continue' or 'skip'!");
 							}
 						}
 					while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
@@ -268,7 +268,7 @@ public class GameMechanics implements Main.GameMechanics {
 				break;
 			}
 			
-			this.getOutput().updateGameInfoPanel("Input 'skip' if you want to skip fortification, and 'continue' to fortify!");
+			this.getOutput().updateGameInfoPanel("\nInput 'skip' if you want to skip fortification, and 'continue' to fortify!");
 			do
 				{
 					proceed=this.getInput().getInputCommand();
@@ -392,10 +392,10 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			for (int i = 0; i < 2; i++){
 				
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " type 'roll' to roll the dice");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " type 'roll' to roll the dice!");
 				
 				while (!input.getInputCommand().equals("roll")) {
-					output.updateGameInfoPanel("That's not a command, try using 'roll'");
+					output.updateGameInfoPanel("\nInvalid command, try using 'roll'!");
 				}
 				
 				die.roll();
@@ -408,7 +408,7 @@ public class GameMechanics implements Main.GameMechanics {
 					player2die = die.getFace();
 				}
 				
-				this.getOutput().updateGameInfoPanel(playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()));
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(i).getPlayerName() + " rolled a " + String.valueOf(die.getFace()) + "!");
 			}
 			
 			if (player1die == player2die){
@@ -419,13 +419,13 @@ public class GameMechanics implements Main.GameMechanics {
 			else if (player1die > player2die){
 				draw = false;
 				index = 0;
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
 			}
 			
 			else {
 				draw = false;
 				index = 1;
-				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!");
+				this.getOutput().updateGameInfoPanel("\n" + playerlist.get(index).getPlayerName() + " rolled the highest!\n");
 			}	
 			
 		} while (draw);
