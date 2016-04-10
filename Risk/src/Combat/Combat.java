@@ -6,8 +6,6 @@ import java.util.LinkedList;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import Deck.Card;
-import Deck.Deck;
 import GUI.MapConstants;
 import Game.Army;
 import Game.Country;
@@ -21,13 +19,11 @@ public class Combat {
 	private ArrayList<Army> armies = new ArrayList<Army>();
 	private Army attackingarmy = null;
 	private Army defendingarmy = null;
-	private Deck deck = new Deck();
 	
-	public Combat(ArrayList<Player> _playerList, GameMechanics _gameMechanics, ArrayList<Army> armies, Deck deck) {
+	public Combat(ArrayList<Player> _playerList, GameMechanics _gameMechanics, ArrayList<Army> armies) {
 		this.playerList = _playerList;
 		this.gameMechanics = _gameMechanics;
 		this.armies=armies;
-		this.deck=deck;
 	}
 	
 	public void invasion(Player player){
@@ -40,7 +36,6 @@ public class Combat {
 		LinkedList<Integer> player2rolls = new LinkedList<Integer>();	
 		int attunits = attack(player);
 		int defunits = defend(defendingarmy);
-		boolean conquered = false;
 		
 		//identify number of dice pairs
 		int pairs;
@@ -50,8 +45,6 @@ public class Combat {
 		else{
 			pairs=attunits;
 		}
-		
-		System.out.println(pairs);
 		
 		//roll attacker dice
 		int c;
@@ -94,19 +87,12 @@ public class Combat {
 		
 		for(c=0;c<pairs;c++){
 			if(player1rolls.get(player1rolls.size()-1-c)<player2rolls.get(pairs-1-c)){
-				System.out.println("player1: " + player1rolls.get(player1rolls.size()-1-c));
-				System.out.println("player2: " + player2rolls.get(pairs-1-c));
 				removep1++;
 			}
 			if(player1rolls.get(player1rolls.size()-1-c)>player2rolls.get(pairs-1-c)){
-				System.out.println("player1: " + player1rolls.get(player1rolls.size()-1-c));
-				System.out.println("player2: " + player2rolls.get(pairs-1-c));
 				removep2++;
 			}
 		}
-		
-		System.out.println("player1: " + removep1);
-		System.out.println("player2: " + removep2);
 		
 		//decrease player1 and player2 units accordingly
 		attackingarmy.setSize(attackingarmy.getSize()-removep1);
@@ -125,15 +111,6 @@ public class Combat {
 		if(defendingarmy.getSize()==0){
 			gameMechanics.getOutput().updateGameInfoPanel(attackingarmy.getPlayer().getPlayerName() + " gets " + defendingarmy.getPlayer().getPlayerName() + "'s territory!");			
 			Player temp=defendingarmy.getPlayer();
-			
-			if(conquered==false){
-				Card card=deck.getCard();
-				attackingarmy.getPlayer().addCardToPlayerHand(card);
-				System.out.println("outside: " + card.getCardTerritoryString());
-				gameMechanics.getOutput().updateGameInfoPanel("\n"+attackingarmy.getPlayer().getPlayerName() + " draws " + card.getCardTerritoryString() + "!");		
-			}
-			
-			conquered=true;
 			
 			defendingarmy.setSize(player1rolls.size()-removep1);
 			defendingarmy.setPlayer(attackingarmy.getPlayer());
@@ -167,15 +144,12 @@ public class Combat {
 				gameMechanics.getOutput().updateGameInfoPanel(player.getPlayerName() +", enter country you'd like to attack with!");
 				attacking = gameMechanics.getInput().getInputCommand();
 				
-				System.out.println(attacking);
 				//check if user has that army
 				enoughunits=true;
 				owned=false;
-				System.out.println(attacking);
 				for(String s: MapConstants.COUNTRY_NAMES){
 					if(s.toLowerCase().contains(attacking.toLowerCase())&&attacking.length()>3){
 						attacking=s;
-						System.out.println(attacking);
 					}
 				}
 				for(Army a: player.getPlacedArmies()){
@@ -280,9 +254,6 @@ public class Combat {
 				if(unitsnum>attackingarmy.getSize() || unitsnum<1){
 					gameMechanics.getOutput().updateGameInfoPanel("Number of attacking units must be at least one and no bigger than your army size! (Also three at max!)");
 				}
-				
-				System.out.println("army size: " + attackingarmy.getSize());
-				System.out.println("unitsnum: " + unitsnum);
 			}
 		while(unitsnum>=attackingarmy.getSize() || unitsnum>3 || unitsnum<1);
 			
@@ -328,11 +299,9 @@ public class Combat {
 	boolean countriesBorder(String country){
 		for(Country x: attackingarmy.getCountry().getAdjacentCountries()){
 			if(country.equalsIgnoreCase(x.getName())){
-				System.out.println("bop" + " " +x.getName() + " " + country);
 				return true;
 			}
 		}
-		System.out.println("dude" + " " + country);
 		return false;
 	}
 	

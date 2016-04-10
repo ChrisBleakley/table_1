@@ -41,7 +41,6 @@ public class Deck implements Main.Deck {
 			
 			Card nextCard = new Card(countryList.get(i), insignias[i]);
 			
-			System.out.println("country name : " + countryList.get(i).getName() + " insiginia: " + insignias[i]);
 			fullGameDeck.add(nextCard);
 		}
 		
@@ -63,8 +62,6 @@ public class Deck implements Main.Deck {
 		Card card = fullGameDeck.get(0);
 		fullGameDeck.remove(0);
 		
-		System.out.println("boop");
-		System.out.println(card);
 		return card;
 	}
 	

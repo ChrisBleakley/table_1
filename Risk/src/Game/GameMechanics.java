@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import Combat.Combat;
 import Combat.Fortify;
+import Deck.Card;
 import Deck.Deck;
 import Dice.Die;
 import GUI.MapConstants;
@@ -223,7 +224,7 @@ public class GameMechanics implements Main.GameMechanics {
 		fullDeck.setFullDeck(countrylist, MapConstants.COUNTRY_INSIGNIAS);
 		
 		Turns gameTurns = new Turns(this.playerlist, this);
-		Combat combat = new Combat(this.playerlist, this, this.getArmyList(), fullDeck);
+		Combat combat = new Combat(this.playerlist, this, this.getArmyList());
 		Fortify fortify = new Fortify(this.playerlist,this, this.getArmyList());
 		
 		int indexOfFirstPlayer = decideFirstPlayer();
@@ -236,17 +237,25 @@ public class GameMechanics implements Main.GameMechanics {
 			indexOfSecondPlayer = 0;
 		}
 		
-		// Just for testing, java complains about infinite loops.
 		String proceed = new String();
 		String winner = new String();
+		
 		while (true) {
+			System.out.println("deck size: " + fullDeck.getFullDeck().size());
+			System.out.println("p1 hand size: " + gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlayerHand().size());
+			System.out.println("p2 hand size: " + gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlayerHand().size());
 			
+			//check army sizes to identify if cards need to be drawn at the end of each turn
+			int p1territories=gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlacedArmies().size();
+			int p2territories=gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlacedArmies().size();
+		
 			// turn sequence for first player.
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			
 			do
 				{
 					combat.invasion(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+					
 					this.getOutput().updateGameInfoPanel("\nInput 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
 					do
 						{
@@ -283,10 +292,16 @@ public class GameMechanics implements Main.GameMechanics {
 				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			}
 			
+			if(p1territories<gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlacedArmies().size()){
+				//draw
+				Card card=fullDeck.getCard();
+				gameTurns.getPlayerList().get(indexOfFirstPlayer).addCardToPlayerHand(card);
+				this.getOutput().updateGameInfoPanel("\n"+gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlayerName() + " draws " + card.getCardTerritoryString() + "!");		
+			}
 			
 			// turn sequence for the second player.
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
-			
+
 			do
 				{
 					combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
@@ -314,6 +329,13 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if(proceed.equalsIgnoreCase("continue")){
 				fortify.moveUnits(gameTurns.getPlayerList().get(indexOfSecondPlayer));
+			}
+			
+			if(p2territories<gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlacedArmies().size()){
+				//draw
+				Card card=fullDeck.getCard();
+				gameTurns.getPlayerList().get(indexOfSecondPlayer).addCardToPlayerHand(card);
+				this.getOutput().updateGameInfoPanel("\n"+gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlayerName() + " draws " + card.getCardTerritoryString() + "!");		
 			}
 			
 			//check after each turn if the game is over
