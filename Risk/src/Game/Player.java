@@ -37,6 +37,7 @@ public class Player implements Main.Player {
 		}
 		
 		this.placedArmies = new ArrayList<Army>();
+		this.playerHand = new ArrayList<Card>();
 	}
 	
 	@Override
@@ -109,6 +110,7 @@ public class Player implements Main.Player {
 	/* Method adds a Card to the player's hand. */
 	public void addCardToPlayerHand(Card card) {
 		System.out.println("inside: " + card);
+		System.out.println(card.getCardTerritoryString());
 		playerHand.add(card);
 	}
 	
