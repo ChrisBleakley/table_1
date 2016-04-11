@@ -39,6 +39,7 @@ public class Player implements Main.Player {
 		
 		this.placedArmies = new ArrayList<Army>();
 		this.playerHand = new ArrayList<Card>();
+		this.numberoftradeins=0;
 	}
 	
 	@Override

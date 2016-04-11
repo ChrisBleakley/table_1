@@ -341,8 +341,37 @@ public class GameMechanics implements Main.GameMechanics {
 					}
 				}
 			
-			//increment trade in variable
+				//increment trade in variable
+				player.setNumberOfTradeIns(player.getNumberOfTradeIns()+1);
+				getReinforcementsAfterTradeIn(player);
 			}
+		}
+	}
+	
+	public void getReinforcementsAfterTradeIn(Player player){
+		if(player.getNumberOfTradeIns()==1){
+			player.setAvailableArmies(player.getAvailableArmies()+4);
+			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 4 reinforcements!");
+		}
+		if(player.getNumberOfTradeIns()==2){
+			player.setAvailableArmies(player.getAvailableArmies()+6);
+			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 6 reinforcements!");
+		}
+		if(player.getNumberOfTradeIns()==3){
+			player.setAvailableArmies(player.getAvailableArmies()+8);
+			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 8 reinforcements!");
+		}
+		if(player.getNumberOfTradeIns()==4){
+			player.setAvailableArmies(player.getAvailableArmies()+10);
+			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 10 reinforcements!");		
+		}
+		if(player.getNumberOfTradeIns()==5){
+			player.setAvailableArmies(player.getAvailableArmies()+12);
+			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 12 reinforcements!");	
+		}
+		if(player.getNumberOfTradeIns()==6){
+			player.setAvailableArmies(player.getAvailableArmies()+15);
+			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 15 reinforcements!");
 		}
 	}
 	

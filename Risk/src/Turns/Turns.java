@@ -64,7 +64,7 @@ public class Turns {
 	/* These two methods add the reinforcements to the player's territories and update the map */
 	private void reinforce(Player player, int playerReinforcements) {
 		
-		player.setAvailableArmies(playerReinforcements);
+		player.setAvailableArmies(player.getAvailableArmies()+playerReinforcements);
 	
 		while (player.getAvailableArmies() > 0) {
 			
