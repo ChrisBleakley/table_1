@@ -29,7 +29,7 @@ public class PlayGame {
 		gamemechanics.setDice();
 		gamemechanics.initialiseGameMap();
 		gamemechanics.setReinforceMechanics();
-		gamemechanics.reinforce();
+		//gamemechanics.reinforce();
 		gamemechanics.turns();
 		
 	}

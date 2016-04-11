@@ -217,6 +217,30 @@ public class GameMechanics implements Main.GameMechanics {
 		
 	}
 	
+	//Method to display a player's hand in a list
+	public void displayCards(Player player){
+		if(player.getPlayerHand().size()>0){
+			output.updateGameInfoPanel("\n" + player.getPlayerName() + ", would you like to see your cards? Enter 'yes' or 'no'");
+			String response = new String();
+			do
+				{
+					response = this.getInput().getInputCommand();
+					
+					if(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")){
+						output.updateGameInfoPanel("\nPlease enter either 'yes' or 'no'!");
+					}
+				}
+			while(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no"));
+			
+			if(response.equalsIgnoreCase("yes")){
+				output.updateGameInfoPanel("\n" + player.getPlayerName() + "'s cards:");
+				for(Card c: player.getPlayerHand()){
+					output.updateGameInfoPanel(c.getCardAsString());
+				}
+			}
+		}
+	}
+	
 	/* This method handles the turn based logic for the two players */
 	public void turns() {
 		//make deck object and set deck's contents
@@ -250,6 +274,8 @@ public class GameMechanics implements Main.GameMechanics {
 			int p2territories=gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlacedArmies().size();
 		
 			// turn sequence for first player.
+			
+			displayCards(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			
 			do
@@ -300,29 +326,30 @@ public class GameMechanics implements Main.GameMechanics {
 			}
 			
 			// turn sequence for the second player.
+			displayCards(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 
 			do
 				{
 					combat.invasion(gameTurns.getPlayerList().get(indexOfSecondPlayer));
-					this.getOutput().updateGameInfoPanel("Input 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
+					this.getOutput().updateGameInfoPanel("\nInput 'skip' if you want to end your battle phase, and 'continue' to enter another battle!");
 					do
 						{
 							proceed=this.getInput().getInputCommand();
 							if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
-								this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+								this.getOutput().updateGameInfoPanel("\nPlease input either 'continue' or 'skip'");
 							}
 						}
 					while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
 				}
 			while(proceed.equalsIgnoreCase("Continue"));
 			
-			this.getOutput().updateGameInfoPanel("Input 'skip' if you want to skip fortification, and 'continue' to fortify!");
+			this.getOutput().updateGameInfoPanel("\nInput 'skip' if you want to skip fortification, and 'continue' to fortify!");
 			do
 				{
 					proceed=this.getInput().getInputCommand();
 					if(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue")){
-						this.getOutput().updateGameInfoPanel("Please input either 'continue' or 'skip'");
+						this.getOutput().updateGameInfoPanel("\nPlease input either 'continue' or 'skip'");
 					}
 				}
 			while(!proceed.equalsIgnoreCase("skip") && !proceed.equalsIgnoreCase("continue"));
