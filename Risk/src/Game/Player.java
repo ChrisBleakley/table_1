@@ -24,6 +24,7 @@ public class Player implements Main.Player {
 	private Integer availablearmies;
 	private ArrayList<Army> placedArmies;
 	private ArrayList<Card> playerHand;
+	private Integer numberoftradeins;
 	
 	public Player(GameMechanics gamemechanics, boolean human) {
 		
@@ -93,6 +94,14 @@ public class Player implements Main.Player {
 	@Override
 	public void addPlacedArmies(Army army) {
 		this.placedArmies.add(army);
+	}
+	
+	public void setNumberOfTradeIns(int num){
+		this.numberoftradeins=num;
+	}
+	
+	public int getNumberOfTradeIns(){
+		return this.numberoftradeins;
 	}
 	
 	public void removePlacedArmy(Army armytoremove) {

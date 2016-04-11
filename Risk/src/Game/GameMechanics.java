@@ -8,6 +8,7 @@ package Game;
 */
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JTextField;
 
@@ -241,6 +242,110 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 	}
 	
+	//method for handling card trade ins for reinforcements
+	public void cardTradeIn(Player player){
+		LinkedList<Card> infantries = new LinkedList<Card>();
+		LinkedList<Card> cavalries = new LinkedList<Card>();
+		LinkedList<Card> artilleries = new LinkedList<Card>();
+		boolean tripin = false;
+		boolean diffin = false;
+		boolean cantrade=false;
+		//if player has 3 cards or more
+		if(player.getPlayerHand().size()>2){
+			for(Card c: player.getPlayerHand()){
+				if(c.getCardInsignia().equalsIgnoreCase("cavalry")){
+					cavalries.add(c);
+				}
+				if(c.getCardInsignia().equalsIgnoreCase("artillery")){
+					artilleries.add(c);
+				}
+				if(c.getCardInsignia().equalsIgnoreCase("infantry")){
+					infantries.add(c);
+				}
+			}
+			
+			System.out.println("i size: " + infantries.size());			
+			System.out.println("c size: " + cavalries.size());			
+			System.out.println("a size: " + artilleries.size());		
+				
+			//if player has 1 of each insignia he/she can trade
+			if(infantries.size()>=1 && artilleries.size()>=1 && cavalries.size()>=1){
+				this.getOutput().updateGameInfoPanel("\nYou have one of each insignia!");
+				cantrade=true;
+				diffin=true;
+			}
+			//if player has at least 3 of one insignia he/she can trade
+			if(infantries.size()>2 || artilleries.size()>2 || cavalries.size()>2){
+				this.getOutput().updateGameInfoPanel("\nYou have three of the same insignia!");
+				cantrade=true;
+				tripin=true;
+			}
+			
+			String response = new String();
+			if(cantrade==true){
+				do
+					{
+						this.getOutput().updateGameInfoPanel("\nWould you like to trade in your cards for reinforcements? Enter 'yes' or 'no'.");
+						response = getInput().getInputCommand();
+						
+						if(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")){
+							this.getOutput().updateGameInfoPanel("\nPlease input either 'yes' or 'no'!");
+						}
+					}
+				while(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no"));
+			}
+			
+			String tradeins = new String();
+			char[] tradeinsarr = new char[3];
+			boolean badinput = false;
+			if(response.equalsIgnoreCase("yes")){
+				do
+					{
+						badinput=false;
+						this.getOutput().updateGameInfoPanel("\nEnter first letter of each insignia to be traded in! (e.g. 'iii' for three infantries)");
+						tradeins = this.getInput().getInputCommand().toLowerCase();
+						tradeinsarr=tradeins.toCharArray();
+						
+						if(tradeinsarr.length>3){
+							badinput=true;
+						}
+						
+						for(char c: tradeinsarr){
+							if(c!='i' && c!='a' && c!='c'){
+								badinput=true;
+							}
+						}
+						
+						if(tripin==true && (tradeinsarr[0]!=tradeinsarr[1] || tradeinsarr[0]!=tradeinsarr[2] || tradeinsarr[1]!=tradeinsarr[2])){
+							badinput=true;
+						}
+						
+						if(diffin==true && (tradeinsarr[0]==tradeinsarr[1] || tradeinsarr[0]==tradeinsarr[2] || tradeinsarr[1]==tradeinsarr[2])){
+							badinput=true;
+						}
+						if(badinput==true){
+							this.getOutput().updateGameInfoPanel("Input doesn't match your cards or you haven't selected three!");
+						}
+					}
+				while(badinput==true);
+			
+				//remove cards
+				int i,j;
+				for(i=0;i<3;i++){
+					int handsize=player.getPlayerHand().size();
+					for(j=0;j<handsize;j++){
+						if(player.getPlayerHand().get(j).getCardInsignia().toLowerCase().charAt(0)==tradeinsarr[i]){
+							player.getPlayerHand().remove(j);
+							j=handsize;
+						}
+					}
+				}
+			
+			//increment trade in variable
+			}
+		}
+	}
+	
 	/* This method handles the turn based logic for the two players */
 	public void turns() {
 		//make deck object and set deck's contents
@@ -276,6 +381,7 @@ public class GameMechanics implements Main.GameMechanics {
 			// turn sequence for first player.
 			
 			displayCards(gameTurns.getPlayerList().get(indexOfFirstPlayer));
+			cardTradeIn(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfFirstPlayer));
 			
 			do
@@ -327,6 +433,7 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			// turn sequence for the second player.
 			displayCards(gameTurns.getPlayerList().get(indexOfSecondPlayer));
+			cardTradeIn(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 			gameTurns.placeReinforcements(gameTurns.getPlayerList().get(indexOfSecondPlayer));
 
 			do
