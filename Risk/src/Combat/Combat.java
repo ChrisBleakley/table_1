@@ -251,7 +251,7 @@ public class Combat {
 				
 				unitsnum = Integer.parseInt(units);
 				
-				if(unitsnum>attackingarmy.getSize() || unitsnum<1){
+				if(unitsnum>attackingarmy.getSize() || unitsnum>3 || unitsnum<1){
 					gameMechanics.getOutput().updateGameInfoPanel("Number of attacking units must be at least one and no bigger than your army size! (Also three at max!)");
 				}
 			}

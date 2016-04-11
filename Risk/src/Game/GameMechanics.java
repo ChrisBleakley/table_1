@@ -282,17 +282,23 @@ public class GameMechanics implements Main.GameMechanics {
 			}
 			
 			String response = new String();
-			if(cantrade==true){
-				do
-					{
-						this.getOutput().updateGameInfoPanel("\nWould you like to trade in your cards for reinforcements? Enter 'yes' or 'no'.");
-						response = getInput().getInputCommand();
-						
-						if(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")){
-							this.getOutput().updateGameInfoPanel("\nPlease input either 'yes' or 'no'!");
+			if(player.getPlayerHand().size()<5){
+				if(cantrade==true){
+					do
+						{
+							this.getOutput().updateGameInfoPanel("\nWould you like to trade in your cards for reinforcements? Enter 'yes' or 'no'.");
+							response = getInput().getInputCommand();
+							
+							if(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")){
+								this.getOutput().updateGameInfoPanel("\nPlease input either 'yes' or 'no'!");
+							}
 						}
-					}
-				while(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no"));
+					while(!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no"));
+				}
+			}
+			else {
+				this.getOutput().updateGameInfoPanel("\nYou have " + player.getPlayerHand().size() + " cards. You have to trade them!");
+				response="yes";
 			}
 			
 			String tradeins = new String();
@@ -319,9 +325,11 @@ public class GameMechanics implements Main.GameMechanics {
 						if(tripin==true && (tradeinsarr[0]!=tradeinsarr[1] || tradeinsarr[0]!=tradeinsarr[2] || tradeinsarr[1]!=tradeinsarr[2])){
 							badinput=true;
 						}
-						
 						if(diffin==true && (tradeinsarr[0]==tradeinsarr[1] || tradeinsarr[0]==tradeinsarr[2] || tradeinsarr[1]==tradeinsarr[2])){
 							badinput=true;
+						}
+						if((tripin==true && diffin == true) && (tradeinsarr[0]==tradeinsarr[1] && tradeinsarr[0]==tradeinsarr[2] && tradeinsarr[1]==tradeinsarr[2] || tradeinsarr[0]!=tradeinsarr[1] && tradeinsarr[0]!=tradeinsarr[2] && tradeinsarr[1]!=tradeinsarr[2])){
+							badinput=false;
 						}
 						if(badinput==true){
 							this.getOutput().updateGameInfoPanel("Input doesn't match your cards or you haven't selected three!");
@@ -455,6 +463,18 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if(p1territories<gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlacedArmies().size()){
 				//draw
+				String input = new String();
+				do
+					{
+						this.getOutput().updateGameInfoPanel("\n" + gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlayerName() + ", input 'draw' to draw a card!");
+						input=this.getInput().getInputCommand();
+						
+						if(!input.equalsIgnoreCase("draw")){
+							this.getOutput().updateGameInfoPanel("\nInvalid command. Please enter 'draw'.");
+						}
+					}
+				while(!input.equalsIgnoreCase("draw"));
+				
 				Card card=fullDeck.getCard();
 				gameTurns.getPlayerList().get(indexOfFirstPlayer).addCardToPlayerHand(card);
 				this.getOutput().updateGameInfoPanel("\n"+gameTurns.getPlayerList().get(indexOfFirstPlayer).getPlayerName() + " draws " + card.getCardTerritoryString() + "!");		
@@ -496,6 +516,18 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if(p2territories<gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlacedArmies().size()){
 				//draw
+				String input = new String();
+				do
+					{
+						this.getOutput().updateGameInfoPanel("\n" + gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlayerName() + ", input 'draw' to draw a card!");
+						input=this.getInput().getInputCommand();
+						
+						if(!input.equalsIgnoreCase("draw")){
+							this.getOutput().updateGameInfoPanel("\nInvalid command. Please enter 'draw'.");
+						}
+					}
+				while(!input.equalsIgnoreCase("draw"));
+				
 				Card card=fullDeck.getCard();
 				gameTurns.getPlayerList().get(indexOfSecondPlayer).addCardToPlayerHand(card);
 				this.getOutput().updateGameInfoPanel("\n"+gameTurns.getPlayerList().get(indexOfSecondPlayer).getPlayerName() + " draws " + card.getCardTerritoryString() + "!");		

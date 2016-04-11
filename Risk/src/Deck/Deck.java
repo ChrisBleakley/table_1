@@ -54,7 +54,6 @@ public class Deck implements Main.Deck {
 	
 	/* Draw a card from the deck. If deck is empty, reset it and draw. */
 	public Card getCard() {
-		
 		if (fullGameDeck.isEmpty()) {
 			resetDeck();
 		}
