@@ -8,7 +8,6 @@ package Main;
 */
 
 import java.util.ArrayList;
-
 import GUI.MapConstants;
 import GUI.Output;
 import Game.GameMechanics;
@@ -17,7 +16,7 @@ import Input.Input;
 
 public class PlayGame {
 	
-	public static void main(String args[]){ 
+	public static void main(String args[]) { 
 		
 		GameMechanics gamemechanics = new GameMechanics();
 		

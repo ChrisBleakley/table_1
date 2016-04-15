@@ -9,9 +9,7 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import javax.swing.JTextField;
-
 import Combat.Combat;
 import Combat.Fortify;
 import Deck.Card;
@@ -105,7 +103,9 @@ public class GameMechanics implements Main.GameMechanics {
 				output.updateMapPanel();
 				player.setAvailableArmies(player.getAvailableArmies() - armysize);
 
-			} else {
+			} 
+			
+			else {
 				i++;
 			}
 		}
@@ -171,7 +171,8 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if (indexOfFirstPlayer == 0) {
 				indexOfSecondPlayer = 1;
-			} else {
+			} 
+			else {
 				indexOfSecondPlayer = 0;
 			}
 			
@@ -180,9 +181,8 @@ public class GameMechanics implements Main.GameMechanics {
 			drawCardsAndSetTerritories(playerlist.get(indexOfFirstPlayer));
 			drawCardsAndSetTerritories(playerlist.get(indexOfSecondPlayer));
 			
-			for (int i = 2; i < 6; i++) {
+			for (int i = 2; i < 6; i++) 
 				drawCardsAndSetTerritories(playerlist.get(i));
-			}
 			
 		}
 	}
@@ -218,11 +218,14 @@ public class GameMechanics implements Main.GameMechanics {
 		
 	}
 	
-	//Method to display a player's hand in a list
-	public void displayCards(Player player){
-		if(player.getPlayerHand().size()>0){
+	/* Method displays a player's hand as a list */
+	public void displayCards(Player player) {
+		
+		if(player.getPlayerHand().size() > 0) {
+			
 			output.updateGameInfoPanel("\n" + player.getPlayerName() + ", would you like to see your cards? Enter 'yes' or 'no'");
 			String response = new String();
+			
 			do
 				{
 					response = this.getInput().getInputCommand();
@@ -235,22 +238,26 @@ public class GameMechanics implements Main.GameMechanics {
 			
 			if(response.equalsIgnoreCase("yes")){
 				output.updateGameInfoPanel("\n" + player.getPlayerName() + "'s cards:");
-				for(Card c: player.getPlayerHand()){
+				
+				for(Card c: player.getPlayerHand())
 					output.updateGameInfoPanel(c.getCardAsString());
-				}
+				
 			}
 		}
 	}
 	
-	//method for handling card trade ins for reinforcements
-	public void cardTradeIn(Player player){
+	/* Method for handling card trade ins for reinforcements */
+	public void cardTradeIn(Player player) {
+		
 		LinkedList<Card> infantries = new LinkedList<Card>();
 		LinkedList<Card> cavalries = new LinkedList<Card>();
 		LinkedList<Card> artilleries = new LinkedList<Card>();
+		
 		boolean tripin = false;
 		boolean diffin = false;
 		boolean cantrade=false;
-		//if player has 3 cards or more
+		
+		// if player has 3 cards or more
 		if(player.getPlayerHand().size()>2){
 			for(Card c: player.getPlayerHand()){
 				if(c.getCardInsignia().equalsIgnoreCase("cavalry")){
@@ -356,27 +363,33 @@ public class GameMechanics implements Main.GameMechanics {
 		}
 	}
 	
-	public void getReinforcementsAfterTradeIn(Player player){
+	public void getReinforcementsAfterTradeIn(Player player) {
+		
 		if(player.getNumberOfTradeIns()==1){
 			player.setAvailableArmies(player.getAvailableArmies()+4);
 			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 4 reinforcements!");
 		}
+		
 		if(player.getNumberOfTradeIns()==2){
 			player.setAvailableArmies(player.getAvailableArmies()+6);
 			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 6 reinforcements!");
 		}
+		
 		if(player.getNumberOfTradeIns()==3){
 			player.setAvailableArmies(player.getAvailableArmies()+8);
 			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 8 reinforcements!");
 		}
+		
 		if(player.getNumberOfTradeIns()==4){
 			player.setAvailableArmies(player.getAvailableArmies()+10);
 			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 10 reinforcements!");		
 		}
+		
 		if(player.getNumberOfTradeIns()==5){
 			player.setAvailableArmies(player.getAvailableArmies()+12);
 			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 12 reinforcements!");	
 		}
+		
 		if(player.getNumberOfTradeIns()==6){
 			player.setAvailableArmies(player.getAvailableArmies()+15);
 			this.getOutput().updateGameInfoPanel("\n" + player.getPlayerName() + " gets 15 reinforcements!");
@@ -385,6 +398,7 @@ public class GameMechanics implements Main.GameMechanics {
 	
 	/* This method handles the turn based logic for the two players */
 	public void turns() {
+		
 		//make deck object and set deck's contents
 		Deck fullDeck = new Deck();
 		fullDeck.setFullDeck(countrylist, MapConstants.COUNTRY_INSIGNIAS);
