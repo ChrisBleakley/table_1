@@ -318,7 +318,7 @@ public class GameMechanics implements Main.GameMechanics {
 						
 						for(char c: tradeinsarr){
 							if(c!='i' && c!='a' && c!='c'){
-								badinput=true;
+								badinput = true;
 							}
 						}
 						

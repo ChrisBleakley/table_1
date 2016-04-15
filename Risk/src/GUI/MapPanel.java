@@ -51,6 +51,7 @@ public class MapPanel extends JPanel {
 		g.drawImage(scaled, 0, 0, null);
 		gfx2d.setColor(new Color(0,191,255));
 	}
+	
 	private Output output;
 	private static final long serialVersionUID = 1L;
 	private BufferedImage image;
