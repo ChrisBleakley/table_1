@@ -32,7 +32,7 @@ public class MapPanel extends JPanel {
 		this.add(output.getLinks());	
 	}
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		//get image locally
 		URL url = MapPanel.class.getResource("/worldmap.png");
 		

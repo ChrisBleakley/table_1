@@ -19,7 +19,7 @@ public class TextActionListener implements ActionListener {
 	private Input input;
 	
 	// This Method is used in order to make JTextField from output class accessible.
-	public TextActionListener(Input input){
+	public TextActionListener(Input input) {
 		this.input = input;
 	}
 	

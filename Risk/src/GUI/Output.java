@@ -25,14 +25,32 @@ import Game.Country;
 import Game.GameMechanics;
 import Game.Player;
 
-public class Output extends JFrame implements Main.Output{
+public class Output extends JFrame implements Main.Output {
+	private GameMechanics gamemechanics;
+	private Links linkscomponent;
+	private Countries countriescomponent;
+	private Armies armiescomponent;
+	private Continents continentskey;
+	private PlayerComponent playerkey;
+	private MapPanel map_panel;
+	private Dimension map_size;
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField textField;
+	private JPanel input_panel;
+	private JPanel game_info_panel;
+	private JScrollPane scrollablepanel;
+	private JTextArea game_info = new JTextArea();
+	private int gameinfoheight = 100;
+	private JLabel input = new JLabel("User input");
+	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+	int map_width = (int)(screensize.getWidth() - 100);
+	int map_height = (int)(screensize.getHeight() - gameinfoheight - 160);
 	
 	public Output(Game.GameMechanics gamemechanics) {
 		this.gamemechanics = gamemechanics;
 		//Set map dimensions using current screensize
-		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int map_width = (int)(screensize.getWidth() - 100);
-		int map_height = (int)(screensize.getHeight() - gameinfoheight - 160);
+		
 		this.map_size = new Dimension(map_width, map_height);
 		
 		this.setTitle("Risk");
@@ -40,6 +58,7 @@ public class Output extends JFrame implements Main.Output{
 		this.createPanels();
 		
 		//add the labels to the panels
+		game_info = new JTextArea(5, map_width / 11);
 		game_info_panel.add(game_info);
 		input_panel.add(input);
 		
@@ -100,7 +119,7 @@ public class Output extends JFrame implements Main.Output{
 	}
 	private void setTextField() {
 		this.textField = gamemechanics.getInputField();	
-		this.textField.setPreferredSize(new Dimension(400,24));
+		this.textField.setPreferredSize(new Dimension(map_width,24));
 	}
 	@Override
 	public Dimension getPanelSize(){
@@ -145,22 +164,4 @@ public class Output extends JFrame implements Main.Output{
 	ArrayList<Player> getPlayerList(){
 		return gamemechanics.getPlayerList();
 	}
-	private GameMechanics gamemechanics;
-	private Links linkscomponent;
-	private Countries countriescomponent;
-	private Armies armiescomponent;
-	private Continents continentskey;
-	private PlayerComponent playerkey;
-	private MapPanel map_panel;
-	private Dimension map_size;
-	private static final long serialVersionUID = 1L;
-	
-	private JTextField textField;
-	private JPanel input_panel;
-	private JPanel game_info_panel;
-	private JScrollPane scrollablepanel;
-	private JTextArea game_info = new JTextArea(5,109);
-	private int gameinfoheight = 100;
-	private JLabel input = new JLabel("User input");
-	
 }
