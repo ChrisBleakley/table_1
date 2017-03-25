@@ -10,5 +10,3 @@ Java-based implementation of the popular board game [Risk](https://en.wikipedia.
 * text-based input
 * real-time gameplay log
 * 2 human players and 4 neutral players.
-
-All primes up to 65025 are shown.
