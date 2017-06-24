@@ -1,6 +1,6 @@
 # Risk
-	
-![Risk](Risk.png)
+
+![DisplayImage](DisplayImage.png)
 
 Java-based implementation of the popular board game [Risk](https://en.wikipedia.org/wiki/Risk_(game)).
 
